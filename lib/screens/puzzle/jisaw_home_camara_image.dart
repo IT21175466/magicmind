@@ -25,6 +25,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     with SingleTickerProviderStateMixin {
   ui.Image? canvasImage;
   bool _loaded = false;
+  bool isLoading = false;
   List<JigsawPiece> pieceOnBoard = [];
   List<JigsawPiece> pieceOnPool = [];
   JigsawPiece? _currentPiece;
@@ -97,6 +98,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
       setState(() {
         dificulityLevel = responseData['difficulty'];
+        isLoading = false;
       });
 
       Navigator.pushReplacement(
@@ -362,41 +364,48 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title:
-              Text('Congratulations!', style: TextStyle(color: Colors.black)),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('You have completed the puzzle!',
-                  style: TextStyle(color: Colors.black)),
-              SizedBox(height: 16),
-              Text('Time Taken: $_timeElapsed seconds',
-                  style: TextStyle(color: Colors.black)),
-              Text('Correct Moves: $_movesMade',
-                  style: TextStyle(color: Colors.black)),
-              Text('Wrong Moves: $incorrectMoves',
-                  style: TextStyle(color: Colors.black)),
-              Text('Score: $_score/100', style: TextStyle(color: Colors.black)),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                await MongoDatabase.insertData(
-                  difficultyLevel: dificulityLevel,
-                  timeElapsed: _timeElapsed,
-                  movesMade: _movesMade,
-                  incorrectMoves: incorrectMoves,
-                  hintUsed: hintUsed,
-                  score: _score,
-                );
-                await _adjestDifficulity(_movesMade, incorrectMoves);
-              },
-              child: Text('OK'),
+        return StatefulBuilder(builder: (context, setState) {
+          return AlertDialog(
+            title:
+                Text('Congratulations!', style: TextStyle(color: Colors.black)),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('You have completed the puzzle!',
+                    style: TextStyle(color: Colors.black)),
+                SizedBox(height: 16),
+                Text('Time Taken: $_timeElapsed seconds',
+                    style: TextStyle(color: Colors.black)),
+                Text('Correct Moves: $_movesMade',
+                    style: TextStyle(color: Colors.black)),
+                Text('Wrong Moves: $incorrectMoves',
+                    style: TextStyle(color: Colors.black)),
+                Text('Score: $_score/100',
+                    style: TextStyle(color: Colors.black)),
+              ],
             ),
-          ],
-        );
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  setState(() {
+                    isLoading = true;
+                  });
+
+                  await MongoDatabase.insertData(
+                    difficultyLevel: dificulityLevel,
+                    timeElapsed: _timeElapsed,
+                    movesMade: _movesMade,
+                    incorrectMoves: incorrectMoves,
+                    hintUsed: hintUsed,
+                    score: _score,
+                  );
+                  await _adjestDifficulity(_movesMade, incorrectMoves);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        });
       },
     );
   }
