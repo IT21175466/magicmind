@@ -1,7 +1,7 @@
 # Overview of the Magic Mind Mobile App 
 
 ## Repository Link - (https://github.com/IT21175466/magicmind)
-## Research Topic - Mobile Application to reduceNon-Verbal Learning Disability (NVLD)In age 10 - 13 Children.
+## Research Topic - Mobile Application to reduce Non-Verbal Learning Disability (NVLD)In age 10 - 13 Children.
 
 ## Project ID - 24-25J-150
 
