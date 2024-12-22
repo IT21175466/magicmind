@@ -1,0 +1,1 @@
+ /Users/user/Desktop/Research/Magic\ Mind\ Puzzle\ App/magicmind_puzzle/.dart_tool/flutter_build/a841eebb1a087e92a0125f58b62b01e0/native_assets.yaml: 

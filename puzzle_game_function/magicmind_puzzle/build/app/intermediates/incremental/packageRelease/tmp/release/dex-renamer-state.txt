@@ -1,0 +1,4 @@
+#Wed Dec 04 01:43:00 IST 2024
+base.0=/Users/user/Desktop/Research/Magic Mind Puzzle App/magicmind_puzzle/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
