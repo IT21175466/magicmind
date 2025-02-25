@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:magicmind_puzzle/screens/home/home_screen.dart';
 import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
 import 'package:magicmind_puzzle/services/http_client.dart';
 import 'package:magicmind_puzzle/services/mongodb.dart';

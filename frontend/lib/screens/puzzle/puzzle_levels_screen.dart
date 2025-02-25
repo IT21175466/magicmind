@@ -3,8 +3,6 @@ import 'package:magicmind_puzzle/screens/home/home_screen.dart';
 import 'package:magicmind_puzzle/screens/puzzle/level_demo.dart';
 import 'package:magicmind_puzzle/screens/puzzle/level_two.dart';
 import 'package:magicmind_puzzle/screens/puzzle/select_image_option_screen.dart';
-import 'package:magicmind_puzzle/utils/app_styles.dart';
-import 'package:magicmind_puzzle/utils/function.dart';
 
 class PuzzleLevelsScreen extends StatefulWidget {
   final bool demo;
@@ -18,22 +16,21 @@ class PuzzleLevelsScreen extends StatefulWidget {
 class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
   int _diff = 0;
 
-  // Sample data for levels
   final List<Map<String, String>> levels = [
     {
-      "title": "Demonstration",
+      "title": "Demo",
       "clue": "Demonstration of the game!",
-      "image": "assets/images/puzzle.png",
+      "image": "assets/images/puzzle_icon.png",
     },
     {
       "title": "Level 1",
-      "clue": "Find the hidden key!",
-      "image": "assets/images/puzzle.png",
+      "clue": "Let’s try similar sized pieces",
+      "image": "assets/images/puzzle_icon.png",
     },
     {
       "title": "Level 2",
-      "clue": "Solve the puzzle to unlock the door.",
-      "image": "assets/images/puzzle.png",
+      "clue": "Then try different sized pieces",
+      "image": "assets/images/puzzle_icon.png",
     },
   ];
 
@@ -48,10 +45,7 @@ class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
   }
 
   void _navigateToPuzzleScreen(Map<String, String> levelData, int index) {
-
-
-
-    if (index == 2){
+    if (index == 2) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -61,16 +55,14 @@ class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
           ),
         ),
       );
-    }
-    else if (index == 0){
+    } else if (index == 0) {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => const PuzzleDemo(),
         ),
       );
-    }
-    else {
+    } else {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -81,105 +73,214 @@ class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
         ),
       );
     }
-
   }
+
+  final List<Color> colors = [
+    Color.fromARGB(255, 203, 127, 173),
+    Color.fromARGB(255, 142, 190, 132),
+    Color.fromARGB(255, 236, 173, 44)
+  ];
 
   @override
   Widget build(BuildContext context) {
-    //double screenHeight = MediaQuery.of(context).size.height;
-
-
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Puzzle Levels'),
-      ),
-      backgroundColor: Styles.secondaryColor,
-      body: Column(
-        children: [
-          // Top card with title, description, and play button
-          Padding(
-            padding: const EdgeInsets.all(16.0), // Padding around the container
-            child: Container(
-              height: 200,
-              padding: const EdgeInsets.all(
-                  16.0), // Inner padding for the container's content
-              decoration: BoxDecoration(
-                color: Colors.blue.shade100,
-                borderRadius: BorderRadius.circular(12.0),
+      body: Container(
+        height: screenHeight,
+        width: screenWidth,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            opacity: 0.9,
+            image: AssetImage('assets/images/mainBG.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          children: [
+            SizedBox(
+              height: AppBar().preferredSize.height / 5 * 4,
+            ),
+            Text(
+              "Puzzles",
+              style: TextStyle(
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontFamily: 'Andika',
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              height: 210,
+              width: screenWidth,
+              child: Stack(
                 children: [
-                  Text(
-                    "Welcome to Puzzle World! Level $_diff",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  Positioned(
+                    top: 10,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 200,
+                      padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+                      child: Container(
+                        width: screenWidth,
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Hi there!",
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                fontFamily: 'Andika',
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Welcome to puzzle world! Let’s see how it’s going...",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black,
+                                fontFamily: 'ABeeZee',
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Align(
+                              alignment: Alignment.bottomLeft,
+                              child: ElevatedButton.icon(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.play_arrow,
+                                  color: Colors.white,
+                                ),
+                                label: const Text(
+                                  "Play Instructions",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.white,
+                                    fontFamily: 'ABeeZee',
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 38, 165, 201),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 8.0),
-                  const Text(
-                    "Choose a level to start solving puzzles and follow the instructions carefully.",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  const Spacer(),
-                  ElevatedButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.play_arrow),
-                    label: const Text("Play Instructions"),
+                  Positioned(
+                    left: 40,
+                    child: SizedBox(
+                      height: 80,
+                      width: 80,
+                      child: Image.asset('assets/images/sun.png'),
+                    ),
                   ),
                 ],
               ),
             ),
-          ),
-
-          const SizedBox(height: 16.0),
-          // List view of level cards
-          Expanded(
-            child: ListView.builder(
-              itemCount: levels.length,
-              itemBuilder: (context, index) {
-                final level = levels[index];
-                return GestureDetector(
-                  onTap: () async {
-                    if (widget.demo || index == 0){
-                      _navigateToPuzzleScreen(level, index);
-                    }
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 8.0),
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+            const SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: levels.length,
+                itemBuilder: (context, index) {
+                  final level = levels[index];
+                  return GestureDetector(
+                    onTap: () async {
+                      if (widget.demo || index == 0) {
+                        _navigateToPuzzleScreen(level, index);
+                      }
+                    },
+                    child: Container(
+                      height: 120,
+                      width: screenWidth,
+                      margin: EdgeInsets.only(
+                          left: 16, right: 16, top: 10, bottom: 5),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0),
+                      decoration: BoxDecoration(
+                        color: colors[index],
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: Colors.white,
+                        ),
                       ),
-                      color: widget.demo || index == 0 ? Styles.secondaryAccent : Colors.grey,
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Row(
                           children: [
-                            Image.asset(
-                              level["image"]!,
-                              width: 60.0,
-                              height: 60.0,
-                              fit: BoxFit.cover,
-                            ),
-                            const SizedBox(width: 16.0),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
                                     level["title"]!,
                                     style: const TextStyle(
                                       color: Colors.white,
-                                      fontSize: 18,
+                                      fontSize: 25,
                                       fontWeight: FontWeight.bold,
+                                      fontFamily: 'Andika',
                                     ),
                                   ),
                                   const SizedBox(height: 4.0),
                                   Text(
                                     level["clue"]!,
                                     style: const TextStyle(
-                                        fontSize: 14, color: Colors.white60),
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.white,
+                                      fontFamily: 'ABeeZee',
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 80,
+                              width: 80,
+                              child: Stack(
+                                children: [
+                                  Opacity(
+                                    opacity: 0.4,
+                                    child: Image.asset(
+                                      level["image"]!,
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    right: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: Colors.white,
+                                      size: 32,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -188,12 +289,12 @@ class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
