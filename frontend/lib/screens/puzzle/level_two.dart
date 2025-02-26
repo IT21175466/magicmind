@@ -1,3 +1,4 @@
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import '../../utils/function.dart';
 
@@ -124,7 +125,7 @@ class _LevelTwo_SelectImageOptionState
                     onTap: () async {
                       int factor =
                           int.parse(await loadString("l2_gen_factor", "1"));
-                      String level = (await loadString("l2_gen_level", "Low"));
+                      //String level = (await loadString("l2_gen_level", "Low"));
                       int difficulty =
                           int.parse(await loadString("l2_gen_difficulty", "1"));
 
@@ -240,7 +241,7 @@ class _LevelTwo_SelectImageOptionState
                     onTap: () async {
                       int factor =
                           int.parse(await loadString("l2_gen_factor", "1"));
-                      String level = (await loadString("l2_gen_level", "Low"));
+                      //String level = (await loadString("l2_gen_level", "Low"));
                       int difficulty =
                           int.parse(await loadString("l2_gen_difficulty", "1"));
 
@@ -664,77 +665,143 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: Colors.grey.shade700,
-          appBar: AppBar(
-            title: Text('Puzzle Screen'),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.home),
-                onPressed: () {
-                  //_prepareGame();
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PuzzleLevelsScreen(
-                              demo: true,
-                            )),
-                    (Route<dynamic> route) => false,
-                  );
-                },
-              ),
-            ],
-          ),
           body: _loaded
-              ? Column(
-                  children: [
-                    Container(
-                      height: 400,
-                      alignment: Alignment.center,
-                      child: _buildBoard(),
+              ? Container(
+                  width: screenWidth,
+                  height: screenHeight,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      opacity: 0.9,
+                      image: AssetImage('assets/images/activity_bg.png'),
+                      fit: BoxFit.cover,
                     ),
-                    Expanded(
-                      child: ListView.separated(
-                        padding: EdgeInsets.all(32),
-                        scrollDirection: Axis.horizontal,
-                        physics: BouncingScrollPhysics(),
-                        itemCount: pieceOnPool.length,
-                        itemBuilder: (context, index) {
-                          final piece = pieceOnPool[index];
-                          return Center(
-                            child: Draggable(
-                              child: piece,
-                              feedback: piece,
-                              childWhenDragging: Opacity(
-                                opacity: 0.24,
-                                child: piece,
-                              ),
-                              onDragEnd: (details) {
-                                _onPiecePlaced(piece, details.offset);
-                              },
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, index) =>
-                            SizedBox(width: 32),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: AppBar().preferredSize.height / 5 * 4,
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 55,
+                              width: 55,
+                            ),
+                            Spacer(),
+                            Text(
+                              "Let’s Play",
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontFamily: 'Andika',
+                              ),
+                            ),
+                            Spacer(),
+                            GestureDetector(
+                              onTap: () async {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PuzzleLevelsScreen(
+                                            demo: true,
+                                          )),
+                                  (Route<dynamic> route) => false,
+                                );
+                              },
+                              child: Container(
+                                height: 55,
+                                width: 55,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white.withOpacity(0.3),
+                                ),
+                                child: Center(
+                                  child: Image.asset(
+                                      'assets/images/home_icon.png'),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 400,
+                        alignment: Alignment.center,
+                        child: _buildBoard(),
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            border: Border(
+                              top: BorderSide(
+                                width: 2,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          child: ListView.separated(
+                            padding: EdgeInsets.all(32),
+                            scrollDirection: Axis.horizontal,
+                            physics: BouncingScrollPhysics(),
+                            itemCount: pieceOnPool.length,
+                            itemBuilder: (context, index) {
+                              final piece = pieceOnPool[index];
+                              return Center(
+                                child: Draggable(
+                                  child: piece,
+                                  feedback: piece,
+                                  childWhenDragging: Opacity(
+                                    opacity: 0.24,
+                                    child: piece,
+                                  ),
+                                  onDragEnd: (details) {
+                                    _onPiecePlaced(piece, details.offset);
+                                  },
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) =>
+                                SizedBox(width: 32),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               : Center(child: CircularProgressIndicator()),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              if (canvasImage != null) {
-                _showFullImageDialog(context);
-                setState(() {
-                  hintUsed++;
-                });
-              }
-            },
-            child: Icon(Icons.image),
-          ),
+          floatingActionButton: _loaded
+              ? Container(
+                  height: 70,
+                  width: 70,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.white,
+                    onPressed: () {
+                      if (canvasImage != null) {
+                        _showFullImageDialog(context);
+                        setState(() {
+                          hintUsed++;
+                        });
+                      }
+                    },
+                    child: Image.asset(
+                      'assets/images/hint_icon.png',
+                      height: 62,
+                    ),
+                  ),
+                )
+              : SizedBox(),
         ),
         if (_currentPiece != null)
           AnimatedBuilder(
@@ -756,9 +823,15 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
   Widget _buildBoard() {
     return Container(
       key: _boardWidgetKey,
-      width: 300,
-      height: 300,
-      color: Colors.grey.shade800,
+      width: 305,
+      height: 305,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(
+          width: 5,
+          color: const Color.fromARGB(255, 236, 173, 44),
+        ),
+      ),
       child: Stack(
         children: [
           for (var piece in pieceOnBoard)
@@ -1010,35 +1083,104 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     _score = baseScore.clamp(0, 100).round();
   }
 
+  String _formatTime(int seconds) {
+    final minutes = seconds ~/ 60;
+    final remainingSeconds = seconds % 60;
+    return '${minutes}m ${remainingSeconds}s';
+  }
+
+  final confettiController = ConfettiController();
+
+  bool isCongrating = false;
+
   void _showCompletionDialog(BuildContext context) {
     final incorrectMoves = _totalMoves - _movesMade;
+    confettiController.play();
+    double screenWidth = MediaQuery.of(context).size.width;
 
     showDialog(
       context: context,
       builder: (context) {
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
-            title:
-                Text('Congratulations!', style: TextStyle(color: Colors.black)),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
+            title: Center(
+              child: Text(
+                'Congratulations!',
+                style: TextStyle(
+                  color: const Color.fromARGB(255, 236, 173, 44),
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Andika',
+                ),
+              ),
+            ),
+            content: Stack(
               children: [
-                Text('You have completed the puzzle!',
-                    style: TextStyle(color: Colors.black)),
-                SizedBox(height: 16),
-                Text('Time Taken: $_timeElapsed seconds',
-                    style: TextStyle(color: Colors.black)),
-                Text('Correct Moves: $_movesMade',
-                    style: TextStyle(color: Colors.black)),
-                Text('Wrong Moves: $incorrectMoves',
-                    style: TextStyle(color: Colors.black)),
-                Text('Score: $_score/100',
-                    style: TextStyle(color: Colors.black)),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset('assets/images/congrats_banner.png'),
+                    SizedBox(height: 20),
+                    Text(
+                      'Time Taken: ${_formatTime(_timeElapsed)}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                    Text(
+                      'Wrong Moves: $incorrectMoves',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                    Text(
+                      'Score: $_score/100',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                    Text(
+                      'Hint Usage: $hintUsed',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(
+                  left: screenWidth / 2,
+                  child: SizedBox(
+                    width: 1,
+                    height: 300,
+                    child: ConfettiWidget(
+                      confettiController: confettiController,
+                      shouldLoop: true,
+                      blastDirectionality: BlastDirectionality.explosive,
+                      numberOfParticles: 35,
+                      emissionFrequency: 0.1,
+                    ),
+                  ),
+                ),
               ],
             ),
             actions: [
-              TextButton(
-                onPressed: () async {
+              InkWell(
+                borderRadius: BorderRadius.circular(30),
+                splashColor: Colors.white.withOpacity(0.2),
+                onTap: () async {
                   setState(() {
                     isLoading = true;
                   });
@@ -1053,7 +1195,29 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
                   );
                   await _adjestDifficulity(_movesMade, incorrectMoves);
                 },
-                child: Text('OK'),
+                child: Container(
+                  height: 56,
+                  width: 123,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: const Color.fromARGB(255, 142, 190, 132),
+                  ),
+                  child: Center(
+                    child: isLoading
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Text(
+                            'Ok',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Andika',
+                            ),
+                          ),
+                  ),
+                ),
               ),
             ],
           );
@@ -1068,11 +1232,17 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
       builder: (context) {
         return AlertDialog(
           title: Text(
-            'Complete Image',
-            style: TextStyle(color: Colors.black),
+            'Complete Image is Here...',
+            style: TextStyle(
+              color: const Color.fromARGB(255, 117, 100, 100),
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Andika',
+            ),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (canvasImage != null)
                 SizedBox(
@@ -1083,18 +1253,52 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
                   ),
                 ),
               SizedBox(height: 16),
-              Text('Time Taken: $_timeElapsed seconds',
-                  style: TextStyle(color: Colors.black)),
-              Text('Moves Made: $_movesMade',
-                  style: TextStyle(color: Colors.black)),
+              Text(
+                'Time Taken: ${_formatTime(_timeElapsed)}',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'ABeeZee',
+                ),
+              ),
+              Text(
+                'Moves Made: $_movesMade',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'ABeeZee',
+                ),
+              ),
             ],
           ),
           actions: [
-            TextButton(
-              onPressed: () {
+            InkWell(
+              borderRadius: BorderRadius.circular(30),
+              splashColor: Colors.white.withOpacity(0.2),
+              onTap: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Close'),
+              child: Container(
+                height: 56,
+                width: 123,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: const Color.fromARGB(255, 236, 173, 44),
+                ),
+                child: Center(
+                  child: Text(
+                    'Ok',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Andika',
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         );
@@ -1366,74 +1570,139 @@ class _JigsawHomePageState extends State<JigsawHomePage>
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: Colors.grey.shade700,
-          appBar: AppBar(
-            title: Text('Puzzle Screen'),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.home),
-                onPressed: () {
-                  //_prepareGame();
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PuzzleLevelsScreen(demo: true)),
-                    (Route<dynamic> route) => false,
-                  );
-                },
-              ),
-            ],
-          ),
           body: _loaded
-              ? Column(
-                  children: [
-                    Container(
-                      height: 400,
-                      alignment: Alignment.center,
-                      child: _buildBoard(),
+              ? Container(
+                  width: screenWidth,
+                  height: screenHeight,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      opacity: 0.9,
+                      image: AssetImage('assets/images/activity_bg.png'),
+                      fit: BoxFit.cover,
                     ),
-                    Expanded(
-                      child: ListView.separated(
-                        padding: EdgeInsets.all(32),
-                        scrollDirection: Axis.horizontal,
-                        physics: BouncingScrollPhysics(),
-                        itemCount: pieceOnPool.length,
-                        itemBuilder: (context, index) {
-                          final piece = pieceOnPool[index];
-                          return Center(
-                            child: Draggable(
-                              child: piece,
-                              feedback: piece,
-                              childWhenDragging: Opacity(
-                                opacity: 0.24,
-                                child: piece,
-                              ),
-                              onDragEnd: (details) {
-                                _onPiecePlaced(piece, details.offset);
-                              },
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, index) =>
-                            SizedBox(width: 32),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: AppBar().preferredSize.height / 5 * 4,
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 55,
+                              width: 55,
+                            ),
+                            Spacer(),
+                            Text(
+                              "Let’s Play",
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontFamily: 'Andika',
+                              ),
+                            ),
+                            Spacer(),
+                            GestureDetector(
+                              onTap: () async {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          PuzzleLevelsScreen(demo: true)),
+                                  (Route<dynamic> route) => false,
+                                );
+                              },
+                              child: Container(
+                                height: 55,
+                                width: 55,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white.withOpacity(0.3),
+                                ),
+                                child: Center(
+                                  child: Image.asset(
+                                      'assets/images/home_icon.png'),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 400,
+                        alignment: Alignment.center,
+                        child: _buildBoard(),
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            border: Border(
+                              top: BorderSide(
+                                width: 2,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          child: ListView.separated(
+                            padding: EdgeInsets.all(32),
+                            scrollDirection: Axis.horizontal,
+                            physics: BouncingScrollPhysics(),
+                            itemCount: pieceOnPool.length,
+                            itemBuilder: (context, index) {
+                              final piece = pieceOnPool[index];
+                              return Center(
+                                child: Draggable(
+                                  child: piece,
+                                  feedback: piece,
+                                  childWhenDragging: Opacity(
+                                    opacity: 0.24,
+                                    child: piece,
+                                  ),
+                                  onDragEnd: (details) {
+                                    _onPiecePlaced(piece, details.offset);
+                                  },
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) =>
+                                SizedBox(width: 32),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               : Center(child: CircularProgressIndicator()),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              if (canvasImage != null) {
-                _showFullImageDialog(context);
-                setState(() {
-                  hintUsed++;
-                });
-              }
-            },
-            child: Icon(Icons.image),
+          floatingActionButton: Container(
+            height: 70,
+            width: 70,
+            child: FloatingActionButton(
+              backgroundColor: Colors.white,
+              onPressed: () {
+                if (canvasImage != null) {
+                  _showFullImageDialog(context);
+                  setState(() {
+                    hintUsed++;
+                  });
+                }
+              },
+              child: Image.asset(
+                'assets/images/hint_icon.png',
+                height: 62,
+              ),
+            ),
           ),
         ),
         if (_currentPiece != null)
@@ -1459,10 +1728,16 @@ class _JigsawHomePageState extends State<JigsawHomePage>
 
   Widget _buildBoard() {
     return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(
+          width: 5,
+          color: const Color.fromARGB(255, 236, 173, 44),
+        ),
+      ),
       key: _boardWidgetKey,
-      width: 300,
-      height: 300,
-      color: Colors.grey.shade800,
+      width: 305,
+      height: 305,
       child: Stack(
         children: [
           for (var piece in pieceOnBoard)
@@ -1656,35 +1931,104 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     _score = baseScore.clamp(0, 100).round();
   }
 
+  String _formatTime(int seconds) {
+    final minutes = seconds ~/ 60;
+    final remainingSeconds = seconds % 60;
+    return '${minutes}m ${remainingSeconds}s';
+  }
+
+  final confettiController = ConfettiController();
+
+  bool isCongrating = false;
+
   void _showCompletionDialog(BuildContext context) {
     final incorrectMoves = _totalMoves - _movesMade;
+    confettiController.play();
+    double screenWidth = MediaQuery.of(context).size.width;
 
     showDialog(
       context: context,
       builder: (context) {
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
-            title:
-                Text('Congratulations!', style: TextStyle(color: Colors.black)),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
+            title: Center(
+              child: Text(
+                'Congratulations!',
+                style: TextStyle(
+                  color: const Color.fromARGB(255, 236, 173, 44),
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Andika',
+                ),
+              ),
+            ),
+            content: Stack(
               children: [
-                Text('You have completed the puzzle!',
-                    style: TextStyle(color: Colors.black)),
-                SizedBox(height: 16),
-                Text('Time Taken: $_timeElapsed seconds',
-                    style: TextStyle(color: Colors.black)),
-                Text('Correct Moves: $_movesMade',
-                    style: TextStyle(color: Colors.black)),
-                Text('Wrong Moves: $incorrectMoves',
-                    style: TextStyle(color: Colors.black)),
-                Text('Score: $_score/100',
-                    style: TextStyle(color: Colors.black)),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset('assets/images/congrats_banner.png'),
+                    SizedBox(height: 20),
+                    Text(
+                      'Time Taken: ${_formatTime(_timeElapsed)}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                    Text(
+                      'Wrong Moves: $incorrectMoves',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                    Text(
+                      'Score: $_score/100',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                    Text(
+                      'Hint Usage: $hintUsed',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(
+                  left: screenWidth / 2,
+                  child: SizedBox(
+                    width: 1,
+                    height: 300,
+                    child: ConfettiWidget(
+                      confettiController: confettiController,
+                      shouldLoop: true,
+                      blastDirectionality: BlastDirectionality.explosive,
+                      numberOfParticles: 35,
+                      emissionFrequency: 0.1,
+                    ),
+                  ),
+                ),
               ],
             ),
             actions: [
-              TextButton(
-                onPressed: () async {
+              InkWell(
+                borderRadius: BorderRadius.circular(30),
+                splashColor: Colors.white.withOpacity(0.2),
+                onTap: () async {
                   setState(() {
                     isLoading = true;
                   });
@@ -1699,11 +2043,29 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                   );
                   await _adjestDifficulity(_movesMade, incorrectMoves);
                 },
-                child: isLoading
-                    ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : Text('OK'),
+                child: Container(
+                  height: 56,
+                  width: 123,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: const Color.fromARGB(255, 142, 190, 132),
+                  ),
+                  child: Center(
+                    child: isLoading
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Text(
+                            'Ok',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Andika',
+                            ),
+                          ),
+                  ),
+                ),
               ),
             ],
           );
@@ -1718,11 +2080,17 @@ class _JigsawHomePageState extends State<JigsawHomePage>
       builder: (context) {
         return AlertDialog(
           title: Text(
-            'Complete Image',
-            style: TextStyle(color: Colors.black),
+            'Complete Image is Here...',
+            style: TextStyle(
+              color: const Color.fromARGB(255, 117, 100, 100),
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Andika',
+            ),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (canvasImage != null)
                 SizedBox(
@@ -1730,18 +2098,52 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                   child: RawImage(image: canvasImage),
                 ),
               SizedBox(height: 16),
-              Text('Time Taken: $_timeElapsed seconds',
-                  style: TextStyle(color: Colors.black)),
-              Text('Moves Made: $_movesMade',
-                  style: TextStyle(color: Colors.black)),
+              Text(
+                'Time Taken: ${_formatTime(_timeElapsed)}',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'ABeeZee',
+                ),
+              ),
+              Text(
+                'Moves Made: $_movesMade',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'ABeeZee',
+                ),
+              ),
             ],
           ),
           actions: [
-            TextButton(
-              onPressed: () {
+            InkWell(
+              borderRadius: BorderRadius.circular(30),
+              splashColor: Colors.white.withOpacity(0.2),
+              onTap: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Close'),
+              child: Container(
+                height: 56,
+                width: 123,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: const Color.fromARGB(255, 236, 173, 44),
+                ),
+                child: Center(
+                  child: Text(
+                    'Ok',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Andika',
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         );
