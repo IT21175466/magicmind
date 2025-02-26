@@ -688,6 +688,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
   @override
   void dispose() {
     _animController.dispose();
+    confettiController.dispose();
     _timer?.cancel();
     super.dispose();
   }
