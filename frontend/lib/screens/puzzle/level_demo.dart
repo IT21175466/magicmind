@@ -15,7 +15,8 @@ import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
 import '../../utils/function.dart';
 import '../home/home_screen.dart';
 
-const TextStyle demoStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
+const TextStyle demoStyle =
+    TextStyle(fontSize: 22, fontWeight: FontWeight.bold, fontFamily: 'ABeeZee');
 
 class PuzzleDemo extends StatelessWidget {
   const PuzzleDemo({Key? key}) : super(key: key);
@@ -46,7 +47,10 @@ class PuzzleDemo extends StatelessWidget {
           },
           blurValue: 1,
           autoPlayDelay: const Duration(seconds: 3),
-          builder: (context) => const DemoImageOption(factor: 1, difficulty: 1,),
+          builder: (context) => const DemoImageOption(
+            factor: 1,
+            difficulty: 1,
+          ),
         ),
       ),
     );
@@ -57,7 +61,9 @@ class DemoImageOption extends StatefulWidget {
   final int factor;
   final int difficulty;
 
-  const DemoImageOption({Key? key, required this.factor, required this.difficulty}) : super(key: key);
+  const DemoImageOption(
+      {Key? key, required this.factor, required this.difficulty})
+      : super(key: key);
 
   @override
   State<DemoImageOption> createState() => _DemoImageOptionState();
@@ -67,7 +73,6 @@ class _DemoImageOptionState extends State<DemoImageOption> {
   final GlobalKey _one = GlobalKey();
   final GlobalKey _two = GlobalKey();
 
-
   final scrollController = ScrollController();
 
   @override
@@ -75,8 +80,7 @@ class _DemoImageOptionState extends State<DemoImageOption> {
     super.initState();
     //Start showcase view after current widget frames are drawn.
     WidgetsBinding.instance.addPostFrameCallback(
-          (_) => ShowCaseWidget.of(context)
-          .startShowCase([_one, _two]),
+      (_) => ShowCaseWidget.of(context).startShowCase([_one, _two]),
     );
   }
 
@@ -92,133 +96,228 @@ class _DemoImageOptionState extends State<DemoImageOption> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Select Option Demo'),
-      ),
       backgroundColor: Styles.secondaryColor,
-      body: SafeArea(
-        bottom: false,
-        child: Container(
-            width: screenWidth,
-            height: screenHeight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 30,
+      body: Container(
+          width: screenWidth,
+          height: screenHeight,
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              opacity: 0.9,
+              image: AssetImage('assets/images/select_option_bg.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: AppBar().preferredSize.height,
+              ),
+              Text(
+                "Select a Option",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontFamily: 'Andika',
                 ),
-                const Text(
-                  "Choose a Option to select image.",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                  ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Spacer(),
+              Container(
+                height: 545,
+                width: screenWidth,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                const Spacer(),
-
-                Showcase(
-                  key: _one,
-                  descTextStyle: demoStyle,
-                  description: 'Tap to take an image using your camera.',
-                  child: GestureDetector(
-                    onTap: () {startPuzzle();},
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.all(16.0), // Padding around the container
-                      child: Container(
-                        height: 200,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Styles.bgColor,
-                        ),
-                        padding: const EdgeInsets.all(
-                            16.0), // Inner padding for the container's content
-
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.add_a_photo,
-                              size: 50,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Spacer(),
+                    const Text(
+                      "Let’s Choose a Option to Continue....",
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.black,
+                        fontFamily: 'ABeeZee',
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    Spacer(),
+                    Showcase(
+                      key: _one,
+                      descTextStyle: demoStyle,
+                      description: 'Tap to take an image using your camera.',
+                      child: GestureDetector(
+                        onTap: () {
+                          startPuzzle();
+                        },
+                        child: Container(
+                          width: screenWidth,
+                          height: 170,
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 236, 173, 44),
                             ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              "Pick from Camara",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.25),
+                                spreadRadius: 0,
+                                blurRadius: 10,
+                                offset: Offset(6, 4),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              const Text(
+                                "Pick\nfrom\nCamera",
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  color:
+                                      const Color.fromARGB(255, 236, 173, 44),
+                                  fontFamily: 'Andika',
+                                ),
+                              ),
+                              Spacer(),
+                              SizedBox(
+                                width: 130,
+                                child: Image.asset(
+                                  'assets/images/pick_from_camara.png',
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                Showcase(
-                  key: _two,
-                  description: 'Tap to generate an image using AI.',
-                  descTextStyle: demoStyle,
-                  child: GestureDetector(
-                    onTap: () {startPuzzle();},
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.all(16.0), // Padding around the container
-                      child: Container(
-                        height: 200,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Styles.bgColor,
-                        ),
-                        padding: const EdgeInsets.all(
-                            16.0), // Inner padding for the container's content
-
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.image,
-                              size: 50,
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Showcase(
+                      key: _two,
+                      description: 'Tap to generate an image using AI.',
+                      descTextStyle: demoStyle,
+                      child: GestureDetector(
+                        onTap: () {
+                          startPuzzle();
+                        },
+                        child: Container(
+                          width: screenWidth,
+                          height: 170,
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 38, 165, 198),
                             ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              "Generate using AI",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.25),
+                                spreadRadius: 0,
+                                blurRadius: 10,
+                                offset: Offset(6, 4),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              const Text(
+                                "Generate\nusing\nAI",
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  color:
+                                      const Color.fromARGB(255, 38, 165, 198),
+                                  fontFamily: 'Andika',
+                                ),
+                              ),
+                              Spacer(),
+                              SizedBox(
+                                width: 130,
+                                child: Image.asset(
+                                  'assets/images/generate_from_ai.png',
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                    Spacer(),
+                  ],
                 ),
+              ),
+              Spacer(),
 
-                const Spacer(),
-                const Spacer(),
-              ],
-            )
-        ),
-      ),
+              // Showcase(
+              //   key: _two,
+              //   description: 'Tap to generate an image using AI.',
+              //   descTextStyle: demoStyle,
+              //   child: GestureDetector(
+              //     onTap: () {
+              //       startPuzzle();
+              //     },
+              //     child: Padding(
+              //       padding: const EdgeInsets.all(
+              //           16.0), // Padding around the container
+              //       child: Container(
+              //         height: 200,
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(20),
+              //           color: Styles.bgColor,
+              //         ),
+              //         padding: const EdgeInsets.all(
+              //             16.0), // Inner padding for the container's content
+
+              //         child: Column(
+              //           crossAxisAlignment: CrossAxisAlignment.center,
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           children: [
+              //             Icon(
+              //               Icons.image,
+              //               size: 50,
+              //             ),
+              //             SizedBox(
+              //               height: 15,
+              //             ),
+              //             Text(
+              //               "Generate using AI",
+              //               style: TextStyle(
+              //                 fontSize: 20,
+              //                 color: Colors.black,
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // const Spacer(),
+              // const Spacer(),
+            ],
+          )),
     );
   }
 
-  void startPuzzle() async{
-
+  void startPuzzle() async {
     final screenPixelScale = MediaQuery.of(context).devicePixelRatio;
     final imageSize = (300 * screenPixelScale).toInt();
 
     ByteData data = await rootBundle.load("assets/images/demo.png");
 
-    final image = MemoryImage(data.buffer.asUint8List(), scale: screenPixelScale);
+    final image =
+        MemoryImage(data.buffer.asUint8List(), scale: screenPixelScale);
 
     final completer = Completer<ImageInfo>();
     image.resolve(const ImageConfiguration()).addListener(
@@ -231,11 +330,13 @@ class _DemoImageOptionState extends State<DemoImageOption> {
 
     ui.Image img_ = await imageInfo.image;
 
-    final ByteData? byteData = await img_.toByteData(format: ui.ImageByteFormat.png);
+    final ByteData? byteData =
+        await img_.toByteData(format: ui.ImageByteFormat.png);
 
     final Uint8List uint8list = byteData!.buffer.asUint8List();
     final img.Image decodedImage = img.decodeImage(uint8list)!;
-    final img.Image resizedImage = img.copyResize(decodedImage, height: imageSize, width: imageSize);
+    final img.Image resizedImage =
+        img.copyResize(decodedImage, height: imageSize, width: imageSize);
     final Uint8List resizedBytes = img.encodePng(resizedImage);
     final ui.Codec codec = await ui.instantiateImageCodec(resizedBytes);
     final ui.FrameInfo frame = await codec.getNextFrame();
@@ -249,17 +350,15 @@ class _DemoImageOptionState extends State<DemoImageOption> {
       ),
     );
   }
-
-
 }
-
 
 class JigsawPiece extends StatelessWidget {
   JigsawPiece({
     Key? key,
     required this.image,
     required this.points,
-    required this.imageSize, required this.position,
+    required this.imageSize,
+    required this.position,
   })  : assert(points.isNotEmpty),
         boundary = _getBounds(points),
         super(key: key);
@@ -353,7 +452,6 @@ class JigsawPainter extends CustomPainter {
   }
 }
 
-
 class DemoGame extends StatelessWidget {
   final ui.Image canvasImage;
 
@@ -392,7 +490,6 @@ class DemoGame extends StatelessWidget {
   }
 }
 
-
 class DemoPuzzle extends StatefulWidget {
   final int factor = 2;
   final int difficulty = 1;
@@ -406,7 +503,6 @@ class DemoPuzzle extends StatefulWidget {
 
 class _DemoPuzzleState extends State<DemoPuzzle>
     with SingleTickerProviderStateMixin {
-
   List<JigsawPiece> pieceOnBoard = [];
   List<JigsawPiece> pieceOnPool = [];
   JigsawPiece? _currentPiece;
@@ -439,15 +535,14 @@ class _DemoPuzzleState extends State<DemoPuzzle>
 
     super.initState();
 
-    for(int i = 0; i < pieceOnPool.length; i++){
+    for (int i = 0; i < pieceOnPool.length; i++) {
       keys.add(GlobalKey());
     }
 
     WidgetsBinding.instance.addPostFrameCallback(
-          (_) => ShowCaseWidget.of(context)
-          .startShowCase([keys[0], keys[1], keys[2]]),
+      (_) =>
+          ShowCaseWidget.of(context).startShowCase([keys[0], keys[1], keys[2]]),
     );
-
   }
 
   void _startTimer() {
@@ -482,8 +577,10 @@ class _DemoPuzzleState extends State<DemoPuzzle>
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => PuzzleLevelsScreen(demo: demo,)),
-                        (Route<dynamic> route) => false,
+                        builder: (context) => PuzzleLevelsScreen(
+                              demo: demo,
+                            )),
+                    (Route<dynamic> route) => false,
                   );
                 },
               ),
@@ -496,7 +593,8 @@ class _DemoPuzzleState extends State<DemoPuzzle>
                 alignment: Alignment.center,
                 child: Showcase(
                   key: keys[0],
-                  description: 'This is where you will solve the puzzle. Drag and drop all puzzle pieces in the correct order.',
+                  description:
+                      'This is where you will solve the puzzle. Drag and drop all puzzle pieces in the correct order.',
                   descTextStyle: demoStyle,
                   child: Container(
                     key: _boardWidgetKey,
@@ -528,7 +626,8 @@ class _DemoPuzzleState extends State<DemoPuzzle>
                       child: Showcase(
                         key: keys[2 + index],
                         descTextStyle: demoStyle,
-                        description: 'Place this puzzle piece in ${piece.position} corner to solve the puzzle.',
+                        description:
+                            'Place this puzzle piece in ${piece.position} corner to solve the puzzle.',
                         child: Draggable(
                           child: piece,
                           feedback: piece,
@@ -543,15 +642,15 @@ class _DemoPuzzleState extends State<DemoPuzzle>
                       ),
                     );
                   },
-                  separatorBuilder: (context, index) =>
-                      SizedBox(width: 32),
+                  separatorBuilder: (context, index) => SizedBox(width: 32),
                 ),
               ),
             ],
           ),
           floatingActionButton: Showcase(
             key: keys[1],
-            description: 'Tap here to view the full image, if you think you are lost.',
+            description:
+                'Tap here to view the full image, if you think you are lost.',
             descTextStyle: demoStyle,
             child: FloatingActionButton(
               onPressed: () {
@@ -581,17 +680,17 @@ class _DemoPuzzleState extends State<DemoPuzzle>
     );
   }
 
-  int random_length(){
+  int random_length() {
     return Random().nextInt(5) > 2 ? 2 : 1;
   }
 
-  String get_position(int x, int y , int w, int h){
+  String get_position(int x, int y, int w, int h) {
     List<String> out = [];
 
-    if (h == 1){
+    if (h == 1) {
       out.add(y == 0 ? "Top" : "Bottom");
     }
-    if (w == 1){
+    if (w == 1) {
       out.add(x == 0 ? "Left" : "Right");
     }
 
@@ -607,32 +706,30 @@ class _DemoPuzzleState extends State<DemoPuzzle>
 
     for (int x = 0; x < factor; x++) {
       for (int y = 0; y < factor; y++) {
-
         bool found = false;
-        for (List<int> use in used){
-          if ( x==use[0] && y == use[1]) found = true;
+        for (List<int> use in used) {
+          if (x == use[0] && y == use[1]) found = true;
         }
 
-        if(found) continue;
+        if (found) continue;
 
         int lx = 1;
         int ly = 1;
 
-        if (y < (factor - 1)){
+        if (y < (factor - 1)) {
           ly = random_length();
         }
         if (x < (factor - 1)) {
           lx = random_length();
         }
-        if (lx > 1){
+        if (lx > 1) {
           used.add([x + 1, y]);
-          if (ly > 1){
-            ly=1;
+          if (ly > 1) {
+            ly = 1;
           }
-        }else if (ly > 1){
+        } else if (ly > 1) {
           used.add([x, y + 1]);
         }
-
 
         pieces.add(JigsawPiece(
           key: UniqueKey(),
@@ -657,10 +754,10 @@ class _DemoPuzzleState extends State<DemoPuzzle>
   void _onPiecePlaced(JigsawPiece piece, Offset pieceDropPosition, int index) {
     _totalMoves++; // Increment total moves
     final RenderBox box =
-    _boardWidgetKey.currentContext?.findRenderObject() as RenderBox;
+        _boardWidgetKey.currentContext?.findRenderObject() as RenderBox;
     final boardPosition = box.localToGlobal(Offset.zero);
     final targetPosition =
-    boardPosition.translate(piece.boundary.left, piece.boundary.top);
+        boardPosition.translate(piece.boundary.left, piece.boundary.top);
 
     const threshold = 48.0;
 
@@ -735,7 +832,7 @@ class _DemoPuzzleState extends State<DemoPuzzle>
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
             title:
-            Text('Congratulations!', style: TextStyle(color: Colors.black)),
+                Text('Congratulations!', style: TextStyle(color: Colors.black)),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -761,7 +858,7 @@ class _DemoPuzzleState extends State<DemoPuzzle>
                     MaterialPageRoute(builder: (context) => HomeScreen()),
                   );
                 },
-                child:Text('OK'),
+                child: Text('OK'),
               ),
             ],
           );
