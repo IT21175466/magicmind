@@ -550,7 +550,6 @@ class _DemoPuzzleState extends State<DemoPuzzle>
           body: Container(
             width: screenWidth,
             height: screenHeight,
-            padding: EdgeInsets.symmetric(horizontal: 30),
             decoration: BoxDecoration(
               image: DecorationImage(
                 opacity: 0.9,
@@ -563,48 +562,51 @@ class _DemoPuzzleState extends State<DemoPuzzle>
                 SizedBox(
                   height: AppBar().preferredSize.height / 5 * 4,
                 ),
-                Row(
-                  children: [
-                    Container(
-                      height: 55,
-                      width: 55,
-                    ),
-                    Spacer(),
-                    Text(
-                      "Let’s Play",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontFamily: 'Andika',
-                      ),
-                    ),
-                    Spacer(),
-                    GestureDetector(
-                      onTap: () async {
-                        bool demo = await loadString("demo", "no") != "no";
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PuzzleLevelsScreen(
-                                    demo: demo,
-                                  )),
-                          (Route<dynamic> route) => false,
-                        );
-                      },
-                      child: Container(
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    children: [
+                      Container(
                         height: 55,
                         width: 55,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white.withOpacity(0.3),
-                        ),
-                        child: Center(
-                          child: Image.asset('assets/images/home_icon.png'),
+                      ),
+                      Spacer(),
+                      Text(
+                        "Let’s Play",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontFamily: 'Andika',
                         ),
                       ),
-                    ),
-                  ],
+                      Spacer(),
+                      GestureDetector(
+                        onTap: () async {
+                          bool demo = await loadString("demo", "no") != "no";
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PuzzleLevelsScreen(
+                                      demo: demo,
+                                    )),
+                            (Route<dynamic> route) => false,
+                          );
+                        },
+                        child: Container(
+                          height: 55,
+                          width: 55,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white.withOpacity(0.3),
+                          ),
+                          child: Center(
+                            child: Image.asset('assets/images/home_icon.png'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 10,
@@ -642,34 +644,45 @@ class _DemoPuzzleState extends State<DemoPuzzle>
                   ),
                 ),
                 Expanded(
-                  child: ListView.separated(
-                    padding: EdgeInsets.all(32),
-                    scrollDirection: Axis.horizontal,
-                    physics: BouncingScrollPhysics(),
-                    itemCount: pieceOnPool.length,
-                    itemBuilder: (context, index) {
-                      final piece = pieceOnPool[index];
-                      return Center(
-                        child: Showcase(
-                          key: keys[2 + index],
-                          descTextStyle: demoStyle,
-                          description:
-                              'Place this puzzle piece in ${piece.position} corner to solve the puzzle.',
-                          child: Draggable(
-                            child: piece,
-                            feedback: piece,
-                            childWhenDragging: Opacity(
-                              opacity: 0.24,
-                              child: piece,
-                            ),
-                            onDragEnd: (details) {
-                              _onPiecePlaced(piece, details.offset, index);
-                            },
-                          ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      border: Border(
+                        top: BorderSide(
+                          width: 2,
+                          color: Colors.white,
                         ),
-                      );
-                    },
-                    separatorBuilder: (context, index) => SizedBox(width: 32),
+                      ),
+                    ),
+                    child: ListView.separated(
+                      padding: EdgeInsets.all(32),
+                      scrollDirection: Axis.horizontal,
+                      physics: BouncingScrollPhysics(),
+                      itemCount: pieceOnPool.length,
+                      itemBuilder: (context, index) {
+                        final piece = pieceOnPool[index];
+                        return Center(
+                          child: Showcase(
+                            key: keys[2 + index],
+                            descTextStyle: demoStyle,
+                            description:
+                                'Place this puzzle piece in ${piece.position} corner to solve the puzzle.',
+                            child: Draggable(
+                              child: piece,
+                              feedback: piece,
+                              childWhenDragging: Opacity(
+                                opacity: 0.24,
+                                child: piece,
+                              ),
+                              onDragEnd: (details) {
+                                _onPiecePlaced(piece, details.offset, index);
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) => SizedBox(width: 32),
+                    ),
                   ),
                 ),
               ],

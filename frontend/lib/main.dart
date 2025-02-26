@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: PuzzleLevelsScreen(
-        demo: false,
+        demo: true,
       ),
     );
   }
