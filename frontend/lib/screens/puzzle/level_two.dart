@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../utils/app_styles.dart';
-
 import '../../utils/function.dart';
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -17,7 +15,6 @@ import 'package:magicmind_puzzle/constants/constant.dart';
 import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
 import 'package:magicmind_puzzle/services/mongodb.dart';
 
-
 class LevelTwo_SelectImageOption extends StatefulWidget {
   final int factor;
   final int difficulty;
@@ -28,255 +25,333 @@ class LevelTwo_SelectImageOption extends StatefulWidget {
   });
 
   @override
-  State<LevelTwo_SelectImageOption> createState() => _LevelTwo_SelectImageOptionState();
+  State<LevelTwo_SelectImageOption> createState() =>
+      _LevelTwo_SelectImageOptionState();
 }
 
-class _LevelTwo_SelectImageOptionState extends State<LevelTwo_SelectImageOption> {
-
+class _LevelTwo_SelectImageOptionState
+    extends State<LevelTwo_SelectImageOption> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Select Option'),
-      ),
-      backgroundColor: Styles.secondaryColor,
       body: Container(
-        width: screenWidth,
         height: screenHeight,
+        width: screenWidth,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            opacity: 0.9,
+            image: AssetImage('assets/images/select_option_bg.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: 30,
+              height: AppBar().preferredSize.height,
             ),
-            Text(
-              "Choose a Option to select image.",
-              style: TextStyle(
-                fontSize: 20,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 53,
+                      width: 53,
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withOpacity(0.5),
+                      ),
+                      child: Center(
+                        child: Image.asset('assets/images/back_arrow.png'),
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    "Select a Option",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontFamily: 'Andika',
+                    ),
+                  ),
+                  Spacer(),
+                  SizedBox(
+                    width: 53,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Spacer(),
+            Container(
+              height: 545,
+              width: screenWidth,
+              margin: EdgeInsets.symmetric(horizontal: 30),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
                 color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
               ),
-            ),
-            Spacer(),
-
-            // To Camara
-            GestureDetector(
-              onTap: () async{
-
-                int factor = int.parse(await loadString("l2_gen_factor", "1"));
-                String level = (await loadString("l2_gen_level", "Low"));
-                int difficulty = int.parse(await loadString("l2_gen_difficulty", "1"));
-
-                if (factor == 1){
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => JisawHomeCamaraImage(
-                        difficulty: 1,
-                        factor: 1,
-                      ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Spacer(),
+                  const Text(
+                    "Let’s Choose a Option to Continue....",
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.black,
+                      fontFamily: 'ABeeZee',
                     ),
-                  );
-                  return;
-                }
+                    textAlign: TextAlign.center,
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () async {
+                      int factor =
+                          int.parse(await loadString("l2_gen_factor", "1"));
+                      String level = (await loadString("l2_gen_level", "Low"));
+                      int difficulty =
+                          int.parse(await loadString("l2_gen_difficulty", "1"));
 
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return StatefulBuilder(builder: (context, setState) {
-                      return AlertDialog(
-                        title:
-                        Text('You have played this game before!', style: TextStyle(color: Colors.black)),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text('Do you want to continue where you left, or start a new game?',
-                                style: TextStyle(color: Colors.black)),
-                          ],
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () async {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => JisawHomeCamaraImage(
-                                    difficulty: difficulty,
-                                    factor: factor,
-                                  ),
-                                ),
-                              );
-                            },
-                            child:Text('Continue'),
+                      if (factor == 1) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => JisawHomeCamaraImage(
+                              difficulty: 1,
+                              factor: 1,
+                            ),
                           ),
-                          TextButton(
-                            onPressed: () async {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => JisawHomeCamaraImage(
-                                    difficulty: 1,
-                                    factor: 1,
-                                  ),
+                        );
+                        return;
+                      }
+
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return StatefulBuilder(builder: (context, setState) {
+                            return AlertDialog(
+                              title: Text('You have played this game before!',
+                                  style: TextStyle(color: Colors.black)),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                      'Do you want to continue where you left, or start a new game?',
+                                      style: TextStyle(color: Colors.black)),
+                                ],
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            JisawHomeCamaraImage(
+                                          difficulty: difficulty,
+                                          factor: factor,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Text('Continue'),
                                 ),
-                              );
-                            },
-                            child:Text('New game'),
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            JisawHomeCamaraImage(
+                                          difficulty: 1,
+                                          factor: 1,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Text('New game'),
+                                ),
+                              ],
+                            );
+                          });
+                        },
+                      );
+                    },
+                    child: Container(
+                      width: screenWidth,
+                      height: 170,
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 236, 173, 44),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.25),
+                            spreadRadius: 0,
+                            blurRadius: 10,
+                            offset: Offset(6, 4),
                           ),
                         ],
-                      );
-                    });
-                  },
-                );
-
-
-
-              },
-              child: Padding(
-                padding:
-                const EdgeInsets.all(16.0), // Padding around the container
-                child: Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Styles.bgColor,
-                  ),
-                  padding: const EdgeInsets.all(
-                      16.0), // Inner padding for the container's content
-
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.add_a_photo,
-                        size: 50,
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Pick from Camara",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () async {
-
-                int factor = int.parse(await loadString("l2_gen_factor", "1"));
-                String level = (await loadString("l2_gen_level", "Low"));
-                int difficulty = int.parse(await loadString("l2_gen_difficulty", "1"));
-
-                if (factor == 1){
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => JigsawHomePage(
-                        difficulty: 1,
-                        factor: 1,
-                      ),
-                    ),
-                  );
-
-                  return;
-                }
-
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return StatefulBuilder(builder: (context, setState) {
-                      return AlertDialog(
-                        title:
-                        Text('You have played this game before!', style: TextStyle(color: Colors.black)),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text('Do you want to continue where you left, or start a new game?',
-                                style: TextStyle(color: Colors.black)),
-                          ],
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () async {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => JigsawHomePage(
-                                    difficulty: difficulty,
-                                    factor: factor,
-                                  ),
-                                ),
-                              );
-                            },
-                            child:Text('Continue'),
+                      child: Row(
+                        children: [
+                          const Text(
+                            "Pick\nfrom\nCamera",
+                            style: TextStyle(
+                              fontSize: 28,
+                              color: const Color.fromARGB(255, 236, 173, 44),
+                              fontFamily: 'Andika',
+                            ),
                           ),
-                          TextButton(
-                            onPressed: () async {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => JigsawHomePage(
-                                    difficulty: 1,
-                                    factor: 1,
-                                  ),
-                                ),
-                              );
-                            },
-                            child:Text('New game'),
+                          Spacer(),
+                          SizedBox(
+                            width: 130,
+                            child: Image.asset(
+                              'assets/images/pick_from_camara.png',
+                            ),
                           ),
                         ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      int factor =
+                          int.parse(await loadString("l2_gen_factor", "1"));
+                      String level = (await loadString("l2_gen_level", "Low"));
+                      int difficulty =
+                          int.parse(await loadString("l2_gen_difficulty", "1"));
+
+                      if (factor == 1) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => JigsawHomePage(
+                              difficulty: 1,
+                              factor: 1,
+                            ),
+                          ),
+                        );
+
+                        return;
+                      }
+
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return StatefulBuilder(builder: (context, setState) {
+                            return AlertDialog(
+                              title: Text('You have played this game before!',
+                                  style: TextStyle(color: Colors.black)),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                      'Do you want to continue where you left, or start a new game?',
+                                      style: TextStyle(color: Colors.black)),
+                                ],
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => JigsawHomePage(
+                                          difficulty: difficulty,
+                                          factor: factor,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Text('Continue'),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => JigsawHomePage(
+                                          difficulty: 1,
+                                          factor: 1,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Text('New game'),
+                                ),
+                              ],
+                            );
+                          });
+                        },
                       );
-                    });
-                  },
-                );
-
-              },
-              child: Padding(
-                padding:
-                const EdgeInsets.all(16.0), // Padding around the container
-                child: Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Styles.bgColor,
-                  ),
-                  padding: const EdgeInsets.all(
-                      16.0), // Inner padding for the container's content
-
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.image,
-                        size: 50,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Generate using AI",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
+                    },
+                    child: Container(
+                      width: screenWidth,
+                      height: 170,
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 38, 165, 198),
                         ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.25),
+                            spreadRadius: 0,
+                            blurRadius: 10,
+                            offset: Offset(6, 4),
+                          ),
+                        ],
                       ),
-                    ],
+                      child: Row(
+                        children: [
+                          const Text(
+                            "Generate\nusing\nAI",
+                            style: TextStyle(
+                              fontSize: 28,
+                              color: const Color.fromARGB(255, 38, 165, 198),
+                              fontFamily: 'Andika',
+                            ),
+                          ),
+                          Spacer(),
+                          SizedBox(
+                            width: 130,
+                            child: Image.asset(
+                              'assets/images/generate_from_ai.png',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  Spacer(),
+                ],
               ),
             ),
-            Spacer(),
             Spacer(),
           ],
         ),
@@ -284,7 +359,6 @@ class _LevelTwo_SelectImageOptionState extends State<LevelTwo_SelectImageOption>
     );
   }
 }
-
 
 class JisawHomeCamaraImage extends StatefulWidget {
   final int factor;
@@ -335,7 +409,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
   Future<void> pickImageCamara() async {
     final pickedImage =
-    await ImagePicker().pickImage(source: ImageSource.camera);
+        await ImagePicker().pickImage(source: ImageSource.camera);
     _prepareGame(pickedImage);
   }
 
@@ -390,7 +464,6 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
         ),
       );
     }
-
   }
 
   void _prepareGame(XFile? pickedFile) async {
@@ -415,18 +488,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
         final image = MemoryImage(imageData, scale: screenPixelScale);
         ui.Image img = await _getImage(image);
 
-        int start = DateTime.now().millisecondsSinceEpoch;
-        // var cropped = await cropUiImage(img, imageSize, imageSize);
-        // canvasImage = await resizeUiImage(cropped, imageSize, imageSize);
-        // int now1 = DateTime.now().millisecondsSinceEpoch;
-        // int t1 = now1 - start;
-
         canvasImage = await cropResizeUiImage(img, imageSize, imageSize);
-        int now2 = DateTime.now().millisecondsSinceEpoch;
-        // int t2 = now2 - now1;
-
-        // print("T1: $t1 | T2: $t2 | ${(t1-t2)/t1}");
-
 
         pieceOnPool = _createJigsawPiece();
         pieceOnPool.shuffle();
@@ -443,7 +505,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     }
   }
 
-  Future<ui.Image> cropUiImage(ui.Image image, int newWidth, int newHeight) async {
+  Future<ui.Image> cropUiImage(
+      ui.Image image, int newWidth, int newHeight) async {
     // Calculate the crop rect
     final double aspectRatio = newWidth / newHeight;
     final double imageAspectRatio = image.width / image.height;
@@ -457,15 +520,15 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
       // Image is wider than the new aspect ratio, crop from left and right
       cropWidth = image.height * aspectRatio;
       cropLeft = (image.width - cropWidth) / 2;
-    }
-    else {
+    } else {
       // Image is taller than the new aspect ratio, crop from top and bottom
       cropHeight = image.width / aspectRatio;
       cropTop = (image.height - cropHeight) / 2;
     }
 
     // Convert the ui.Image to a ByteData object
-    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final ByteData? byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
 
     final Uint8List uint8list = byteData!.buffer.asUint8List();
 
@@ -487,7 +550,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     return frame.image;
   }
 
-  Future<ui.Image> cropResizeUiImage(ui.Image image, int newWidth, int newHeight) async {
+  Future<ui.Image> cropResizeUiImage(
+      ui.Image image, int newWidth, int newHeight) async {
     // Calculate the crop rect
     final double aspectRatio = newWidth / newHeight;
     final double imageAspectRatio = image.width / image.height;
@@ -500,14 +564,13 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     if (imageAspectRatio > aspectRatio) {
       cropWidth = image.height * aspectRatio;
       cropLeft = (image.width - cropWidth) / 2;
-    }
-    else {
-
+    } else {
       cropHeight = image.width / aspectRatio;
       cropTop = (image.height - cropHeight) / 2;
     }
 
-    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final ByteData? byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
 
     final Uint8List uint8list = byteData!.buffer.asUint8List();
     img.Image decodedImage = img.decodeImage(uint8list)!;
@@ -520,7 +583,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
       height: (cropHeight).round(),
     );
 
-    croppedImage = img.copyResize(decodedImage, height: newHeight, width: newWidth);
+    croppedImage =
+        img.copyResize(decodedImage, height: newHeight, width: newWidth);
     final Uint8List croppedBytes = img.encodePng(croppedImage);
 
     final ui.Codec codec = await ui.instantiateImageCodec(croppedBytes);
@@ -528,7 +592,9 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     final ui.FrameInfo frame = await codec.getNextFrame();
     return frame.image;
   }
-  Future<ui.Image> cropResizeCompressUiImage(ui.Image image, int newWidth, int newHeight) async {
+
+  Future<ui.Image> cropResizeCompressUiImage(
+      ui.Image image, int newWidth, int newHeight) async {
     // Calculate the crop rect
     final double aspectRatio = newWidth / newHeight;
     final double imageAspectRatio = image.width / image.height;
@@ -541,14 +607,13 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     if (imageAspectRatio > aspectRatio) {
       cropWidth = image.height * aspectRatio;
       cropLeft = (image.width - cropWidth) / 2;
-    }
-    else {
-
+    } else {
       cropHeight = image.width / aspectRatio;
       cropTop = (image.height - cropHeight) / 2;
     }
 
-    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final ByteData? byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
     final Uint8List uint8list = byteData!.buffer.asUint8List();
 
     final img.Image decodedImage = img.decodeImage(uint8list)!;
@@ -561,7 +626,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
       height: (cropHeight).round(),
     );
 
-    croppedImage = img.copyResize(decodedImage, height: newHeight, width: newWidth);
+    croppedImage =
+        img.copyResize(decodedImage, height: newHeight, width: newWidth);
     final Uint8List croppedBytes = img.encodePng(croppedImage);
 
     final ui.Codec codec = await ui.instantiateImageCodec(croppedBytes);
@@ -571,11 +637,13 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
   }
 
   Future<ui.Image> resizeUiImage(ui.Image image, int height, int width) async {
-    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final ByteData? byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
 
     final Uint8List uint8list = byteData!.buffer.asUint8List();
     final img.Image decodedImage = img.decodeImage(uint8list)!;
-    final img.Image resizedImage = img.copyResize(decodedImage, height: height, width: width);
+    final img.Image resizedImage =
+        img.copyResize(decodedImage, height: height, width: width);
     final Uint8List resizedBytes = img.encodePng(resizedImage);
     final ui.Codec codec = await ui.instantiateImageCodec(resizedBytes);
     final ui.FrameInfo frame = await codec.getNextFrame();
@@ -609,8 +677,10 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => PuzzleLevelsScreen(demo: true,)),
-                        (Route<dynamic> route) => false,
+                        builder: (context) => PuzzleLevelsScreen(
+                              demo: true,
+                            )),
+                    (Route<dynamic> route) => false,
                   );
                 },
               ),
@@ -618,40 +688,40 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
           ),
           body: _loaded
               ? Column(
-            children: [
-              Container(
-                height: 400,
-                alignment: Alignment.center,
-                child: _buildBoard(),
-              ),
-              Expanded(
-                child: ListView.separated(
-                  padding: EdgeInsets.all(32),
-                  scrollDirection: Axis.horizontal,
-                  physics: BouncingScrollPhysics(),
-                  itemCount: pieceOnPool.length,
-                  itemBuilder: (context, index) {
-                    final piece = pieceOnPool[index];
-                    return Center(
-                      child: Draggable(
-                        child: piece,
-                        feedback: piece,
-                        childWhenDragging: Opacity(
-                          opacity: 0.24,
-                          child: piece,
-                        ),
-                        onDragEnd: (details) {
-                          _onPiecePlaced(piece, details.offset);
+                  children: [
+                    Container(
+                      height: 400,
+                      alignment: Alignment.center,
+                      child: _buildBoard(),
+                    ),
+                    Expanded(
+                      child: ListView.separated(
+                        padding: EdgeInsets.all(32),
+                        scrollDirection: Axis.horizontal,
+                        physics: BouncingScrollPhysics(),
+                        itemCount: pieceOnPool.length,
+                        itemBuilder: (context, index) {
+                          final piece = pieceOnPool[index];
+                          return Center(
+                            child: Draggable(
+                              child: piece,
+                              feedback: piece,
+                              childWhenDragging: Opacity(
+                                opacity: 0.24,
+                                child: piece,
+                              ),
+                              onDragEnd: (details) {
+                                _onPiecePlaced(piece, details.offset);
+                              },
+                            ),
+                          );
                         },
+                        separatorBuilder: (context, index) =>
+                            SizedBox(width: 32),
                       ),
-                    );
-                  },
-                  separatorBuilder: (context, index) =>
-                      SizedBox(width: 32),
-                ),
-              ),
-            ],
-          )
+                    ),
+                  ],
+                )
               : Center(child: CircularProgressIndicator()),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
@@ -701,11 +771,9 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     );
   }
 
-  int random_length(){
+  int random_length() {
     return Random().nextInt(5) > 2 ? 2 : 1;
   }
-
-
 
   List<JigsawPiece> _createJigsawPiece() {
 /*    int factor = widget.factor + 1;
@@ -767,7 +835,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     List<Piece> pieces_ = [];
     List<Piece> all = [];
     List<JigsawPiece> pieces = [];
-    List<List<int>> used = [];
+    //List<List<int>> used = [];
 
     /*    for (int x = 0; x < factor; x++) {
       for (int y = 0; y < factor; y++) {
@@ -817,29 +885,34 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
     for (int x = 0; x < factor; x++) {
       for (int y = 0; y < factor; y++) {
-
-        int x2 = x + ((x < (factor -1)) ? random_length() : 1);
-        int y2 = y + ((y < (factor -1)) ? random_length() : 1);
+        int x2 = x + ((x < (factor - 1)) ? random_length() : 1);
+        int y2 = y + ((y < (factor - 1)) ? random_length() : 1);
 
         var p = Piece(x, x2, y, y2);
 
         bool issue = false;
-        for(var b in p.sub_pieces()){if (all.contains(b)) issue = true;}
-        if(issue){
+        for (var b in p.sub_pieces()) {
+          if (all.contains(b)) issue = true;
+        }
+        if (issue) {
           issue = false;
           x2 = x + 1;
           p = Piece(x, x2, y, y2);
-          for(var b in p.sub_pieces()){if (all.contains(b)) issue = true;}
+          for (var b in p.sub_pieces()) {
+            if (all.contains(b)) issue = true;
+          }
         }
 
-        if(issue){
+        if (issue) {
           issue = false;
           y2 = y + 1;
           p = Piece(x, x2, y, y2);
-          for(var b in p.sub_pieces()){if (all.contains(b)) issue = true;}
+          for (var b in p.sub_pieces()) {
+            if (all.contains(b)) issue = true;
+          }
         }
 
-        if(issue) continue;
+        if (issue) continue;
 
         pieces_.add(p);
         all.addAll(p.sub_pieces());
@@ -848,7 +921,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
     print("Pieces: ${pieces_.length}");
     int area = 0;
-    for (var piece in pieces_){
+    for (var piece in pieces_) {
       area += piece.area();
 
       pieces.add(JigsawPiece(
@@ -867,14 +940,13 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     return pieces;
   }
 
-
   void _onPiecePlaced(JigsawPiece piece, Offset pieceDropPosition) {
     _totalMoves++; // Increment total moves
     final RenderBox box =
-    _boardWidgetKey.currentContext?.findRenderObject() as RenderBox;
+        _boardWidgetKey.currentContext?.findRenderObject() as RenderBox;
     final boardPosition = box.localToGlobal(Offset.zero);
     final targetPosition =
-    boardPosition.translate(piece.boundary.left, piece.boundary.top);
+        boardPosition.translate(piece.boundary.left, piece.boundary.top);
 
     const threshold = 48.0;
 
@@ -946,7 +1018,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
             title:
-            Text('Congratulations!', style: TextStyle(color: Colors.black)),
+                Text('Congratulations!', style: TextStyle(color: Colors.black)),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -1135,7 +1207,6 @@ class JigsawPainter extends CustomPainter {
   }
 }
 
-
 class JigsawHomePage extends StatefulWidget {
   final int factor;
   final int difficulty;
@@ -1201,7 +1272,6 @@ class _JigsawHomePageState extends State<JigsawHomePage>
   }
 
   Future<void> _adjestDifficulity(int correctM, int wrongM) async {
-
     final response = await http.post(
       Uri.parse('$ML_API/adjust-difficulty'),
       headers: {'Content-Type': 'application/json'},
@@ -1222,7 +1292,6 @@ class _JigsawHomePageState extends State<JigsawHomePage>
       });
 
       int factor = responseData['new_split_count'];
-
 
       await saveString("l2_gen_factor", factor.toString());
       await saveString("l2_gen_level", difficulty.toString());
@@ -1254,12 +1323,16 @@ class _JigsawHomePageState extends State<JigsawHomePage>
       Uri.parse('https://api.dezgo.com/text2image/'),
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'X-Dezgo-Key': 'DEZGO-9F9A8CB100D69E6884C9A7F907306607D71183DD121B7A083AF9E003CBD4AB5F8DCEA4A1', // Replace with your actual API key
+        'X-Dezgo-Key':
+            'DEZGO-9F9A8CB100D69E6884C9A7F907306607D71183DD121B7A083AF9E003CBD4AB5F8DCEA4A1', // Replace with your actual API key
       },
       body: {
-        'prompt': ' Lively cartoon-style outdoor playground scene with children aged 10 to 13 playing together. Vibrant, colorful slides, swings, and climbing structures surrounded by lush green trees. Children smiling and enjoying different activities like swinging, sliding, and playing games. Bright, cheerful colors and a playful art style to kids.', // Replace with the text you want to convert to an image
-        'height': imageSize.toString(), // Replace with the desired height of the image
-        'width': imageSize.toString(), // Replace with the desired width of the image
+        'prompt':
+            ' Lively cartoon-style outdoor playground scene with children aged 10 to 13 playing together. Vibrant, colorful slides, swings, and climbing structures surrounded by lush green trees. Children smiling and enjoying different activities like swinging, sliding, and playing games. Bright, cheerful colors and a playful art style to kids.', // Replace with the text you want to convert to an image
+        'height': imageSize
+            .toString(), // Replace with the desired height of the image
+        'width':
+            imageSize.toString(), // Replace with the desired width of the image
       },
     );
     final imageData = response.bodyBytes;
@@ -1307,7 +1380,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                     context,
                     MaterialPageRoute(
                         builder: (context) => PuzzleLevelsScreen(demo: true)),
-                        (Route<dynamic> route) => false,
+                    (Route<dynamic> route) => false,
                   );
                 },
               ),
@@ -1315,40 +1388,40 @@ class _JigsawHomePageState extends State<JigsawHomePage>
           ),
           body: _loaded
               ? Column(
-            children: [
-              Container(
-                height: 400,
-                alignment: Alignment.center,
-                child: _buildBoard(),
-              ),
-              Expanded(
-                child: ListView.separated(
-                  padding: EdgeInsets.all(32),
-                  scrollDirection: Axis.horizontal,
-                  physics: BouncingScrollPhysics(),
-                  itemCount: pieceOnPool.length,
-                  itemBuilder: (context, index) {
-                    final piece = pieceOnPool[index];
-                    return Center(
-                      child: Draggable(
-                        child: piece,
-                        feedback: piece,
-                        childWhenDragging: Opacity(
-                          opacity: 0.24,
-                          child: piece,
-                        ),
-                        onDragEnd: (details) {
-                          _onPiecePlaced(piece, details.offset);
+                  children: [
+                    Container(
+                      height: 400,
+                      alignment: Alignment.center,
+                      child: _buildBoard(),
+                    ),
+                    Expanded(
+                      child: ListView.separated(
+                        padding: EdgeInsets.all(32),
+                        scrollDirection: Axis.horizontal,
+                        physics: BouncingScrollPhysics(),
+                        itemCount: pieceOnPool.length,
+                        itemBuilder: (context, index) {
+                          final piece = pieceOnPool[index];
+                          return Center(
+                            child: Draggable(
+                              child: piece,
+                              feedback: piece,
+                              childWhenDragging: Opacity(
+                                opacity: 0.24,
+                                child: piece,
+                              ),
+                              onDragEnd: (details) {
+                                _onPiecePlaced(piece, details.offset);
+                              },
+                            ),
+                          );
                         },
+                        separatorBuilder: (context, index) =>
+                            SizedBox(width: 32),
                       ),
-                    );
-                  },
-                  separatorBuilder: (context, index) =>
-                      SizedBox(width: 32),
-                ),
-              ),
-            ],
-          )
+                    ),
+                  ],
+                )
               : Center(child: CircularProgressIndicator()),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
@@ -1379,7 +1452,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     );
   }
 
-  int random_length(){
+  int random_length() {
     return Random().nextInt(5) > 2 ? 2 : 1;
   }
 
@@ -1408,7 +1481,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     List<Piece> pieces_ = [];
     List<Piece> all = [];
     List<JigsawPiece> pieces = [];
-    List<List<int>> used = [];
+    //List<List<int>> used = [];
 
     /*    for (int x = 0; x < factor; x++) {
       for (int y = 0; y < factor; y++) {
@@ -1458,29 +1531,34 @@ class _JigsawHomePageState extends State<JigsawHomePage>
 
     for (int x = 0; x < factor; x++) {
       for (int y = 0; y < factor; y++) {
-
-        int x2 = x + ((x < (factor -1)) ? random_length() : 1);
-        int y2 = y + ((y < (factor -1)) ? random_length() : 1);
+        int x2 = x + ((x < (factor - 1)) ? random_length() : 1);
+        int y2 = y + ((y < (factor - 1)) ? random_length() : 1);
 
         var p = Piece(x, x2, y, y2);
 
         bool issue = false;
-        for(var b in p.sub_pieces()){if (all.contains(b)) issue = true;}
-        if(issue){
+        for (var b in p.sub_pieces()) {
+          if (all.contains(b)) issue = true;
+        }
+        if (issue) {
           issue = false;
           x2 = x + 1;
           p = Piece(x, x2, y, y2);
-          for(var b in p.sub_pieces()){if (all.contains(b)) issue = true;}
+          for (var b in p.sub_pieces()) {
+            if (all.contains(b)) issue = true;
+          }
         }
 
-        if(issue){
+        if (issue) {
           issue = false;
           y2 = y + 1;
           p = Piece(x, x2, y, y2);
-          for(var b in p.sub_pieces()){if (all.contains(b)) issue = true;}
+          for (var b in p.sub_pieces()) {
+            if (all.contains(b)) issue = true;
+          }
         }
 
-        if(issue) continue;
+        if (issue) continue;
 
         pieces_.add(p);
         all.addAll(p.sub_pieces());
@@ -1489,7 +1567,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
 
     print("Pieces: ${pieces_.length}");
     int area = 0;
-    for (var piece in pieces_){
+    for (var piece in pieces_) {
       area += piece.area();
 
       pieces.add(JigsawPiece(
@@ -1511,10 +1589,10 @@ class _JigsawHomePageState extends State<JigsawHomePage>
   void _onPiecePlaced(JigsawPiece piece, Offset pieceDropPosition) {
     _totalMoves++; // Increment total moves
     final RenderBox box =
-    _boardWidgetKey.currentContext?.findRenderObject() as RenderBox;
+        _boardWidgetKey.currentContext?.findRenderObject() as RenderBox;
     final boardPosition = box.localToGlobal(Offset.zero);
     final targetPosition =
-    boardPosition.translate(piece.boundary.left, piece.boundary.top);
+        boardPosition.translate(piece.boundary.left, piece.boundary.top);
 
     const threshold = 48.0;
 
@@ -1586,7 +1664,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
             title:
-            Text('Congratulations!', style: TextStyle(color: Colors.black)),
+                Text('Congratulations!', style: TextStyle(color: Colors.black)),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -1622,8 +1700,8 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                 },
                 child: isLoading
                     ? Center(
-                  child: CircularProgressIndicator(),
-                )
+                        child: CircularProgressIndicator(),
+                      )
                     : Text('OK'),
               ),
             ],
@@ -1678,18 +1756,18 @@ class _JigsawHomePageState extends State<JigsawHomePage>
   }
 }
 
-class Piece{
+class Piece {
   final int x1, x2, y1, y2;
   Piece(this.x1, this.x2, this.y1, this.y2);
 
-  int area(){
+  int area() {
     return (x2 - x1) * (y2 - y1);
   }
 
-  List<Piece> sub_pieces(){
+  List<Piece> sub_pieces() {
     List<Piece> a = [];
-    for(int x = x1; x < x2; x++){
-      for(int y = y1; y < y2; y++){
+    for (int x = x1; x < x2; x++) {
+      for (int y = y1; y < y2; y++) {
         a.add(Piece(x, x + 1, y, y + 1));
       }
     }
@@ -1710,5 +1788,3 @@ class Piece{
   @override
   int get hashCode => x1.hashCode ^ x2.hashCode ^ y1.hashCode ^ y2.hashCode;
 }
-
-

@@ -2,8 +2,6 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
 
-import '../../utils/app_styles.dart';
-
 import 'dart:async';
 import 'dart:math';
 import 'dart:ui' as ui;
@@ -97,11 +95,9 @@ class _DemoImageOptionState extends State<DemoImageOption> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: Styles.secondaryColor,
       body: Container(
         width: screenWidth,
         height: screenHeight,
-        padding: EdgeInsets.symmetric(horizontal: 30),
         decoration: BoxDecoration(
           image: DecorationImage(
             opacity: 0.9,
@@ -115,13 +111,42 @@ class _DemoImageOptionState extends State<DemoImageOption> {
             SizedBox(
               height: AppBar().preferredSize.height,
             ),
-            Text(
-              "Select a Option",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontFamily: 'Andika',
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 53,
+                      width: 53,
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withOpacity(0.5),
+                      ),
+                      child: Center(
+                        child: Image.asset('assets/images/back_arrow.png'),
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    "Select a Option",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontFamily: 'Andika',
+                    ),
+                  ),
+                  Spacer(),
+                  SizedBox(
+                    width: 53,
+                  ),
+                ],
               ),
             ),
             SizedBox(
@@ -131,6 +156,7 @@ class _DemoImageOptionState extends State<DemoImageOption> {
             Container(
               height: 545,
               width: screenWidth,
+              margin: EdgeInsets.symmetric(horizontal: 30),
               padding: EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
                 color: Colors.white,
