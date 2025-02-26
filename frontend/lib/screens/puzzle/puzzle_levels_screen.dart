@@ -14,8 +14,6 @@ class PuzzleLevelsScreen extends StatefulWidget {
 }
 
 class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
-  int _diff = 0;
-
   final List<Map<String, String>> levels = [
     {
       "title": "Demo",
@@ -297,13 +295,14 @@ class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 118, 100, 98),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => HomeScreen()),
           );
         },
-        child: const Icon(Icons.home),
+        child: Image.asset('assets/images/home_icon.png'),
       ),
     );
   }
