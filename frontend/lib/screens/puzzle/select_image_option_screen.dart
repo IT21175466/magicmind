@@ -111,7 +111,7 @@ class _SelectImageOptionState extends State<SelectImageOption> {
                     onTap: () async {
                       int factor =
                           int.parse(await loadString("l1_cam_factor", "1"));
-                      String level = (await loadString("l1_cam_level", "Low"));
+                      //String level = (await loadString("l1_cam_level", "Low"));
                       int difficulty =
                           int.parse(await loadString("l1_cam_difficulty", "1"));
 
@@ -227,7 +227,7 @@ class _SelectImageOptionState extends State<SelectImageOption> {
                     onTap: () async {
                       int factor =
                           int.parse(await loadString("l1_gen_factor", "1"));
-                      String level = (await loadString("l1_gen_level", "Low"));
+                      //String level = (await loadString("l1_gen_level", "Low"));
                       int difficulty =
                           int.parse(await loadString("l1_gen_difficulty", "1"));
 

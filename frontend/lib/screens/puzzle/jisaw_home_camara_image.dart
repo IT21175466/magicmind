@@ -429,28 +429,43 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     );
   }
 
+  bool isCorrect = false;
+
   Widget _buildBoard() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-          width: 5,
-          color: const Color.fromARGB(255, 236, 173, 44),
-        ),
-      ),
-      key: _boardWidgetKey,
-      width: 305,
-      height: 305,
-      child: Stack(
-        children: [
-          for (var piece in pieceOnBoard)
-            Positioned(
-              left: piece.boundary.left,
-              top: piece.boundary.top,
-              child: piece,
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              width: 5,
+              color: const Color.fromARGB(255, 236, 173, 44),
             ),
-        ],
-      ),
+          ),
+          key: _boardWidgetKey,
+          width: 305,
+          height: 305,
+          child: Stack(
+            children: [
+              for (var piece in pieceOnBoard)
+                Positioned(
+                  left: piece.boundary.left,
+                  top: piece.boundary.top,
+                  child: piece,
+                ),
+            ],
+          ),
+        ),
+        isCorrect
+            ? SizedBox(
+                width: 305,
+                height: 305,
+                child: Center(
+                  child: Lottie.asset('assets/animations/correct.json'),
+                ),
+              )
+            : SizedBox(),
+      ],
     );
   }
 
@@ -507,8 +522,17 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
           if (pieceOnPool.isEmpty) {
             _stopTimer();
-            _calculateScore(); // Calculate score when the puzzle is complete
-            _showCompletionDialog(context);
+            _calculateScore();
+            setState(() {
+              isCorrect = true;
+            });
+
+            Future.delayed(Duration(seconds: 2), () {
+              setState(() {
+                isCorrect = false;
+              });
+              _showCompletionDialog(context);
+            });
           }
         }
       });
