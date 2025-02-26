@@ -340,6 +340,7 @@ class _SelectImageOptionState extends State<SelectImageOption> {
               ),
             ),
             Spacer(),
+            Spacer(),
           ],
         ),
       ),

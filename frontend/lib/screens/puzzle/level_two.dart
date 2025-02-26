@@ -353,6 +353,7 @@ class _LevelTwo_SelectImageOptionState
               ),
             ),
             Spacer(),
+            Spacer(),
           ],
         ),
       ),

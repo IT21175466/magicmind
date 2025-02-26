@@ -283,6 +283,7 @@ class _DemoImageOptionState extends State<DemoImageOption> {
               ),
             ),
             Spacer(),
+            Spacer(),
           ],
         ),
       ),
