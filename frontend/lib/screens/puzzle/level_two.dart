@@ -1,5 +1,6 @@
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import '../../utils/function.dart';
 
 import 'dart:async';
@@ -780,7 +781,39 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
                     ],
                   ),
                 )
-              : Center(child: CircularProgressIndicator()),
+              : Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/loading_bg.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: screenWidth / 2,
+                        child: Center(
+                          child: Lottie.asset(
+                              'assets/animations/image_processing.json'),
+                        ),
+                      ),
+                      Lottie.asset('assets/animations/loading_ani.json'),
+                      Text(
+                        "Get ready! Your picture is on its way!",
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.black,
+                          fontFamily: 'Andika',
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
           floatingActionButton: _loaded
               ? Container(
                   height: 70,
@@ -1684,26 +1717,60 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                     ],
                   ),
                 )
-              : Center(child: CircularProgressIndicator()),
-          floatingActionButton: Container(
-            height: 70,
-            width: 70,
-            child: FloatingActionButton(
-              backgroundColor: Colors.white,
-              onPressed: () {
-                if (canvasImage != null) {
-                  _showFullImageDialog(context);
-                  setState(() {
-                    hintUsed++;
-                  });
-                }
-              },
-              child: Image.asset(
-                'assets/images/hint_icon.png',
-                height: 62,
-              ),
-            ),
-          ),
+              : Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/loading_bg.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: screenWidth / 2,
+                        child: Center(
+                          child: Lottie.asset(
+                              'assets/animations/image_processing.json'),
+                        ),
+                      ),
+                      Lottie.asset('assets/animations/loading_ani.json'),
+                      Text(
+                        "Get ready! Your picture is on its way!",
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.black,
+                          fontFamily: 'Andika',
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+          floatingActionButton: _loaded
+              ? Container(
+                  height: 70,
+                  width: 70,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.white,
+                    onPressed: () {
+                      if (canvasImage != null) {
+                        _showFullImageDialog(context);
+                        setState(() {
+                          hintUsed++;
+                        });
+                      }
+                    },
+                    child: Image.asset(
+                      'assets/images/hint_icon.png',
+                      height: 62,
+                    ),
+                  ),
+                )
+              : SizedBox(),
         ),
         if (_currentPiece != null)
           AnimatedBuilder(

@@ -10,6 +10,7 @@ import 'package:flutter/physics.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:lottie/lottie.dart';
 import 'package:magicmind_puzzle/constants/constant.dart';
 import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
 import 'package:magicmind_puzzle/services/mongodb.dart';
@@ -356,7 +357,39 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
                     ],
                   ),
                 )
-              : Center(child: CircularProgressIndicator()),
+              : Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/loading_bg.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: screenWidth / 2,
+                        child: Center(
+                          child: Lottie.asset(
+                              'assets/animations/image_processing.json'),
+                        ),
+                      ),
+                      Lottie.asset('assets/animations/loading_ani.json'),
+                      Text(
+                        "Get ready! Your picture is on its way!",
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.black,
+                          fontFamily: 'Andika',
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
           floatingActionButton: _loaded
               ? Container(
                   height: 70,
