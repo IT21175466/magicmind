@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:ui' as ui;
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
@@ -52,6 +53,8 @@ class _JigsawHomePageState extends State<JigsawHomePage>
   Timer? _timer;
 
   int hintUsed = 0;
+
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -522,7 +525,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
 
   int _consecutiveWrongMoves = 0; // Tracks consecutive wrong moves
 
-  void _onPiecePlaced(JigsawPiece piece, Offset pieceDropPosition) {
+  void _onPiecePlaced(JigsawPiece piece, Offset pieceDropPosition) async {
     _totalMoves++; // Increment total moves
     final RenderBox box =
         _boardWidgetKey.currentContext?.findRenderObject() as RenderBox;
@@ -541,12 +544,14 @@ class _JigsawHomePageState extends State<JigsawHomePage>
         _consecutiveWrongMoves = 0; // Reset wrong move counter
       });
 
+      await _audioPlayer.play(AssetSource('audios/correct_move.wav'));
+
       _offsetAnimation = Tween<Offset>(
         begin: pieceDropPosition,
         end: targetPosition,
       ).animate(_animController);
 
-      _animController.addStatusListener((status) {
+      _animController.addStatusListener((status) async {
         if (status == AnimationStatus.completed) {
           setState(() {
             pieceOnBoard.add(piece);
@@ -560,7 +565,9 @@ class _JigsawHomePageState extends State<JigsawHomePage>
               isCorrect = true;
             });
 
-            Future.delayed(Duration(seconds: 2), () {
+            await _audioPlayer.play(AssetSource('audios/completed.wav'));
+
+            Future.delayed(Duration(seconds: 2), () async {
               setState(() {
                 isCorrect = false;
               });
@@ -582,6 +589,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
       // If move was incorrect, increment wrong move counter
       _consecutiveWrongMoves++;
       _checkWrongMoveProgress();
+      await _audioPlayer.play(AssetSource('audios/wrong_move.wav'));
     }
   }
 
@@ -609,7 +617,8 @@ class _JigsawHomePageState extends State<JigsawHomePage>
 
   bool isCongrating = false;
 
-  void _showCompletionDialog(BuildContext context) {
+  void _showCompletionDialog(BuildContext context) async {
+    await _audioPlayer.play(AssetSource('audios/congrats.wav'));
     final incorrectMoves = _totalMoves - _movesMade;
     confettiController.play();
     double screenWidth = MediaQuery.of(context).size.width;

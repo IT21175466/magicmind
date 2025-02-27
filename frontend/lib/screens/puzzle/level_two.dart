@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -37,6 +38,8 @@ class _LevelTwo_SelectImageOptionState
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
+    final AudioPlayer _clickPlayer = AudioPlayer();
 
     return Scaffold(
       body: Container(
@@ -124,6 +127,7 @@ class _LevelTwo_SelectImageOptionState
                   Spacer(),
                   GestureDetector(
                     onTap: () async {
+                      await _clickPlayer.play(AssetSource('audios/click.wav'));
                       int factor =
                           int.parse(await loadString("l2_gen_factor", "1"));
                       //String level = (await loadString("l2_gen_level", "Low"));
@@ -240,6 +244,7 @@ class _LevelTwo_SelectImageOptionState
                   ),
                   GestureDetector(
                     onTap: () async {
+                      await _clickPlayer.play(AssetSource('audios/click.wav'));
                       int factor =
                           int.parse(await loadString("l2_gen_factor", "1"));
                       //String level = (await loadString("l2_gen_level", "Low"));

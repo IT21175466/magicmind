@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:magicmind_puzzle/screens/home/home_screen.dart';
 import 'package:magicmind_puzzle/screens/puzzle/level_demo.dart';
@@ -14,6 +15,18 @@ class PuzzleLevelsScreen extends StatefulWidget {
 }
 
 class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  final AudioPlayer _clickPlayer = AudioPlayer();
+
+  void _playSound() async {
+    try {
+      await _audioPlayer.play(AssetSource('audios/bg.MP3'));
+      await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+    } catch (e) {
+      print("Error playing sound: $e");
+    }
+  }
+
   final List<Map<String, String>> levels = [
     {
       "title": "Demo",
@@ -32,17 +45,15 @@ class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
     },
   ];
 
-  // void _playInstructions() async {
-  //   await _audioPlayer.play(AssetSource("assets/audios/puzzle.mp3"));
-  // }
-
   @override
-  void dispose() {
-    // _audioPlayer.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _playSound();
   }
 
-  void _navigateToPuzzleScreen(Map<String, String> levelData, int index) {
+  void _navigateToPuzzleScreen(Map<String, String> levelData, int index) async {
+    await _audioPlayer.stop();
+    await _clickPlayer.play(AssetSource('audios/click.wav'));
     if (index == 2) {
       Navigator.push(
         context,
@@ -57,7 +68,7 @@ class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const PuzzleDemo(),
+          builder: (context) => PuzzleDemo(),
         ),
       );
     } else {

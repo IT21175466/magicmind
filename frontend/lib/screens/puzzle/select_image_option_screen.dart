@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:magicmind_puzzle/screens/puzzle/jigsaw_home_screen.dart';
 import 'package:magicmind_puzzle/screens/puzzle/jisaw_home_camara_image.dart';
@@ -22,6 +23,8 @@ class _SelectImageOptionState extends State<SelectImageOption> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
+    final AudioPlayer _clickPlayer = AudioPlayer();
 
     return Scaffold(
       body: Container(
@@ -109,6 +112,7 @@ class _SelectImageOptionState extends State<SelectImageOption> {
                   Spacer(),
                   GestureDetector(
                     onTap: () async {
+                      await _clickPlayer.play(AssetSource('audios/click.wav'));
                       int factor =
                           int.parse(await loadString("l1_cam_factor", "1"));
                       //String level = (await loadString("l1_cam_level", "Low"));
@@ -225,6 +229,7 @@ class _SelectImageOptionState extends State<SelectImageOption> {
                   ),
                   GestureDetector(
                     onTap: () async {
+                      await _clickPlayer.play(AssetSource('audios/click.wav'));
                       int factor =
                           int.parse(await loadString("l1_gen_factor", "1"));
                       //String level = (await loadString("l1_gen_level", "Low"));

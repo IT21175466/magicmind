@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
@@ -18,7 +19,7 @@ const TextStyle demoStyle =
     TextStyle(fontSize: 22, fontWeight: FontWeight.bold, fontFamily: 'ABeeZee');
 
 class PuzzleDemo extends StatelessWidget {
-  const PuzzleDemo({Key? key}) : super(key: key);
+  PuzzleDemo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +78,6 @@ class _DemoImageOptionState extends State<DemoImageOption> {
   @override
   void initState() {
     super.initState();
-    //Start showcase view after current widget frames are drawn.
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => ShowCaseWidget.of(context).startShowCase([_one, _two]),
     );
@@ -88,6 +88,8 @@ class _DemoImageOptionState extends State<DemoImageOption> {
     scrollController.dispose();
     super.dispose();
   }
+
+  final AudioPlayer _clickPlayer = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -182,8 +184,10 @@ class _DemoImageOptionState extends State<DemoImageOption> {
                     descTextStyle: demoStyle,
                     description: 'Tap to take an image using your camera.',
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         startPuzzle();
+                        await _clickPlayer
+                            .play(AssetSource('audios/click.wav'));
                       },
                       child: Container(
                         width: screenWidth,
@@ -234,8 +238,10 @@ class _DemoImageOptionState extends State<DemoImageOption> {
                     description: 'Tap to generate an image using AI.',
                     descTextStyle: demoStyle,
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         startPuzzle();
+                        await _clickPlayer
+                            .play(AssetSource('audios/click.wav'));
                       },
                       child: Container(
                         width: screenWidth,
@@ -800,7 +806,10 @@ class _DemoPuzzleState extends State<DemoPuzzle>
     return pieces;
   }
 
-  void _onPiecePlaced(JigsawPiece piece, Offset pieceDropPosition, int index) {
+  final AudioPlayer _audioPlaye = AudioPlayer();
+
+  void _onPiecePlaced(
+      JigsawPiece piece, Offset pieceDropPosition, int index) async {
     _totalMoves++; // Increment total moves
     final RenderBox box =
         _boardWidgetKey.currentContext?.findRenderObject() as RenderBox;
@@ -818,6 +827,8 @@ class _DemoPuzzleState extends State<DemoPuzzle>
         _movesMade++;
         keys.removeAt(2);
       });
+
+      await _audioPlaye.play(AssetSource('audios/demo.wav'));
 
       _offsetAnimation = Tween<Offset>(
         begin: pieceDropPosition,
