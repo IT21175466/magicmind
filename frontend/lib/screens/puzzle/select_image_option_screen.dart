@@ -238,6 +238,8 @@ class _SelectImageOptionState extends State<SelectImageOption> {
                             builder: (context) => JigsawHomePage(
                               difficulty: 1,
                               factor: 1,
+                              prompt:
+                                  'A simple, vibrant cartoon image of a friendly animal character, like a smiling panda or playful kitten, in a cheerful outdoor setting.',
                             ),
                           ),
                         );
@@ -269,6 +271,8 @@ class _SelectImageOptionState extends State<SelectImageOption> {
                                         builder: (context) => JigsawHomePage(
                                           difficulty: difficulty,
                                           factor: factor,
+                                          prompt:
+                                              'A simple, vibrant cartoon image of a friendly animal character, like a smiling panda or playful kitten, in a cheerful outdoor setting.',
                                         ),
                                       ),
                                     );
@@ -283,6 +287,8 @@ class _SelectImageOptionState extends State<SelectImageOption> {
                                         builder: (context) => JigsawHomePage(
                                           difficulty: 1,
                                           factor: 1,
+                                          prompt:
+                                              'A simple, vibrant cartoon image of a friendly animal character, like a smiling panda or playful kitten, in a cheerful outdoor setting.',
                                         ),
                                       ),
                                     );

@@ -17,10 +17,12 @@ import '../../utils/function.dart';
 class JigsawHomePage extends StatefulWidget {
   final int factor;
   final int difficulty;
+  final String prompt;
 
   JigsawHomePage({
     required this.factor,
     required this.difficulty,
+    required this.prompt,
   });
 
   @override
@@ -45,6 +47,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
   int _score = 0;
 
   String dificulityLevel = 'Low';
+  String imagePrompt = '';
 
   Timer? _timer;
 
@@ -56,10 +59,76 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     super.initState();
   }
 
+  void checkUserStruggle() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Need some help?"),
+        content: Text("It seems you're struggling. Would you like a hint?"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _consecutiveWrongMoves = 0;
+            },
+            child: Text('No'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              fillPuzzleHints();
+            },
+            child: Text('Yes'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void fillPuzzleHints() {
+    if (pieceOnPool.length <= 4) {
+      setState(() {
+        int piecesToFill = min(1, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 2;
+      });
+    } else if (pieceOnPool.length > 4 && pieceOnPool.length <= 8) {
+      setState(() {
+        int piecesToFill = min(2, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 4;
+      });
+    } else if (pieceOnPool.length > 8 && pieceOnPool.length <= 12) {
+      setState(() {
+        int piecesToFill = min(3, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 6;
+      });
+    } else if (pieceOnPool.length > 12 && pieceOnPool.length <= 20) {
+      setState(() {
+        int piecesToFill = min(5, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 8;
+      });
+    }
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (!_loaded) _prepareGame();
+    if (!_loaded) _prepareGame(imagePrompt);
   }
 
   void _startTimer() {
@@ -77,35 +146,16 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     _timer?.cancel();
   }
 
-  Future<void> _adjestDifficulity(int correctM, int wrongM) async {
-    // const apiKey = 'DEZGO-E3892C6F00D69E6884C9A7F907306607D71183DD810B9DA21363DA510F818EFFA4E31415';
-    // const url = 'https://api.dezgo.com/text2image';
-
-    // final payload = {
-    //   "prompt": widget.levelData['answer'] ?? "A simple indoor scene illustrating various object placements.",
-    //   "steps": 10,
-    //   "sampler": "euler_a",
-    //   "scale": 7.5,
-    // };
-
-    // final headers = {
-    //   'X-Dezgo-Key': apiKey,
-    //   'Content-Type': 'application/json',
-    // };
-
-    // final response = await http.post(
-    //     Uri.parse(url),
-    //     headers: headers,
-    //     body: jsonEncode(payload),
-    //   );
-
+  Future<void> _adjestDifficulity(
+      int correctM, int wrongM, int hintUsage) async {
     final response = await http.post(
       Uri.parse('$ML_API/adjust-difficulty'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         "correct_moves": correctM,
         "wrong_moves": wrongM,
-        "current_split_count": correctM,
+        "hint_usage": hintUsage,
+        "current_split_count": correctM
       }),
     );
 
@@ -113,8 +163,11 @@ class _JigsawHomePageState extends State<JigsawHomePage>
       final responseData = json.decode(response.body);
 
       String difficulty = responseData['difficulty'];
+      String prompt = responseData['image_prompt'];
+
       setState(() {
         dificulityLevel = difficulty;
+        imagePrompt = prompt;
         isLoading = false;
       });
 
@@ -130,13 +183,14 @@ class _JigsawHomePageState extends State<JigsawHomePage>
           builder: (context) => JigsawHomePage(
             factor: responseData['new_split_count'],
             difficulty: 1,
+            prompt: prompt,
           ),
         ),
       );
     }
   }
 
-  void _prepareGame() async {
+  void _prepareGame(String prompt) async {
     pieceOnPool.clear();
     pieceOnBoard.clear();
 
@@ -152,15 +206,13 @@ class _JigsawHomePageState extends State<JigsawHomePage>
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
         'X-Dezgo-Key':
-            'DEZGO-9F9A8CB100D69E6884C9A7F907306607D71183DD121B7A083AF9E003CBD4AB5F8DCEA4A1', // Replace with your actual API key
+            'DEZGO-9F9A8CB100D69E6884C9A7F907306607D71183DD121B7A083AF9E003CBD4AB5F8DCEA4A1',
       },
       body: {
         'prompt':
-            'cartoon 2D outdoor playground scene with children aged 10 to 13 playing together.',
-        'height': imageSize
-            .toString(), // Replace with the desired height of the image
-        'width':
-            imageSize.toString(), // Replace with the desired width of the image
+            'A detailed cartoon scene showing an adventurous journey, like young explorers in a colorful jungle discovering hidden treasures.',
+        'height': imageSize.toString(),
+        'width': imageSize.toString(),
       },
     );
     final imageData = response.bodyBytes;
@@ -444,6 +496,32 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     ];
   }
 
+  void _checkWrongMoveProgress() {
+    if (pieceOnPool.length > 2 && pieceOnPool.length <= 4) {
+      if (_consecutiveWrongMoves >= 2) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 4 && pieceOnPool.length <= 8) {
+      if (_consecutiveWrongMoves >= 4) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 8 && pieceOnPool.length <= 12) {
+      if (_consecutiveWrongMoves >= 6) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 12 && pieceOnPool.length <= 20) {
+      if (_consecutiveWrongMoves >= 8) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    }
+  }
+
+  int _consecutiveWrongMoves = 0; // Tracks consecutive wrong moves
+
   void _onPiecePlaced(JigsawPiece piece, Offset pieceDropPosition) {
     _totalMoves++; // Increment total moves
     final RenderBox box =
@@ -453,13 +531,14 @@ class _JigsawHomePageState extends State<JigsawHomePage>
         boardPosition.translate(piece.boundary.left, piece.boundary.top);
 
     const threshold = 48.0;
-
     final distance = (pieceDropPosition - targetPosition).distance;
+
     if (distance < threshold) {
       setState(() {
         _currentPiece = piece;
         pieceOnPool.remove(piece);
-        _movesMade++; // Increment correct moves
+        _movesMade++; // Correct move made
+        _consecutiveWrongMoves = 0; // Reset wrong move counter
       });
 
       _offsetAnimation = Tween<Offset>(
@@ -477,10 +556,10 @@ class _JigsawHomePageState extends State<JigsawHomePage>
           if (pieceOnPool.isEmpty) {
             _stopTimer();
             _calculateScore();
-
             setState(() {
               isCorrect = true;
             });
+
             Future.delayed(Duration(seconds: 2), () {
               setState(() {
                 isCorrect = false;
@@ -499,6 +578,10 @@ class _JigsawHomePageState extends State<JigsawHomePage>
 
       final simulation = SpringSimulation(spring, 0, 1, -distance);
       _animController.animateWith(simulation);
+    } else {
+      // If move was incorrect, increment wrong move counter
+      _consecutiveWrongMoves++;
+      _checkWrongMoveProgress();
     }
   }
 
@@ -626,7 +709,8 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                     hintUsed: hintUsed,
                     score: _score,
                   );
-                  await _adjestDifficulity(_movesMade, incorrectMoves);
+                  await _adjestDifficulity(
+                      _movesMade, incorrectMoves, hintUsed);
                 },
                 child: Container(
                   height: 56,

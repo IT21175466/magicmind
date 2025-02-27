@@ -61,6 +61,72 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     super.didChangeDependencies();
   }
 
+  void checkUserStruggle() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Need some help?"),
+        content: Text("It seems you're struggling. Would you like a hint?"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _consecutiveWrongMoves = 0;
+            },
+            child: Text('No'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              fillPuzzleHints();
+            },
+            child: Text('Yes'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void fillPuzzleHints() {
+    if (pieceOnPool.length <= 4) {
+      setState(() {
+        int piecesToFill = min(1, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 2;
+      });
+    } else if (pieceOnPool.length > 4 && pieceOnPool.length <= 8) {
+      setState(() {
+        int piecesToFill = min(2, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 4;
+      });
+    } else if (pieceOnPool.length > 8 && pieceOnPool.length <= 12) {
+      setState(() {
+        int piecesToFill = min(3, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 6;
+      });
+    } else if (pieceOnPool.length > 12 && pieceOnPool.length <= 20) {
+      setState(() {
+        int piecesToFill = min(5, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 8;
+      });
+    }
+  }
+
   XFile? pickedFile;
 
   Future<void> pickImageCamara() async {
@@ -84,14 +150,16 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     _timer?.cancel();
   }
 
-  Future<void> _adjestDifficulity(int correctM, int wrongM) async {
+  Future<void> _adjestDifficulity(
+      int correctM, int wrongM, int hintUsage) async {
     final response = await http.post(
       Uri.parse('$ML_API/adjust-difficulty'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         "correct_moves": correctM,
         "wrong_moves": wrongM,
-        "current_split_count": correctM,
+        "hint_usage": hintUsage,
+        "current_split_count": correctM
       }),
     );
 
@@ -100,10 +168,14 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
       final responseData = json.decode(response.body);
 
       String difficulty = responseData['difficulty'];
+      String prompt = responseData['image_prompt'];
+
       setState(() {
         dificulityLevel = difficulty;
         isLoading = false;
       });
+
+      print(prompt);
 
       int factor = responseData['new_split_count'];
       await saveString("l1_cam_factor", factor.toString());
@@ -490,6 +562,32 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     ];
   }
 
+  void _checkWrongMoveProgress() {
+    if (pieceOnPool.length > 2 && pieceOnPool.length <= 4) {
+      if (_consecutiveWrongMoves >= 2) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 4 && pieceOnPool.length <= 8) {
+      if (_consecutiveWrongMoves >= 4) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 8 && pieceOnPool.length <= 12) {
+      if (_consecutiveWrongMoves >= 6) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 12 && pieceOnPool.length <= 20) {
+      if (_consecutiveWrongMoves >= 8) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    }
+  }
+
+  int _consecutiveWrongMoves = 0; // Tracks consecutive wrong moves
+
   void _onPiecePlaced(JigsawPiece piece, Offset pieceDropPosition) {
     _totalMoves++; // Increment total moves
     final RenderBox box =
@@ -499,13 +597,14 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
         boardPosition.translate(piece.boundary.left, piece.boundary.top);
 
     const threshold = 48.0;
-
     final distance = (pieceDropPosition - targetPosition).distance;
+
     if (distance < threshold) {
       setState(() {
         _currentPiece = piece;
         pieceOnPool.remove(piece);
-        _movesMade++; // Increment correct moves
+        _movesMade++; // Correct move made
+        _consecutiveWrongMoves = 0; // Reset wrong move counter
       });
 
       _offsetAnimation = Tween<Offset>(
@@ -545,6 +644,10 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
       final simulation = SpringSimulation(spring, 0, 1, -distance);
       _animController.animateWith(simulation);
+    } else {
+      // If move was incorrect, increment wrong move counter
+      _consecutiveWrongMoves++;
+      _checkWrongMoveProgress();
     }
   }
 
@@ -560,6 +663,9 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
     // Deduct points for incorrect moves
     baseScore -= (incorrectMoves * 2).clamp(0, 40);
+
+    // Deduct points for hint usage (each hint deducts 5 points)
+    baseScore -= (hintUsed * 5).clamp(0, 25);
 
     // Add difficulty bonus
     baseScore += (widget.difficulty * 5).clamp(0, 20);
@@ -678,7 +784,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
                     hintUsed: hintUsed,
                     score: _score,
                   );
-                  await _adjestDifficulity(_movesMade, incorrectMoves);
+                  await _adjestDifficulity(
+                      _movesMade, incorrectMoves, hintUsed);
                 },
                 child: Container(
                   height: 56,
