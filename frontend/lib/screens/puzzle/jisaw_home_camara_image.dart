@@ -127,6 +127,15 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
         }
         hintUsed = hintUsed + 8;
       });
+    } else if (pieceOnPool.length > 20 && pieceOnPool.length <= 35) {
+      setState(() {
+        int piecesToFill = min(8, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 10;
+      });
     }
   }
 
@@ -583,6 +592,11 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
       }
     } else if (pieceOnPool.length > 12 && pieceOnPool.length <= 20) {
       if (_consecutiveWrongMoves >= 8) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 20 && pieceOnPool.length <= 35) {
+      if (_consecutiveWrongMoves >= 10) {
         checkUserStruggle();
         _consecutiveWrongMoves = 0;
       }

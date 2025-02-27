@@ -2,6 +2,9 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:magicmind_puzzle/models/puzzle_result_model.dart';
+import 'package:magicmind_puzzle/services/report_service.dart';
+import 'package:uuid/uuid.dart';
 import '../../utils/function.dart';
 
 import 'dart:async';
@@ -17,6 +20,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:magicmind_puzzle/constants/constant.dart';
 import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
 import 'package:magicmind_puzzle/services/mongodb.dart';
+
+import '../report/report_page.dart';
 
 class LevelTwo_SelectImageOption extends StatefulWidget {
   final int factor;
@@ -402,6 +407,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
   int hintUsed = 0;
 
   final AudioPlayer _audioPlayer = AudioPlayer();
+
+  final ReportService _reportService = ReportService();
 
   @override
   void initState() {
@@ -1135,6 +1142,15 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
         }
         hintUsed = hintUsed + 8;
       });
+    } else if (pieceOnPool.length > 20 && pieceOnPool.length <= 35) {
+      setState(() {
+        int piecesToFill = min(8, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 10;
+      });
     }
   }
 
@@ -1156,6 +1172,11 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
       }
     } else if (pieceOnPool.length > 12 && pieceOnPool.length <= 20) {
       if (_consecutiveWrongMoves >= 8) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 20 && pieceOnPool.length <= 35) {
+      if (_consecutiveWrongMoves >= 10) {
         checkUserStruggle();
         _consecutiveWrongMoves = 0;
       }
@@ -1354,6 +1375,40 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
                   setState(() {
                     isLoading = true;
                   });
+
+                  int totalActivities = _reportService.completedActivities++;
+
+                  print(totalActivities);
+
+                  if (totalActivities == 5) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ReportPage(activities: _reportService.activities),
+                      ),
+                    );
+                  } else {
+                    _reportService.completedActivities++;
+                    _reportService.activities.add(PuzzleResult(
+                      id: Uuid().v4(),
+                      age: 'NaN',
+                      gender: 'NaN',
+                      difficultyLevel: dificulityLevel,
+                      timeTaken: _timeElapsed,
+                      correctMoves: _movesMade,
+                      incorrectMoves: incorrectMoves,
+                      hintsUsed: hintUsed,
+                      splitAmount: _movesMade,
+                      score: _score,
+                      nvldSeverity: 'NaN',
+                      physicalActivity: 'NaN',
+                      sleepHours: 'NaN',
+                      nvldDiagnosis: 'NaN',
+                      level: 1,
+                      date: DateTime.now(),
+                    ));
+                  }
 
                   await MongoDatabase.insertData(
                     difficultyLevel: dificulityLevel,
@@ -1712,6 +1767,15 @@ class _JigsawHomePageState extends State<JigsawHomePage>
           pieceOnBoard.add(piece);
         }
         hintUsed = hintUsed + 8;
+      });
+    } else if (pieceOnPool.length > 20 && pieceOnPool.length <= 35) {
+      setState(() {
+        int piecesToFill = min(8, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 10;
       });
     }
   }
@@ -2176,6 +2240,11 @@ class _JigsawHomePageState extends State<JigsawHomePage>
       }
     } else if (pieceOnPool.length > 12 && pieceOnPool.length <= 20) {
       if (_consecutiveWrongMoves >= 8) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 20 && pieceOnPool.length <= 35) {
+      if (_consecutiveWrongMoves >= 10) {
         checkUserStruggle();
         _consecutiveWrongMoves = 0;
       }
