@@ -792,6 +792,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
                     incorrectMoves: incorrectMoves,
                     hintUsed: hintUsed,
                     score: _score,
+                    level: 1,
                   );
                   await _adjestDifficulity(
                       _movesMade, incorrectMoves, hintUsed);

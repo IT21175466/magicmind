@@ -1362,6 +1362,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
                     incorrectMoves: incorrectMoves,
                     hintUsed: hintUsed,
                     score: _score,
+                    level: 2,
                   );
                   await _adjestDifficulity(_movesMade, incorrectMoves);
                 },
@@ -2381,6 +2382,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                     incorrectMoves: incorrectMoves,
                     hintUsed: hintUsed,
                     score: _score,
+                    level: 2,
                   );
                   await _adjestDifficulity(
                       _movesMade, incorrectMoves, hintUsed);

@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 def adjust_difficulty_logic(correct_moves, wrong_moves, hint_usage, current_split_count):
     """
-    Improved Rule-Based Algorithm to Adjust Difficulty with Hint Usage
+    Algorithm to Adjust Difficulty with Hint Usage
     """
     if correct_moves != current_split_count:
         return current_split_count, "Invalid Data", "Default Image Prompt"
@@ -28,7 +28,6 @@ def adjust_difficulty_logic(correct_moves, wrong_moves, hint_usage, current_spli
 
     difficulty = "Low" if new_split_count < 3 else "Medium" if new_split_count < 5 else "Hard"
 
-    # Child-friendly cartoon image prompts specifically tailored for ages 10 to 13
     if difficulty == "Low":
         image_prompt = "A simple, vibrant cartoon image of a friendly animal character, like a smiling panda or playful kitten, in a cheerful outdoor setting."
     elif difficulty == "Medium":

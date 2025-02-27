@@ -25,6 +25,7 @@ class MongoDatabase {
     required int incorrectMoves,
     required int hintUsed,
     required int score,
+    required int level,
   }) async {
     var db = await Db.create(MONGO_URL);
     await db.open();
@@ -45,6 +46,8 @@ class MongoDatabase {
       physicalActivity: 'NaN',
       sleepHours: 'NaN',
       nvldDiagnosis: 'NaN',
+      level: level,
+      date: DateTime.now(),
     );
 
     await collection.insertOne(puzzleResult.toMap());

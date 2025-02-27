@@ -13,6 +13,8 @@ class PuzzleResult {
   String physicalActivity;
   String sleepHours;
   String nvldDiagnosis;
+  int level;
+  DateTime date;
 
   PuzzleResult({
     required this.id,
@@ -29,6 +31,8 @@ class PuzzleResult {
     required this.physicalActivity,
     required this.sleepHours,
     required this.nvldDiagnosis,
+    required this.level,
+    required this.date,
   });
 
   Map<String, dynamic> toMap() {
@@ -47,6 +51,8 @@ class PuzzleResult {
       'physicalActivity': physicalActivity,
       'sleepHours': sleepHours,
       'nvldDiagnosis': nvldDiagnosis,
+      'level': level,
+      'date': DateTime.now(),
     };
   }
 }

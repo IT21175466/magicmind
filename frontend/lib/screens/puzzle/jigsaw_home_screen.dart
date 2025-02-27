@@ -717,6 +717,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                     incorrectMoves: incorrectMoves,
                     hintUsed: hintUsed,
                     score: _score,
+                    level: 1,
                   );
                   await _adjestDifficulity(
                       _movesMade, incorrectMoves, hintUsed);
