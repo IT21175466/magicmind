@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 import 'dart:async';
@@ -511,6 +512,8 @@ class _DemoPuzzleState extends State<DemoPuzzle>
 
   final List<GlobalKey> keys = [GlobalKey(), GlobalKey(), GlobalKey()];
 
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
   @override
   void initState() {
     _animController = AnimationController(vsync: this);
@@ -545,6 +548,8 @@ class _DemoPuzzleState extends State<DemoPuzzle>
   void _stopTimer() {
     _timer?.cancel();
   }
+
+  bool isCorrect = false;
 
   @override
   Widget build(BuildContext context) {
@@ -625,27 +630,41 @@ class _DemoPuzzleState extends State<DemoPuzzle>
                     description:
                         'This is where you will solve the puzzle. Drag and drop all puzzle pieces in the correct order.',
                     descTextStyle: demoStyle,
-                    child: Container(
-                      key: _boardWidgetKey,
-                      width: 305,
-                      height: 305,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          width: 5,
-                          color: const Color.fromARGB(255, 236, 173, 44),
-                        ),
-                      ),
-                      child: Stack(
-                        children: [
-                          for (var piece in pieceOnBoard)
-                            Positioned(
-                              left: piece.boundary.left,
-                              top: piece.boundary.top,
-                              child: piece,
+                    child: Stack(
+                      children: [
+                        Container(
+                          key: _boardWidgetKey,
+                          width: 305,
+                          height: 305,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              width: 5,
+                              color: const Color.fromARGB(255, 236, 173, 44),
                             ),
-                        ],
-                      ),
+                          ),
+                          child: Stack(
+                            children: [
+                              for (var piece in pieceOnBoard)
+                                Positioned(
+                                  left: piece.boundary.left,
+                                  top: piece.boundary.top,
+                                  child: piece,
+                                ),
+                            ],
+                          ),
+                        ),
+                        isCorrect
+                            ? SizedBox(
+                                width: 305,
+                                height: 305,
+                                child: Center(
+                                  child: Lottie.asset(
+                                      'assets/animations/correct.json'),
+                                ),
+                              )
+                            : SizedBox(),
+                      ],
                     ),
                   ),
                 ),
@@ -806,8 +825,6 @@ class _DemoPuzzleState extends State<DemoPuzzle>
     return pieces;
   }
 
-  final AudioPlayer _audioPlaye = AudioPlayer();
-
   void _onPiecePlaced(
       JigsawPiece piece, Offset pieceDropPosition, int index) async {
     _totalMoves++; // Increment total moves
@@ -828,14 +845,14 @@ class _DemoPuzzleState extends State<DemoPuzzle>
         keys.removeAt(2);
       });
 
-      await _audioPlaye.play(AssetSource('audios/demo.wav'));
+      await _audioPlayer.play(AssetSource('audios/correct_move.wav'));
 
       _offsetAnimation = Tween<Offset>(
         begin: pieceDropPosition,
         end: targetPosition,
       ).animate(_animController);
 
-      _animController.addStatusListener((status) {
+      _animController.addStatusListener((status) async {
         if (status == AnimationStatus.completed) {
           setState(() {
             pieceOnBoard.add(piece);
@@ -845,7 +862,18 @@ class _DemoPuzzleState extends State<DemoPuzzle>
           if (pieceOnPool.isEmpty) {
             _stopTimer();
             _calculateScore();
-            _showCompletionDialog(context);
+            setState(() {
+              isCorrect = true;
+            });
+
+            await _audioPlayer.play(AssetSource('audios/completed.wav'));
+
+            Future.delayed(Duration(seconds: 2), () async {
+              setState(() {
+                isCorrect = true;
+              });
+              _showCompletionDialog(context);
+            });
           }
         }
       });
@@ -858,6 +886,8 @@ class _DemoPuzzleState extends State<DemoPuzzle>
 
       final simulation = SpringSimulation(spring, 0, 1, -distance);
       _animController.animateWith(simulation);
+    } else {
+      await _audioPlayer.play(AssetSource('audios/wrong_move.wav'));
     }
 
     ShowCaseWidget.of(context).startShowCase([keys[2]]);
@@ -887,7 +917,8 @@ class _DemoPuzzleState extends State<DemoPuzzle>
 
   bool isCongrating = false;
 
-  void _showCompletionDialog(BuildContext context) {
+  void _showCompletionDialog(BuildContext context) async {
+    await _audioPlayer.play(AssetSource('audios/congrats.wav'));
     final incorrectMoves = _totalMoves - _movesMade;
     confettiController.play();
     double screenWidth = MediaQuery.of(context).size.width;
