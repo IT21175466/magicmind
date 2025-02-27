@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'dart:ui' as ui;
+import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:image/image.dart' as img;
 
@@ -48,6 +49,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
   Timer? _timer;
 
   int hintUsed = 0;
+
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -588,7 +591,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
   int _consecutiveWrongMoves = 0; // Tracks consecutive wrong moves
 
-  void _onPiecePlaced(JigsawPiece piece, Offset pieceDropPosition) {
+  void _onPiecePlaced(JigsawPiece piece, Offset pieceDropPosition) async {
     _totalMoves++; // Increment total moves
     final RenderBox box =
         _boardWidgetKey.currentContext?.findRenderObject() as RenderBox;
@@ -607,12 +610,14 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
         _consecutiveWrongMoves = 0; // Reset wrong move counter
       });
 
+      await _audioPlayer.play(AssetSource('audios/correct_move.wav'));
+
       _offsetAnimation = Tween<Offset>(
         begin: pieceDropPosition,
         end: targetPosition,
       ).animate(_animController);
 
-      _animController.addStatusListener((status) {
+      _animController.addStatusListener((status) async {
         if (status == AnimationStatus.completed) {
           setState(() {
             pieceOnBoard.add(piece);
@@ -625,6 +630,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
             setState(() {
               isCorrect = true;
             });
+
+            await _audioPlayer.play(AssetSource('audios/completed.wav'));
 
             Future.delayed(Duration(seconds: 2), () {
               setState(() {
@@ -648,6 +655,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
       // If move was incorrect, increment wrong move counter
       _consecutiveWrongMoves++;
       _checkWrongMoveProgress();
+      await _audioPlayer.play(AssetSource('audios/wrong_move.wav'));
     }
   }
 
@@ -684,7 +692,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
   bool isCongrating = false;
 
-  void _showCompletionDialog(BuildContext context) {
+  void _showCompletionDialog(BuildContext context) async {
+    await _audioPlayer.play(AssetSource('audios/congrats.wav'));
     final incorrectMoves = _totalMoves - _movesMade;
     confettiController.play();
     double screenWidth = MediaQuery.of(context).size.width;
