@@ -4,6 +4,7 @@ import 'package:magicmind_puzzle/screens/home/home_screen.dart';
 import 'package:magicmind_puzzle/screens/puzzle/level_demo.dart';
 import 'package:magicmind_puzzle/screens/puzzle/level_two.dart';
 import 'package:magicmind_puzzle/screens/puzzle/select_image_option_screen.dart';
+import 'package:magicmind_puzzle/screens/report/report_page.dart';
 
 class PuzzleLevelsScreen extends StatefulWidget {
   final bool demo;
@@ -111,13 +112,48 @@ class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
             SizedBox(
               height: AppBar().preferredSize.height / 5 * 4,
             ),
-            Text(
-              "Puzzles",
-              style: TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontFamily: 'Andika',
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                children: [
+                  SizedBox(
+                    height: 45,
+                    width: 45,
+                  ),
+                  Spacer(),
+                  Text(
+                    "Puzzles",
+                    style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontFamily: 'Andika',
+                    ),
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () async {
+                      await _audioPlayer.stop();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ReportPage(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: 45,
+                      width: 45,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Icon(Icons.document_scanner),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(

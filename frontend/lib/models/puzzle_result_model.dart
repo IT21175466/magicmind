@@ -55,4 +55,25 @@ class PuzzleResult {
       'date': DateTime.now(),
     };
   }
+
+  factory PuzzleResult.fromMap(Map<String, dynamic> map) {
+    return PuzzleResult(
+      id: map['id'],
+      age: map['age'],
+      gender: map['gender'],
+      difficultyLevel: map['difficultyLevel'],
+      timeTaken: map['timeTaken'],
+      correctMoves: map['correctMoves'],
+      incorrectMoves: map['incorrectMoves'],
+      hintsUsed: map['hintsUsed'],
+      splitAmount: map['splitAmount'],
+      score: map['score'],
+      nvldSeverity: map['nvldSeverity'],
+      physicalActivity: map['physicalActivity'],
+      sleepHours: map['sleepHours'],
+      nvldDiagnosis: map['nvldDiagnosis'],
+      level: map['level'],
+      date: map['date'],
+    );
+  }
 }
