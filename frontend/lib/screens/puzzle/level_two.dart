@@ -446,6 +446,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
         "correct_moves": correctM,
         "wrong_moves": wrongM,
         "current_split_count": correctM,
+        "hint_usage": hintUsed,
       }),
     );
 
