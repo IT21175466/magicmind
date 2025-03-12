@@ -223,16 +223,19 @@ class _LevelTwo_SelectImageOptionState
                           const Text(
                             "Pick\nfrom\nCamera",
                             style: TextStyle(
-                              fontSize: 28,
+                              fontSize: 26,
                               color: const Color.fromARGB(255, 236, 173, 44),
                               fontFamily: 'Andika',
                             ),
                           ),
                           Spacer(),
-                          SizedBox(
-                            width: 130,
-                            child: Image.asset(
-                              'assets/images/pick_from_camara.png',
+                          FittedBox(
+                            fit: BoxFit.contain,
+                            child: SizedBox(
+                              width: 110,
+                              child: Image.asset(
+                                'assets/images/pick_from_camara.png',
+                              ),
                             ),
                           ),
                         ],
@@ -339,16 +342,19 @@ class _LevelTwo_SelectImageOptionState
                           const Text(
                             "Generate\nusing\nAI",
                             style: TextStyle(
-                              fontSize: 28,
+                              fontSize: 26,
                               color: const Color.fromARGB(255, 38, 165, 198),
                               fontFamily: 'Andika',
                             ),
                           ),
                           Spacer(),
-                          SizedBox(
-                            width: 130,
-                            child: Image.asset(
-                              'assets/images/generate_from_ai.png',
+                          FittedBox(
+                            fit: BoxFit.contain,
+                            child: SizedBox(
+                              width: 110,
+                              child: Image.asset(
+                                'assets/images/generate_from_ai.png',
+                              ),
                             ),
                           ),
                         ],

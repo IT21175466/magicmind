@@ -222,7 +222,7 @@ class _DemoImageOptionState extends State<DemoImageOption> {
                             FittedBox(
                               fit: BoxFit.contain,
                               child: SizedBox(
-                                width: 130,
+                                width: 110,
                                 child: Image.asset(
                                   'assets/images/pick_from_camara.png',
                                 ),
