@@ -160,7 +160,7 @@ class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
               height: 10,
             ),
             Container(
-              height: 210,
+              height: 220,
               width: screenWidth,
               child: Stack(
                 children: [
@@ -169,7 +169,7 @@ class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
                     left: 0,
                     right: 0,
                     child: Container(
-                      height: 200,
+                      height: 210,
                       padding: EdgeInsets.only(left: 16, right: 16, top: 16),
                       child: Container(
                         width: screenWidth,
@@ -190,9 +190,7 @@ class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
                                 fontFamily: 'Andika',
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
+                            Spacer(),
                             Text(
                               "Welcome to puzzle world! Let’s see how it’s going...",
                               style: TextStyle(
@@ -259,12 +257,11 @@ class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
                       }
                     },
                     child: Container(
-                      height: 120,
+                      height: 125,
                       width: screenWidth,
                       margin: EdgeInsets.only(
                           left: 16, right: 16, top: 10, bottom: 5),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       decoration: BoxDecoration(
                         color: colors[index],
                         borderRadius: BorderRadius.circular(15),
@@ -337,6 +334,9 @@ class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
                   );
                 },
               ),
+            ),
+            const SizedBox(
+              height: 5,
             ),
           ],
         ),

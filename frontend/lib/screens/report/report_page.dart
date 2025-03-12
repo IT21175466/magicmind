@@ -197,6 +197,7 @@ class _ReportPageState extends State<ReportPage> {
           'Student Performance Report',
           style: TextStyle(
             fontFamily: 'ABeeZee',
+            fontSize: 20,
           ),
         ),
       ),

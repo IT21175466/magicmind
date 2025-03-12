@@ -14,7 +14,6 @@ import 'package:flutter/services.dart';
 import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
 
 import '../../utils/function.dart';
-import '../home/home_screen.dart';
 
 const TextStyle demoStyle =
     TextStyle(fontSize: 22, fontWeight: FontWeight.bold, fontFamily: 'ABeeZee');
@@ -214,16 +213,19 @@ class _DemoImageOptionState extends State<DemoImageOption> {
                             const Text(
                               "Pick\nfrom\nCamera",
                               style: TextStyle(
-                                fontSize: 28,
+                                fontSize: 26,
                                 color: const Color.fromARGB(255, 236, 173, 44),
                                 fontFamily: 'Andika',
                               ),
                             ),
                             Spacer(),
-                            SizedBox(
-                              width: 130,
-                              child: Image.asset(
-                                'assets/images/pick_from_camara.png',
+                            FittedBox(
+                              fit: BoxFit.contain,
+                              child: SizedBox(
+                                width: 130,
+                                child: Image.asset(
+                                  'assets/images/pick_from_camara.png',
+                                ),
                               ),
                             ),
                           ],
@@ -268,16 +270,19 @@ class _DemoImageOptionState extends State<DemoImageOption> {
                             const Text(
                               "Generate\nusing\nAI",
                               style: TextStyle(
-                                fontSize: 28,
+                                fontSize: 26,
                                 color: const Color.fromARGB(255, 38, 165, 198),
                                 fontFamily: 'Andika',
                               ),
                             ),
                             Spacer(),
-                            SizedBox(
-                              width: 130,
-                              child: Image.asset(
-                                'assets/images/generate_from_ai.png',
+                            FittedBox(
+                              fit: BoxFit.contain,
+                              child: SizedBox(
+                                width: 110,
+                                child: Image.asset(
+                                  'assets/images/generate_from_ai.png',
+                                ),
                               ),
                             ),
                           ],
@@ -1009,7 +1014,11 @@ class _DemoPuzzleState extends State<DemoPuzzle>
                   await saveString("demo", "yes");
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => PuzzleLevelsScreen(
+                        demo: true,
+                      ),
+                    ),
                   );
                 },
                 child: Container(
