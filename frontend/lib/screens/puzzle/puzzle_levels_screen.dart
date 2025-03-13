@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:magicmind_puzzle/screens/demo/demo_video.dart';
 import 'package:magicmind_puzzle/screens/home/home_screen.dart';
 import 'package:magicmind_puzzle/screens/puzzle/level_demo.dart';
 import 'package:magicmind_puzzle/screens/puzzle/level_two.dart';
@@ -206,7 +207,14 @@ class _PuzzleLevelsScreenState extends State<PuzzleLevelsScreen> {
                             Align(
                               alignment: Alignment.bottomLeft,
                               child: ElevatedButton.icon(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DemoVideoPage(),
+                                    ),
+                                  );
+                                },
                                 icon: const Icon(
                                   Icons.play_arrow,
                                   color: Colors.white,
