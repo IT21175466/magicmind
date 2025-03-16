@@ -424,8 +424,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
   XFile? pickedFile;
 
   Future<void> pickImageCamara() async {
-    final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.camera);
+    final pickedImage = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 10);
     _prepareGame(pickedImage);
   }
 
