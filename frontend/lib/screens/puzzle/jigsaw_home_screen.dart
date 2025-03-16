@@ -59,6 +59,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
   @override
   void initState() {
     _animController = AnimationController(vsync: this);
+
     super.initState();
   }
 
@@ -140,7 +141,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (!_loaded) _prepareGame(imagePrompt);
+    if (!_loaded) _prepareGame();
   }
 
   void _startTimer() {
@@ -202,13 +203,15 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     }
   }
 
-  void _prepareGame(String prompt) async {
+  void _prepareGame() async {
     pieceOnPool.clear();
     pieceOnBoard.clear();
 
     setState(() {
       _loaded = false;
     });
+
+    print('Prompt: ${widget.prompt}');
 
     final screenPixelScale = MediaQuery.of(context).devicePixelRatio;
     final imageSize = (300 * screenPixelScale).toInt();
@@ -221,8 +224,9 @@ class _JigsawHomePageState extends State<JigsawHomePage>
             'DEZGO-9F9A8CB100D69E6884C9A7F907306607D71183DD121B7A083AF9E003CBD4AB5F8DCEA4A1',
       },
       body: {
-        'prompt':
-            'A detailed cartoon scene showing an adventurous journey, like young explorers in a colorful jungle discovering hidden treasures.',
+        'prompt': widget.prompt != null
+            ? widget.prompt
+            : 'A simple, vibrant cartoon image of a friendly animal character, in a cheerful outdoor setting.',
         'height': imageSize.toString(),
         'width': imageSize.toString(),
       },

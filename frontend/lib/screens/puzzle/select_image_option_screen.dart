@@ -247,7 +247,7 @@ class _SelectImageOptionState extends State<SelectImageOption> {
                               difficulty: 1,
                               factor: 1,
                               prompt:
-                                  'A simple, vibrant cartoon image of a friendly animal character, like a smiling panda or playful kitten, in a cheerful outdoor setting.',
+                                  'A simple, vibrant cartoon image of a friendly animal character, in a cheerful outdoor setting.',
                             ),
                           ),
                         );

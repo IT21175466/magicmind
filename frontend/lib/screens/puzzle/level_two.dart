@@ -261,6 +261,8 @@ class _LevelTwo_SelectImageOptionState
                             builder: (context) => JigsawHomePage(
                               difficulty: 1,
                               factor: 1,
+                              prompt:
+                                  'A simple, vibrant cartoon image of a friendly animal character, in a cheerful outdoor setting.',
                             ),
                           ),
                         );
@@ -292,6 +294,8 @@ class _LevelTwo_SelectImageOptionState
                                         builder: (context) => JigsawHomePage(
                                           difficulty: difficulty,
                                           factor: factor,
+                                          prompt:
+                                              'A simple, vibrant cartoon image of a friendly animal character, in a cheerful outdoor setting.',
                                         ),
                                       ),
                                     );
@@ -306,6 +310,8 @@ class _LevelTwo_SelectImageOptionState
                                         builder: (context) => JigsawHomePage(
                                           difficulty: 1,
                                           factor: 1,
+                                          prompt:
+                                              'A simple, vibrant cartoon image of a friendly animal character, in a cheerful outdoor setting.',
                                         ),
                                       ),
                                     );
@@ -1607,11 +1613,13 @@ class JigsawPainter extends CustomPainter {
 class JigsawHomePage extends StatefulWidget {
   final int factor;
   final int difficulty;
+  final String prompt;
 
   // Constructor to initialize the parameters
   JigsawHomePage({
     required this.factor,
     required this.difficulty,
+    required this.prompt,
   });
 
   @override
@@ -1765,8 +1773,6 @@ class _JigsawHomePageState extends State<JigsawHomePage>
       String difficulty = responseData['difficulty'];
       String prompt = responseData['image_prompt'];
 
-      print(prompt);
-
       setState(() {
         dificulityLevel = difficulty;
         imagePrompt = prompt;
@@ -1785,6 +1791,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
           builder: (context) => JigsawHomePage(
             factor: responseData['new_split_count'],
             difficulty: 1,
+            prompt: prompt,
           ),
         ),
       );
@@ -1809,12 +1816,11 @@ class _JigsawHomePageState extends State<JigsawHomePage>
             'DEZGO-9F9A8CB100D69E6884C9A7F907306607D71183DD121B7A083AF9E003CBD4AB5F8DCEA4A1', // Replace with your actual API key
       },
       body: {
-        'prompt':
-            'A detailed cartoon scene showing an adventurous journey, like young explorers in a colorful jungle discovering hidden treasures.',
-        'height': imageSize
-            .toString(), // Replace with the desired height of the image
-        'width':
-            imageSize.toString(), // Replace with the desired width of the image
+        'prompt': widget.prompt != null
+            ? widget.prompt
+            : 'A simple, vibrant cartoon image of a friendly animal character, in a cheerful outdoor setting.',
+        'height': imageSize.toString(),
+        'width': imageSize.toString(),
       },
     );
     final imageData = response.bodyBytes;
