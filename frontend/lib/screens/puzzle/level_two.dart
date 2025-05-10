@@ -1035,7 +1035,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
         var p = Piece(x, x2, y, y2);
 
-        bool issue = false;
+        bool issue = false; // already exist in the all collection
         for (var b in p.sub_pieces()) {
           if (all.contains(b)) issue = true;
         }
@@ -1546,6 +1546,7 @@ class JigsawPiece extends StatelessWidget {
   }
 
   static Rect _getBounds(List<Offset> points) {
+    // create a rectangle (bounding box)
     final pointsX = points.map((e) => e.dx);
     final pointsY = points.map((e) => e.dy);
     return Rect.fromLTRB(
@@ -1582,6 +1583,7 @@ class JigsawPainter extends CustomPainter {
 
     canvas.clipPath(path);
     if (image != null) {
+      //Cropping the Image
       canvas.drawImageRect(
           image!,
           Rect.fromLTRB(boundary.left * pixelScale, boundary.top * pixelScale,
@@ -2089,53 +2091,6 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     List<Piece> pieces_ = [];
     List<Piece> all = [];
     List<JigsawPiece> pieces = [];
-    //List<List<int>> used = [];
-
-    /*    for (int x = 0; x < factor; x++) {
-      for (int y = 0; y < factor; y++) {
-
-        bool found = false;
-        for (List<int> use in used){
-          if ( x==use[0] && y == use[1]) found = true;
-        }
-
-        if(found) continue;
-
-        int lx = 1;
-        int ly = 1;
-
-        if (y < (factor - 1)){
-          ly = random_length();
-        }
-        if (x < (factor - 1)) {
-          lx = random_length();
-        }
-
-        if (lx == 2){
-          used.add([x + 1, y]);
-          if (ly == 2){
-            used.add([x + 1, y + 1]);
-            used.add([x, y + 1]);
-          }
-        }else if (ly == 2){
-          used.add([x, y + 1]);
-        }
-
-
-        pieces.add(JigsawPiece(
-          key: UniqueKey(),
-          image: canvasImage,
-          imageSize: Size(300, 300),
-          points: [
-            Offset((x / factor) * 300, (y / factor) * 300),
-            Offset(((x + lx) / factor) * 300, (y / factor) * 300),
-            Offset(((x + lx) / factor) * 300, ((y + ly) / factor) * 300),
-            Offset((x / factor) * 300, ((y + ly) / factor) * 300),
-          ],
-        ));
-
-      }
-    }*/
 
     for (int x = 0; x < factor; x++) {
       for (int y = 0; y < factor; y++) {

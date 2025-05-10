@@ -11,7 +11,7 @@ def adjust_difficulty_logic(correct_moves, wrong_moves, hint_usage, current_spli
         return current_split_count, "Invalid Data", "Default Image Prompt"
 
     total_moves = correct_moves + wrong_moves
-    success_rate = correct_moves / (total_moves + 1e-5)
+    success_rate = correct_moves / (total_moves + 1e-5) # avoid division by zero
 
     if hint_usage >= current_split_count or (current_split_count >= 4 and hint_usage >= current_split_count / 2):
         action = -1  # User heavily depends on hints, reduce difficulty
