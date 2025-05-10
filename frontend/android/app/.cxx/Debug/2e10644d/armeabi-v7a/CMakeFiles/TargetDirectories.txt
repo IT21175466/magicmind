@@ -1,0 +1,2 @@
+C:/Users/Chamath Harshana/Desktop/Research/Full Source Code/magicmind/frontend/android/app/.cxx/Debug/2e10644d/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/Chamath Harshana/Desktop/Research/Full Source Code/magicmind/frontend/android/app/.cxx/Debug/2e10644d/armeabi-v7a/CMakeFiles/rebuild_cache.dir
