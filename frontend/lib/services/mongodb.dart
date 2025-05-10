@@ -25,6 +25,7 @@ class MongoDatabase {
     required int incorrectMoves,
     required int hintUsed,
     required int score,
+    required int level,
   }) async {
     var db = await Db.create(MONGO_URL);
     await db.open();
@@ -45,9 +46,30 @@ class MongoDatabase {
       physicalActivity: 'NaN',
       sleepHours: 'NaN',
       nvldDiagnosis: 'NaN',
+      level: level,
+      date: DateTime.now(),
     );
 
     await collection.insertOne(puzzleResult.toMap());
     print('Data inserted successfully');
+  }
+
+  static Future<List<PuzzleResult>> getData() async {
+    try {
+      var db = await Db.create(MONGO_URL);
+      await db.open();
+
+      var collection = db.collection(COLLECTION_NAME);
+      List<Map<String, dynamic>> data = await collection.find().toList();
+
+      List<PuzzleResult> results =
+          data.map((map) => PuzzleResult.fromMap(map)).toList();
+
+      await db.close();
+      return results;
+    } catch (e) {
+      print("Error retrieving data: $e");
+      return [];
+    }
   }
 }

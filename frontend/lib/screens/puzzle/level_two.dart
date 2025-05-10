@@ -1,8 +1,9 @@
+import 'package:audioplayers/audioplayers.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
-
-import '../../utils/app_styles.dart';
-
+import 'package:lottie/lottie.dart';
 import '../../utils/function.dart';
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -17,7 +18,6 @@ import 'package:magicmind_puzzle/constants/constant.dart';
 import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
 import 'package:magicmind_puzzle/services/mongodb.dart';
 
-
 class LevelTwo_SelectImageOption extends StatefulWidget {
   final int factor;
   final int difficulty;
@@ -28,252 +28,347 @@ class LevelTwo_SelectImageOption extends StatefulWidget {
   });
 
   @override
-  State<LevelTwo_SelectImageOption> createState() => _LevelTwo_SelectImageOptionState();
+  State<LevelTwo_SelectImageOption> createState() =>
+      _LevelTwo_SelectImageOptionState();
 }
 
-class _LevelTwo_SelectImageOptionState extends State<LevelTwo_SelectImageOption> {
-
+class _LevelTwo_SelectImageOptionState
+    extends State<LevelTwo_SelectImageOption> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
+    final AudioPlayer _clickPlayer = AudioPlayer();
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Select Option'),
-      ),
-      backgroundColor: Styles.secondaryColor,
       body: Container(
-        width: screenWidth,
         height: screenHeight,
+        width: screenWidth,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            opacity: 0.9,
+            image: AssetImage('assets/images/select_option_bg.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: 30,
+              height: AppBar().preferredSize.height,
             ),
-            Text(
-              "Choose a Option to select image.",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.white,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 53,
+                      width: 53,
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withOpacity(0.5),
+                      ),
+                      child: Center(
+                        child: Image.asset('assets/images/back_arrow.png'),
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    "Select a Option",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontFamily: 'Andika',
+                    ),
+                  ),
+                  Spacer(),
+                  SizedBox(
+                    width: 53,
+                  ),
+                ],
               ),
+            ),
+            SizedBox(
+              height: 10,
             ),
             Spacer(),
-
-            // To Camara
-            GestureDetector(
-              onTap: () async{
-
-                int factor = int.parse(await loadString("l2_gen_factor", "1"));
-                String level = (await loadString("l2_gen_level", "Low"));
-                int difficulty = int.parse(await loadString("l2_gen_difficulty", "1"));
-
-                if (factor == 1){
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => JisawHomeCamaraImage(
-                        difficulty: 1,
-                        factor: 1,
-                      ),
-                    ),
-                  );
-                  return;
-                }
-
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return StatefulBuilder(builder: (context, setState) {
-                      return AlertDialog(
-                        title:
-                        Text('You have played this game before!', style: TextStyle(color: Colors.black)),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text('Do you want to continue where you left, or start a new game?',
-                                style: TextStyle(color: Colors.black)),
-                          ],
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () async {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => JisawHomeCamaraImage(
-                                    difficulty: difficulty,
-                                    factor: factor,
-                                  ),
-                                ),
-                              );
-                            },
-                            child:Text('Continue'),
-                          ),
-                          TextButton(
-                            onPressed: () async {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => JisawHomeCamaraImage(
-                                    difficulty: 1,
-                                    factor: 1,
-                                  ),
-                                ),
-                              );
-                            },
-                            child:Text('New game'),
-                          ),
-                        ],
-                      );
-                    });
-                  },
-                );
-
-
-
-              },
-              child: Padding(
-                padding:
-                const EdgeInsets.all(16.0), // Padding around the container
-                child: Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Styles.bgColor,
-                  ),
-                  padding: const EdgeInsets.all(
-                      16.0), // Inner padding for the container's content
-
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.add_a_photo,
-                        size: 50,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Pick from Camara",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+            Container(
+              height: 545,
+              width: screenWidth,
+              margin: EdgeInsets.symmetric(horizontal: 30),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
               ),
-            ),
-            GestureDetector(
-              onTap: () async {
-
-                int factor = int.parse(await loadString("l2_gen_factor", "1"));
-                String level = (await loadString("l2_gen_level", "Low"));
-                int difficulty = int.parse(await loadString("l2_gen_difficulty", "1"));
-
-                if (factor == 1){
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => JigsawHomePage(
-                        difficulty: 1,
-                        factor: 1,
-                      ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Spacer(),
+                  const Text(
+                    "Let’s Choose a Option to Continue....",
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.black,
+                      fontFamily: 'ABeeZee',
                     ),
-                  );
+                    textAlign: TextAlign.center,
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () async {
+                      await _clickPlayer.play(AssetSource('audios/click.wav'));
+                      int factor =
+                          int.parse(await loadString("l2_gen_factor", "1"));
+                      //String level = (await loadString("l2_gen_level", "Low"));
+                      int difficulty =
+                          int.parse(await loadString("l2_gen_difficulty", "1"));
 
-                  return;
-                }
-
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return StatefulBuilder(builder: (context, setState) {
-                      return AlertDialog(
-                        title:
-                        Text('You have played this game before!', style: TextStyle(color: Colors.black)),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text('Do you want to continue where you left, or start a new game?',
-                                style: TextStyle(color: Colors.black)),
-                          ],
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () async {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => JigsawHomePage(
-                                    difficulty: difficulty,
-                                    factor: factor,
-                                  ),
-                                ),
-                              );
-                            },
-                            child:Text('Continue'),
+                      if (factor == 1) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => JisawHomeCamaraImage(
+                              difficulty: 1,
+                              factor: 1,
+                            ),
                           ),
-                          TextButton(
-                            onPressed: () async {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => JigsawHomePage(
-                                    difficulty: 1,
-                                    factor: 1,
-                                  ),
+                        );
+                        return;
+                      }
+
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return StatefulBuilder(builder: (context, setState) {
+                            return AlertDialog(
+                              title: Text('You have played this game before!',
+                                  style: TextStyle(color: Colors.black)),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                      'Do you want to continue where you left, or start a new game?',
+                                      style: TextStyle(color: Colors.black)),
+                                ],
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            JisawHomeCamaraImage(
+                                          difficulty: difficulty,
+                                          factor: factor,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Text('Continue'),
                                 ),
-                              );
-                            },
-                            child:Text('New game'),
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            JisawHomeCamaraImage(
+                                          difficulty: 1,
+                                          factor: 1,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Text('New game'),
+                                ),
+                              ],
+                            );
+                          });
+                        },
+                      );
+                    },
+                    child: Container(
+                      width: screenWidth,
+                      height: 170,
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 236, 173, 44),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.25),
+                            spreadRadius: 0,
+                            blurRadius: 10,
+                            offset: Offset(6, 4),
                           ),
                         ],
+                      ),
+                      child: Row(
+                        children: [
+                          const Text(
+                            "Pick\nfrom\nCamera",
+                            style: TextStyle(
+                              fontSize: 26,
+                              color: const Color.fromARGB(255, 236, 173, 44),
+                              fontFamily: 'Andika',
+                            ),
+                          ),
+                          Spacer(),
+                          FittedBox(
+                            fit: BoxFit.contain,
+                            child: SizedBox(
+                              width: 110,
+                              child: Image.asset(
+                                'assets/images/pick_from_camara.png',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      await _clickPlayer.play(AssetSource('audios/click.wav'));
+                      int factor =
+                          int.parse(await loadString("l2_gen_factor", "1"));
+                      //String level = (await loadString("l2_gen_level", "Low"));
+                      int difficulty =
+                          int.parse(await loadString("l2_gen_difficulty", "1"));
+
+                      if (factor == 1) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => JigsawHomePage(
+                              difficulty: 1,
+                              factor: 1,
+                              prompt:
+                                  'A simple, vibrant cartoon image of a friendly animal character, in a cheerful outdoor setting.',
+                            ),
+                          ),
+                        );
+
+                        return;
+                      }
+
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return StatefulBuilder(builder: (context, setState) {
+                            return AlertDialog(
+                              title: Text('You have played this game before!',
+                                  style: TextStyle(color: Colors.black)),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                      'Do you want to continue where you left, or start a new game?',
+                                      style: TextStyle(color: Colors.black)),
+                                ],
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => JigsawHomePage(
+                                          difficulty: difficulty,
+                                          factor: factor,
+                                          prompt:
+                                              'A simple, vibrant cartoon image of a friendly animal character, in a cheerful outdoor setting.',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Text('Continue'),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => JigsawHomePage(
+                                          difficulty: 1,
+                                          factor: 1,
+                                          prompt:
+                                              'A simple, vibrant cartoon image of a friendly animal character, in a cheerful outdoor setting.',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Text('New game'),
+                                ),
+                              ],
+                            );
+                          });
+                        },
                       );
-                    });
-                  },
-                );
-
-              },
-              child: Padding(
-                padding:
-                const EdgeInsets.all(16.0), // Padding around the container
-                child: Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Styles.bgColor,
-                  ),
-                  padding: const EdgeInsets.all(
-                      16.0), // Inner padding for the container's content
-
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.image,
-                        size: 50,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        "Generate using AI",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
+                    },
+                    child: Container(
+                      width: screenWidth,
+                      height: 170,
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 38, 165, 198),
                         ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.25),
+                            spreadRadius: 0,
+                            blurRadius: 10,
+                            offset: Offset(6, 4),
+                          ),
+                        ],
                       ),
-                    ],
+                      child: Row(
+                        children: [
+                          const Text(
+                            "Generate\nusing\nAI",
+                            style: TextStyle(
+                              fontSize: 26,
+                              color: const Color.fromARGB(255, 38, 165, 198),
+                              fontFamily: 'Andika',
+                            ),
+                          ),
+                          Spacer(),
+                          FittedBox(
+                            fit: BoxFit.contain,
+                            child: SizedBox(
+                              width: 110,
+                              child: Image.asset(
+                                'assets/images/generate_from_ai.png',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  Spacer(),
+                ],
               ),
             ),
             Spacer(),
@@ -284,7 +379,6 @@ class _LevelTwo_SelectImageOptionState extends State<LevelTwo_SelectImageOption>
     );
   }
 }
-
 
 class JisawHomeCamaraImage extends StatefulWidget {
   final int factor;
@@ -319,6 +413,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
   int hintUsed = 0;
 
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
   @override
   void initState() {
     _animController = AnimationController(vsync: this);
@@ -334,8 +430,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
   XFile? pickedFile;
 
   Future<void> pickImageCamara() async {
-    final pickedImage =
-    await ImagePicker().pickImage(source: ImageSource.camera);
+    final pickedImage = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 10);
     _prepareGame(pickedImage);
   }
 
@@ -362,6 +458,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
         "correct_moves": correctM,
         "wrong_moves": wrongM,
         "current_split_count": correctM,
+        "hint_usage": hintUsed,
       }),
     );
 
@@ -370,6 +467,9 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
       final responseData = json.decode(response.body);
 
       String difficulty = responseData['difficulty'];
+      String prompt = responseData['image_prompt'];
+
+      print(prompt);
       setState(() {
         dificulityLevel = difficulty;
         isLoading = false;
@@ -390,7 +490,6 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
         ),
       );
     }
-
   }
 
   void _prepareGame(XFile? pickedFile) async {
@@ -415,18 +514,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
         final image = MemoryImage(imageData, scale: screenPixelScale);
         ui.Image img = await _getImage(image);
 
-        int start = DateTime.now().millisecondsSinceEpoch;
-        // var cropped = await cropUiImage(img, imageSize, imageSize);
-        // canvasImage = await resizeUiImage(cropped, imageSize, imageSize);
-        // int now1 = DateTime.now().millisecondsSinceEpoch;
-        // int t1 = now1 - start;
-
         canvasImage = await cropResizeUiImage(img, imageSize, imageSize);
-        int now2 = DateTime.now().millisecondsSinceEpoch;
-        // int t2 = now2 - now1;
-
-        // print("T1: $t1 | T2: $t2 | ${(t1-t2)/t1}");
-
 
         pieceOnPool = _createJigsawPiece();
         pieceOnPool.shuffle();
@@ -443,7 +531,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     }
   }
 
-  Future<ui.Image> cropUiImage(ui.Image image, int newWidth, int newHeight) async {
+  Future<ui.Image> cropUiImage(
+      ui.Image image, int newWidth, int newHeight) async {
     // Calculate the crop rect
     final double aspectRatio = newWidth / newHeight;
     final double imageAspectRatio = image.width / image.height;
@@ -457,15 +546,15 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
       // Image is wider than the new aspect ratio, crop from left and right
       cropWidth = image.height * aspectRatio;
       cropLeft = (image.width - cropWidth) / 2;
-    }
-    else {
+    } else {
       // Image is taller than the new aspect ratio, crop from top and bottom
       cropHeight = image.width / aspectRatio;
       cropTop = (image.height - cropHeight) / 2;
     }
 
     // Convert the ui.Image to a ByteData object
-    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final ByteData? byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
 
     final Uint8List uint8list = byteData!.buffer.asUint8List();
 
@@ -487,7 +576,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     return frame.image;
   }
 
-  Future<ui.Image> cropResizeUiImage(ui.Image image, int newWidth, int newHeight) async {
+  Future<ui.Image> cropResizeUiImage(
+      ui.Image image, int newWidth, int newHeight) async {
     // Calculate the crop rect
     final double aspectRatio = newWidth / newHeight;
     final double imageAspectRatio = image.width / image.height;
@@ -500,14 +590,13 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     if (imageAspectRatio > aspectRatio) {
       cropWidth = image.height * aspectRatio;
       cropLeft = (image.width - cropWidth) / 2;
-    }
-    else {
-
+    } else {
       cropHeight = image.width / aspectRatio;
       cropTop = (image.height - cropHeight) / 2;
     }
 
-    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final ByteData? byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
 
     final Uint8List uint8list = byteData!.buffer.asUint8List();
     img.Image decodedImage = img.decodeImage(uint8list)!;
@@ -520,7 +609,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
       height: (cropHeight).round(),
     );
 
-    croppedImage = img.copyResize(decodedImage, height: newHeight, width: newWidth);
+    croppedImage =
+        img.copyResize(decodedImage, height: newHeight, width: newWidth);
     final Uint8List croppedBytes = img.encodePng(croppedImage);
 
     final ui.Codec codec = await ui.instantiateImageCodec(croppedBytes);
@@ -528,7 +618,9 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     final ui.FrameInfo frame = await codec.getNextFrame();
     return frame.image;
   }
-  Future<ui.Image> cropResizeCompressUiImage(ui.Image image, int newWidth, int newHeight) async {
+
+  Future<ui.Image> cropResizeCompressUiImage(
+      ui.Image image, int newWidth, int newHeight) async {
     // Calculate the crop rect
     final double aspectRatio = newWidth / newHeight;
     final double imageAspectRatio = image.width / image.height;
@@ -541,14 +633,13 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     if (imageAspectRatio > aspectRatio) {
       cropWidth = image.height * aspectRatio;
       cropLeft = (image.width - cropWidth) / 2;
-    }
-    else {
-
+    } else {
       cropHeight = image.width / aspectRatio;
       cropTop = (image.height - cropHeight) / 2;
     }
 
-    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final ByteData? byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
     final Uint8List uint8list = byteData!.buffer.asUint8List();
 
     final img.Image decodedImage = img.decodeImage(uint8list)!;
@@ -561,7 +652,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
       height: (cropHeight).round(),
     );
 
-    croppedImage = img.copyResize(decodedImage, height: newHeight, width: newWidth);
+    croppedImage =
+        img.copyResize(decodedImage, height: newHeight, width: newWidth);
     final Uint8List croppedBytes = img.encodePng(croppedImage);
 
     final ui.Codec codec = await ui.instantiateImageCodec(croppedBytes);
@@ -571,11 +663,13 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
   }
 
   Future<ui.Image> resizeUiImage(ui.Image image, int height, int width) async {
-    final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    final ByteData? byteData =
+        await image.toByteData(format: ui.ImageByteFormat.png);
 
     final Uint8List uint8list = byteData!.buffer.asUint8List();
     final img.Image decodedImage = img.decodeImage(uint8list)!;
-    final img.Image resizedImage = img.copyResize(decodedImage, height: height, width: width);
+    final img.Image resizedImage =
+        img.copyResize(decodedImage, height: height, width: width);
     final Uint8List resizedBytes = img.encodePng(resizedImage);
     final ui.Codec codec = await ui.instantiateImageCodec(resizedBytes);
     final ui.FrameInfo frame = await codec.getNextFrame();
@@ -595,75 +689,175 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: Colors.grey.shade700,
-          appBar: AppBar(
-            title: Text('Puzzle Screen'),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.home),
-                onPressed: () {
-                  //_prepareGame();
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PuzzleLevelsScreen(demo: true,)),
-                        (Route<dynamic> route) => false,
-                  );
-                },
-              ),
-            ],
-          ),
           body: _loaded
-              ? Column(
-            children: [
-              Container(
-                height: 400,
-                alignment: Alignment.center,
-                child: _buildBoard(),
-              ),
-              Expanded(
-                child: ListView.separated(
-                  padding: EdgeInsets.all(32),
-                  scrollDirection: Axis.horizontal,
-                  physics: BouncingScrollPhysics(),
-                  itemCount: pieceOnPool.length,
-                  itemBuilder: (context, index) {
-                    final piece = pieceOnPool[index];
-                    return Center(
-                      child: Draggable(
-                        child: piece,
-                        feedback: piece,
-                        childWhenDragging: Opacity(
-                          opacity: 0.24,
-                          child: piece,
-                        ),
-                        onDragEnd: (details) {
-                          _onPiecePlaced(piece, details.offset);
-                        },
+              ? Container(
+                  width: screenWidth,
+                  height: screenHeight,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      opacity: 0.9,
+                      image: AssetImage('assets/images/activity_bg.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: AppBar().preferredSize.height / 5 * 4,
                       ),
-                    );
-                  },
-                  separatorBuilder: (context, index) =>
-                      SizedBox(width: 32),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 55,
+                              width: 55,
+                            ),
+                            Spacer(),
+                            Text(
+                              "Let’s Play",
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontFamily: 'Andika',
+                              ),
+                            ),
+                            Spacer(),
+                            GestureDetector(
+                              onTap: () async {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PuzzleLevelsScreen(
+                                            demo: true,
+                                          )),
+                                  (Route<dynamic> route) => false,
+                                );
+                              },
+                              child: Container(
+                                height: 55,
+                                width: 55,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white.withOpacity(0.3),
+                                ),
+                                child: Center(
+                                  child: Image.asset(
+                                      'assets/images/home_icon.png'),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 400,
+                        alignment: Alignment.center,
+                        child: _buildBoard(),
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            border: Border(
+                              top: BorderSide(
+                                width: 2,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          child: ListView.separated(
+                            padding: EdgeInsets.all(32),
+                            scrollDirection: Axis.horizontal,
+                            physics: BouncingScrollPhysics(),
+                            itemCount: pieceOnPool.length,
+                            itemBuilder: (context, index) {
+                              final piece = pieceOnPool[index];
+                              return Center(
+                                child: Draggable(
+                                  child: piece,
+                                  feedback: piece,
+                                  childWhenDragging: Opacity(
+                                    opacity: 0.24,
+                                    child: piece,
+                                  ),
+                                  onDragEnd: (details) {
+                                    _onPiecePlaced(piece, details.offset);
+                                  },
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) =>
+                                SizedBox(width: 32),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/loading_bg.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: screenWidth / 2,
+                        child: Center(
+                          child: Lottie.asset(
+                              'assets/animations/image_processing.json'),
+                        ),
+                      ),
+                      Lottie.asset('assets/animations/loading_ani.json'),
+                      Text(
+                        "Get ready! Your picture is on its way!",
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.black,
+                          fontFamily: 'Andika',
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          )
-              : Center(child: CircularProgressIndicator()),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              if (canvasImage != null) {
-                _showFullImageDialog(context);
-                setState(() {
-                  hintUsed++;
-                });
-              }
-            },
-            child: Icon(Icons.image),
-          ),
+          floatingActionButton: _loaded
+              ? Container(
+                  height: 70,
+                  width: 70,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.white,
+                    onPressed: () {
+                      if (canvasImage != null) {
+                        _showFullImageDialog(context);
+                        setState(() {
+                          hintUsed++;
+                        });
+                      }
+                    },
+                    child: Image.asset(
+                      'assets/images/hint_icon.png',
+                      height: 62,
+                    ),
+                  ),
+                )
+              : SizedBox(),
         ),
         if (_currentPiece != null)
           AnimatedBuilder(
@@ -682,30 +876,49 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     );
   }
 
+  bool isCorrect = false;
+
   Widget _buildBoard() {
-    return Container(
-      key: _boardWidgetKey,
-      width: 300,
-      height: 300,
-      color: Colors.grey.shade800,
-      child: Stack(
-        children: [
-          for (var piece in pieceOnBoard)
-            Positioned(
-              left: piece.boundary.left,
-              top: piece.boundary.top,
-              child: piece,
+    return Stack(
+      children: [
+        Container(
+          key: _boardWidgetKey,
+          width: 305,
+          height: 305,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              width: 5,
+              color: const Color.fromARGB(255, 236, 173, 44),
             ),
-        ],
-      ),
+          ),
+          child: Stack(
+            children: [
+              for (var piece in pieceOnBoard)
+                Positioned(
+                  left: piece.boundary.left,
+                  top: piece.boundary.top,
+                  child: piece,
+                ),
+            ],
+          ),
+        ),
+        isCorrect
+            ? SizedBox(
+                width: 305,
+                height: 305,
+                child: Center(
+                  child: Lottie.asset('assets/animations/correct.json'),
+                ),
+              )
+            : SizedBox(),
+      ],
     );
   }
 
-  int random_length(){
+  int random_length() {
     return Random().nextInt(5) > 2 ? 2 : 1;
   }
-
-
 
   List<JigsawPiece> _createJigsawPiece() {
 /*    int factor = widget.factor + 1;
@@ -767,7 +980,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     List<Piece> pieces_ = [];
     List<Piece> all = [];
     List<JigsawPiece> pieces = [];
-    List<List<int>> used = [];
+    //List<List<int>> used = [];
 
     /*    for (int x = 0; x < factor; x++) {
       for (int y = 0; y < factor; y++) {
@@ -817,29 +1030,34 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
     for (int x = 0; x < factor; x++) {
       for (int y = 0; y < factor; y++) {
-
-        int x2 = x + ((x < (factor -1)) ? random_length() : 1);
-        int y2 = y + ((y < (factor -1)) ? random_length() : 1);
+        int x2 = x + ((x < (factor - 1)) ? random_length() : 1);
+        int y2 = y + ((y < (factor - 1)) ? random_length() : 1);
 
         var p = Piece(x, x2, y, y2);
 
-        bool issue = false;
-        for(var b in p.sub_pieces()){if (all.contains(b)) issue = true;}
-        if(issue){
+        bool issue = false; // already exist in the all collection
+        for (var b in p.sub_pieces()) {
+          if (all.contains(b)) issue = true;
+        }
+        if (issue) {
           issue = false;
           x2 = x + 1;
           p = Piece(x, x2, y, y2);
-          for(var b in p.sub_pieces()){if (all.contains(b)) issue = true;}
+          for (var b in p.sub_pieces()) {
+            if (all.contains(b)) issue = true;
+          }
         }
 
-        if(issue){
+        if (issue) {
           issue = false;
           y2 = y + 1;
           p = Piece(x, x2, y, y2);
-          for(var b in p.sub_pieces()){if (all.contains(b)) issue = true;}
+          for (var b in p.sub_pieces()) {
+            if (all.contains(b)) issue = true;
+          }
         }
 
-        if(issue) continue;
+        if (issue) continue;
 
         pieces_.add(p);
         all.addAll(p.sub_pieces());
@@ -848,7 +1066,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
     print("Pieces: ${pieces_.length}");
     int area = 0;
-    for (var piece in pieces_){
+    for (var piece in pieces_) {
       area += piece.area();
 
       pieces.add(JigsawPiece(
@@ -867,31 +1085,139 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     return pieces;
   }
 
+  void checkUserStruggle() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Need some help?"),
+        content: Text("It seems you're struggling. Would you like a hint?"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _consecutiveWrongMoves = 0;
+            },
+            child: Text('No'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              fillPuzzleHints();
+            },
+            child: Text('Yes'),
+          ),
+        ],
+      ),
+    );
+  }
 
-  void _onPiecePlaced(JigsawPiece piece, Offset pieceDropPosition) {
+  void fillPuzzleHints() {
+    if (pieceOnPool.length <= 4) {
+      setState(() {
+        int piecesToFill = min(1, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 2;
+      });
+    } else if (pieceOnPool.length > 4 && pieceOnPool.length <= 8) {
+      setState(() {
+        int piecesToFill = min(2, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 4;
+      });
+    } else if (pieceOnPool.length > 8 && pieceOnPool.length <= 12) {
+      setState(() {
+        int piecesToFill = min(3, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 6;
+      });
+    } else if (pieceOnPool.length > 12 && pieceOnPool.length <= 20) {
+      setState(() {
+        int piecesToFill = min(5, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 8;
+      });
+    } else if (pieceOnPool.length > 20 && pieceOnPool.length <= 35) {
+      setState(() {
+        int piecesToFill = min(8, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 10;
+      });
+    }
+  }
+
+  void _checkWrongMoveProgress() {
+    if (pieceOnPool.length > 2 && pieceOnPool.length <= 4) {
+      if (_consecutiveWrongMoves >= 2) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 4 && pieceOnPool.length <= 8) {
+      if (_consecutiveWrongMoves >= 4) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 8 && pieceOnPool.length <= 12) {
+      if (_consecutiveWrongMoves >= 6) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 12 && pieceOnPool.length <= 20) {
+      if (_consecutiveWrongMoves >= 8) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 20 && pieceOnPool.length <= 35) {
+      if (_consecutiveWrongMoves >= 10) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    }
+  }
+
+  int _consecutiveWrongMoves = 0;
+
+  void _onPiecePlaced(JigsawPiece piece, Offset pieceDropPosition) async {
     _totalMoves++; // Increment total moves
     final RenderBox box =
-    _boardWidgetKey.currentContext?.findRenderObject() as RenderBox;
+        _boardWidgetKey.currentContext?.findRenderObject() as RenderBox;
     final boardPosition = box.localToGlobal(Offset.zero);
     final targetPosition =
-    boardPosition.translate(piece.boundary.left, piece.boundary.top);
+        boardPosition.translate(piece.boundary.left, piece.boundary.top);
 
     const threshold = 48.0;
-
     final distance = (pieceDropPosition - targetPosition).distance;
+
     if (distance < threshold) {
       setState(() {
         _currentPiece = piece;
         pieceOnPool.remove(piece);
-        _movesMade++; // Increment correct moves
+        _movesMade++; // Correct move made
+        _consecutiveWrongMoves = 0; // Reset wrong move counter
       });
+
+      await _audioPlayer.play(AssetSource('audios/correct_move.wav'));
 
       _offsetAnimation = Tween<Offset>(
         begin: pieceDropPosition,
         end: targetPosition,
       ).animate(_animController);
 
-      _animController.addStatusListener((status) {
+      _animController.addStatusListener((status) async {
         if (status == AnimationStatus.completed) {
           setState(() {
             pieceOnBoard.add(piece);
@@ -900,8 +1226,19 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
           if (pieceOnPool.isEmpty) {
             _stopTimer();
-            _calculateScore(); // Calculate score when the puzzle is complete
-            _showCompletionDialog(context);
+            _calculateScore();
+            setState(() {
+              isCorrect = true;
+            });
+
+            await _audioPlayer.play(AssetSource('audios/completed.wav'));
+
+            Future.delayed(Duration(seconds: 2), () {
+              setState(() {
+                isCorrect = false;
+              });
+              _showCompletionDialog(context);
+            });
           }
         }
       });
@@ -914,6 +1251,11 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
 
       final simulation = SpringSimulation(spring, 0, 1, -distance);
       _animController.animateWith(simulation);
+    } else {
+      // If move was incorrect, increment wrong move counter
+      _consecutiveWrongMoves++;
+      _checkWrongMoveProgress();
+      await _audioPlayer.play(AssetSource('audios/wrong_move.wav'));
     }
   }
 
@@ -937,35 +1279,105 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
     _score = baseScore.clamp(0, 100).round();
   }
 
-  void _showCompletionDialog(BuildContext context) {
+  String _formatTime(int seconds) {
+    final minutes = seconds ~/ 60;
+    final remainingSeconds = seconds % 60;
+    return '${minutes}m ${remainingSeconds}s';
+  }
+
+  final confettiController = ConfettiController();
+
+  bool isCongrating = false;
+
+  void _showCompletionDialog(BuildContext context) async {
+    await _audioPlayer.play(AssetSource('audios/congrats.wav'));
     final incorrectMoves = _totalMoves - _movesMade;
+    confettiController.play();
+    double screenWidth = MediaQuery.of(context).size.width;
 
     showDialog(
       context: context,
       builder: (context) {
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
-            title:
-            Text('Congratulations!', style: TextStyle(color: Colors.black)),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
+            title: Center(
+              child: Text(
+                'Congratulations!',
+                style: TextStyle(
+                  color: const Color.fromARGB(255, 236, 173, 44),
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Andika',
+                ),
+              ),
+            ),
+            content: Stack(
               children: [
-                Text('You have completed the puzzle!',
-                    style: TextStyle(color: Colors.black)),
-                SizedBox(height: 16),
-                Text('Time Taken: $_timeElapsed seconds',
-                    style: TextStyle(color: Colors.black)),
-                Text('Correct Moves: $_movesMade',
-                    style: TextStyle(color: Colors.black)),
-                Text('Wrong Moves: $incorrectMoves',
-                    style: TextStyle(color: Colors.black)),
-                Text('Score: $_score/100',
-                    style: TextStyle(color: Colors.black)),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset('assets/images/congrats_banner.png'),
+                    SizedBox(height: 20),
+                    Text(
+                      'Time Taken: ${_formatTime(_timeElapsed)}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                    Text(
+                      'Wrong Moves: $incorrectMoves',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                    Text(
+                      'Score: $_score/100',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                    Text(
+                      'Hint Usage: $hintUsed',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(
+                  left: screenWidth / 2,
+                  child: SizedBox(
+                    width: 1,
+                    height: 300,
+                    child: ConfettiWidget(
+                      confettiController: confettiController,
+                      shouldLoop: true,
+                      blastDirectionality: BlastDirectionality.explosive,
+                      numberOfParticles: 35,
+                      emissionFrequency: 0.1,
+                    ),
+                  ),
+                ),
               ],
             ),
             actions: [
-              TextButton(
-                onPressed: () async {
+              InkWell(
+                borderRadius: BorderRadius.circular(30),
+                splashColor: Colors.white.withOpacity(0.2),
+                onTap: () async {
                   setState(() {
                     isLoading = true;
                   });
@@ -977,10 +1389,33 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
                     incorrectMoves: incorrectMoves,
                     hintUsed: hintUsed,
                     score: _score,
+                    level: 2,
                   );
                   await _adjestDifficulity(_movesMade, incorrectMoves);
                 },
-                child: Text('OK'),
+                child: Container(
+                  height: 56,
+                  width: 123,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: const Color.fromARGB(255, 142, 190, 132),
+                  ),
+                  child: Center(
+                    child: isLoading
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Text(
+                            'Ok',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Andika',
+                            ),
+                          ),
+                  ),
+                ),
               ),
             ],
           );
@@ -995,11 +1430,17 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
       builder: (context) {
         return AlertDialog(
           title: Text(
-            'Complete Image',
-            style: TextStyle(color: Colors.black),
+            'Complete Image is Here...',
+            style: TextStyle(
+              color: const Color.fromARGB(255, 117, 100, 100),
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Andika',
+            ),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (canvasImage != null)
                 SizedBox(
@@ -1010,18 +1451,52 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
                   ),
                 ),
               SizedBox(height: 16),
-              Text('Time Taken: $_timeElapsed seconds',
-                  style: TextStyle(color: Colors.black)),
-              Text('Moves Made: $_movesMade',
-                  style: TextStyle(color: Colors.black)),
+              Text(
+                'Time Taken: ${_formatTime(_timeElapsed)}',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'ABeeZee',
+                ),
+              ),
+              Text(
+                'Moves Made: $_movesMade',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'ABeeZee',
+                ),
+              ),
             ],
           ),
           actions: [
-            TextButton(
-              onPressed: () {
+            InkWell(
+              borderRadius: BorderRadius.circular(30),
+              splashColor: Colors.white.withOpacity(0.2),
+              onTap: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Close'),
+              child: Container(
+                height: 56,
+                width: 123,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: const Color.fromARGB(255, 236, 173, 44),
+                ),
+                child: Center(
+                  child: Text(
+                    'Ok',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Andika',
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         );
@@ -1071,6 +1546,7 @@ class JigsawPiece extends StatelessWidget {
   }
 
   static Rect _getBounds(List<Offset> points) {
+    // create a rectangle (bounding box)
     final pointsX = points.map((e) => e.dx);
     final pointsY = points.map((e) => e.dy);
     return Rect.fromLTRB(
@@ -1107,6 +1583,7 @@ class JigsawPainter extends CustomPainter {
 
     canvas.clipPath(path);
     if (image != null) {
+      //Cropping the Image
       canvas.drawImageRect(
           image!,
           Rect.fromLTRB(boundary.left * pixelScale, boundary.top * pixelScale,
@@ -1135,15 +1612,16 @@ class JigsawPainter extends CustomPainter {
   }
 }
 
-
 class JigsawHomePage extends StatefulWidget {
   final int factor;
   final int difficulty;
+  final String prompt;
 
   // Constructor to initialize the parameters
   JigsawHomePage({
     required this.factor,
     required this.difficulty,
+    required this.prompt,
   });
 
   @override
@@ -1168,10 +1646,13 @@ class _JigsawHomePageState extends State<JigsawHomePage>
   int _score = 0;
 
   String dificulityLevel = 'Low';
+  String imagePrompt = '';
 
   Timer? _timer;
 
   int hintUsed = 0;
+
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -1200,15 +1681,91 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     _timer?.cancel();
   }
 
-  Future<void> _adjestDifficulity(int correctM, int wrongM) async {
+  void checkUserStruggle() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Need some help?"),
+        content: Text("It seems you're struggling. Would you like a hint?"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _consecutiveWrongMoves = 0;
+            },
+            child: Text('No'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              fillPuzzleHints();
+            },
+            child: Text('Yes'),
+          ),
+        ],
+      ),
+    );
+  }
 
+  void fillPuzzleHints() {
+    if (pieceOnPool.length <= 4) {
+      setState(() {
+        int piecesToFill = min(1, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 2;
+      });
+    } else if (pieceOnPool.length > 4 && pieceOnPool.length <= 8) {
+      setState(() {
+        int piecesToFill = min(2, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 4;
+      });
+    } else if (pieceOnPool.length > 8 && pieceOnPool.length <= 12) {
+      setState(() {
+        int piecesToFill = min(3, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 6;
+      });
+    } else if (pieceOnPool.length > 12 && pieceOnPool.length <= 20) {
+      setState(() {
+        int piecesToFill = min(5, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 8;
+      });
+    } else if (pieceOnPool.length > 20 && pieceOnPool.length <= 35) {
+      setState(() {
+        int piecesToFill = min(8, pieceOnPool.length);
+        for (int i = 0; i < piecesToFill; i++) {
+          var piece = pieceOnPool.removeAt(0);
+          pieceOnBoard.add(piece);
+        }
+        hintUsed = hintUsed + 10;
+      });
+    }
+  }
+
+  Future<void> _adjestDifficulity(
+      int correctM, int wrongM, int hintUsage) async {
     final response = await http.post(
       Uri.parse('$ML_API/adjust-difficulty'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode({
         "correct_moves": correctM,
         "wrong_moves": wrongM,
-        "current_split_count": correctM,
+        "hint_usage": hintUsage,
+        "current_split_count": correctM
       }),
     );
 
@@ -1216,13 +1773,15 @@ class _JigsawHomePageState extends State<JigsawHomePage>
       final responseData = json.decode(response.body);
 
       String difficulty = responseData['difficulty'];
+      String prompt = responseData['image_prompt'];
+
       setState(() {
         dificulityLevel = difficulty;
+        imagePrompt = prompt;
         isLoading = false;
       });
 
       int factor = responseData['new_split_count'];
-
 
       await saveString("l2_gen_factor", factor.toString());
       await saveString("l2_gen_level", difficulty.toString());
@@ -1234,6 +1793,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
           builder: (context) => JigsawHomePage(
             factor: responseData['new_split_count'],
             difficulty: 1,
+            prompt: prompt,
           ),
         ),
       );
@@ -1254,12 +1814,15 @@ class _JigsawHomePageState extends State<JigsawHomePage>
       Uri.parse('https://api.dezgo.com/text2image/'),
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'X-Dezgo-Key': 'DEZGO-9F9A8CB100D69E6884C9A7F907306607D71183DD121B7A083AF9E003CBD4AB5F8DCEA4A1', // Replace with your actual API key
+        'X-Dezgo-Key':
+            'DEZGO-9F9A8CB100D69E6884C9A7F907306607D71183DD121B7A083AF9E003CBD4AB5F8DCEA4A1', // Replace with your actual API key
       },
       body: {
-        'prompt': ' Lively cartoon-style outdoor playground scene with children aged 10 to 13 playing together. Vibrant, colorful slides, swings, and climbing structures surrounded by lush green trees. Children smiling and enjoying different activities like swinging, sliding, and playing games. Bright, cheerful colors and a playful art style to kids.', // Replace with the text you want to convert to an image
-        'height': imageSize.toString(), // Replace with the desired height of the image
-        'width': imageSize.toString(), // Replace with the desired width of the image
+        'prompt': widget.prompt != null
+            ? widget.prompt
+            : 'A simple, vibrant cartoon image of a friendly animal character, in a cheerful outdoor setting.',
+        'height': imageSize.toString(),
+        'width': imageSize.toString(),
       },
     );
     final imageData = response.bodyBytes;
@@ -1292,75 +1855,174 @@ class _JigsawHomePageState extends State<JigsawHomePage>
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: Colors.grey.shade700,
-          appBar: AppBar(
-            title: Text('Puzzle Screen'),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.home),
-                onPressed: () {
-                  //_prepareGame();
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PuzzleLevelsScreen(demo: true)),
-                        (Route<dynamic> route) => false,
-                  );
-                },
-              ),
-            ],
-          ),
           body: _loaded
-              ? Column(
-            children: [
-              Container(
-                height: 400,
-                alignment: Alignment.center,
-                child: _buildBoard(),
-              ),
-              Expanded(
-                child: ListView.separated(
-                  padding: EdgeInsets.all(32),
-                  scrollDirection: Axis.horizontal,
-                  physics: BouncingScrollPhysics(),
-                  itemCount: pieceOnPool.length,
-                  itemBuilder: (context, index) {
-                    final piece = pieceOnPool[index];
-                    return Center(
-                      child: Draggable(
-                        child: piece,
-                        feedback: piece,
-                        childWhenDragging: Opacity(
-                          opacity: 0.24,
-                          child: piece,
-                        ),
-                        onDragEnd: (details) {
-                          _onPiecePlaced(piece, details.offset);
-                        },
+              ? Container(
+                  width: screenWidth,
+                  height: screenHeight,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      opacity: 0.9,
+                      image: AssetImage('assets/images/activity_bg.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: AppBar().preferredSize.height / 5 * 4,
                       ),
-                    );
-                  },
-                  separatorBuilder: (context, index) =>
-                      SizedBox(width: 32),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 55,
+                              width: 55,
+                            ),
+                            Spacer(),
+                            Text(
+                              "Let’s Play",
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontFamily: 'Andika',
+                              ),
+                            ),
+                            Spacer(),
+                            GestureDetector(
+                              onTap: () async {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          PuzzleLevelsScreen(demo: true)),
+                                  (Route<dynamic> route) => false,
+                                );
+                              },
+                              child: Container(
+                                height: 55,
+                                width: 55,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white.withOpacity(0.3),
+                                ),
+                                child: Center(
+                                  child: Image.asset(
+                                      'assets/images/home_icon.png'),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 400,
+                        alignment: Alignment.center,
+                        child: _buildBoard(),
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            border: Border(
+                              top: BorderSide(
+                                width: 2,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          child: ListView.separated(
+                            padding: EdgeInsets.all(32),
+                            scrollDirection: Axis.horizontal,
+                            physics: BouncingScrollPhysics(),
+                            itemCount: pieceOnPool.length,
+                            itemBuilder: (context, index) {
+                              final piece = pieceOnPool[index];
+                              return Center(
+                                child: Draggable(
+                                  child: piece,
+                                  feedback: piece,
+                                  childWhenDragging: Opacity(
+                                    opacity: 0.24,
+                                    child: piece,
+                                  ),
+                                  onDragEnd: (details) {
+                                    _onPiecePlaced(piece, details.offset);
+                                  },
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) =>
+                                SizedBox(width: 32),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/loading_bg.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: screenWidth / 2,
+                        child: Center(
+                          child: Lottie.asset(
+                              'assets/animations/image_processing.json'),
+                        ),
+                      ),
+                      Lottie.asset('assets/animations/loading_ani.json'),
+                      Text(
+                        "Get ready! Your picture is on its way!",
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.black,
+                          fontFamily: 'Andika',
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          )
-              : Center(child: CircularProgressIndicator()),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              if (canvasImage != null) {
-                _showFullImageDialog(context);
-                setState(() {
-                  hintUsed++;
-                });
-              }
-            },
-            child: Icon(Icons.image),
-          ),
+          floatingActionButton: _loaded
+              ? Container(
+                  height: 70,
+                  width: 70,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.white,
+                    onPressed: () {
+                      if (canvasImage != null) {
+                        _showFullImageDialog(context);
+                        setState(() {
+                          hintUsed++;
+                        });
+                      }
+                    },
+                    child: Image.asset(
+                      'assets/images/hint_icon.png',
+                      height: 62,
+                    ),
+                  ),
+                )
+              : SizedBox(),
         ),
         if (_currentPiece != null)
           AnimatedBuilder(
@@ -1379,26 +2041,47 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     );
   }
 
-  int random_length(){
+  int random_length() {
     return Random().nextInt(5) > 2 ? 2 : 1;
   }
 
+  bool isCorrect = false;
+
   Widget _buildBoard() {
-    return Container(
-      key: _boardWidgetKey,
-      width: 300,
-      height: 300,
-      color: Colors.grey.shade800,
-      child: Stack(
-        children: [
-          for (var piece in pieceOnBoard)
-            Positioned(
-              left: piece.boundary.left,
-              top: piece.boundary.top,
-              child: piece,
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              width: 5,
+              color: const Color.fromARGB(255, 236, 173, 44),
             ),
-        ],
-      ),
+          ),
+          key: _boardWidgetKey,
+          width: 305,
+          height: 305,
+          child: Stack(
+            children: [
+              for (var piece in pieceOnBoard)
+                Positioned(
+                  left: piece.boundary.left,
+                  top: piece.boundary.top,
+                  child: piece,
+                ),
+            ],
+          ),
+        ),
+        isCorrect
+            ? SizedBox(
+                width: 305,
+                height: 305,
+                child: Center(
+                  child: Lottie.asset('assets/animations/correct.json'),
+                ),
+              )
+            : SizedBox(),
+      ],
     );
   }
 
@@ -1408,79 +2091,37 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     List<Piece> pieces_ = [];
     List<Piece> all = [];
     List<JigsawPiece> pieces = [];
-    List<List<int>> used = [];
-
-    /*    for (int x = 0; x < factor; x++) {
-      for (int y = 0; y < factor; y++) {
-
-        bool found = false;
-        for (List<int> use in used){
-          if ( x==use[0] && y == use[1]) found = true;
-        }
-
-        if(found) continue;
-
-        int lx = 1;
-        int ly = 1;
-
-        if (y < (factor - 1)){
-          ly = random_length();
-        }
-        if (x < (factor - 1)) {
-          lx = random_length();
-        }
-
-        if (lx == 2){
-          used.add([x + 1, y]);
-          if (ly == 2){
-            used.add([x + 1, y + 1]);
-            used.add([x, y + 1]);
-          }
-        }else if (ly == 2){
-          used.add([x, y + 1]);
-        }
-
-
-        pieces.add(JigsawPiece(
-          key: UniqueKey(),
-          image: canvasImage,
-          imageSize: Size(300, 300),
-          points: [
-            Offset((x / factor) * 300, (y / factor) * 300),
-            Offset(((x + lx) / factor) * 300, (y / factor) * 300),
-            Offset(((x + lx) / factor) * 300, ((y + ly) / factor) * 300),
-            Offset((x / factor) * 300, ((y + ly) / factor) * 300),
-          ],
-        ));
-
-      }
-    }*/
 
     for (int x = 0; x < factor; x++) {
       for (int y = 0; y < factor; y++) {
-
-        int x2 = x + ((x < (factor -1)) ? random_length() : 1);
-        int y2 = y + ((y < (factor -1)) ? random_length() : 1);
+        int x2 = x + ((x < (factor - 1)) ? random_length() : 1);
+        int y2 = y + ((y < (factor - 1)) ? random_length() : 1);
 
         var p = Piece(x, x2, y, y2);
 
         bool issue = false;
-        for(var b in p.sub_pieces()){if (all.contains(b)) issue = true;}
-        if(issue){
+        for (var b in p.sub_pieces()) {
+          if (all.contains(b)) issue = true;
+        }
+        if (issue) {
           issue = false;
           x2 = x + 1;
           p = Piece(x, x2, y, y2);
-          for(var b in p.sub_pieces()){if (all.contains(b)) issue = true;}
+          for (var b in p.sub_pieces()) {
+            if (all.contains(b)) issue = true;
+          }
         }
 
-        if(issue){
+        if (issue) {
           issue = false;
           y2 = y + 1;
           p = Piece(x, x2, y, y2);
-          for(var b in p.sub_pieces()){if (all.contains(b)) issue = true;}
+          for (var b in p.sub_pieces()) {
+            if (all.contains(b)) issue = true;
+          }
         }
 
-        if(issue) continue;
+        if (issue) continue;
 
         pieces_.add(p);
         all.addAll(p.sub_pieces());
@@ -1489,7 +2130,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
 
     print("Pieces: ${pieces_.length}");
     int area = 0;
-    for (var piece in pieces_){
+    for (var piece in pieces_) {
       area += piece.area();
 
       pieces.add(JigsawPiece(
@@ -1508,30 +2149,64 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     return pieces;
   }
 
-  void _onPiecePlaced(JigsawPiece piece, Offset pieceDropPosition) {
+  void _checkWrongMoveProgress() {
+    if (pieceOnPool.length > 2 && pieceOnPool.length <= 4) {
+      if (_consecutiveWrongMoves >= 2) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 4 && pieceOnPool.length <= 8) {
+      if (_consecutiveWrongMoves >= 4) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 8 && pieceOnPool.length <= 12) {
+      if (_consecutiveWrongMoves >= 6) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 12 && pieceOnPool.length <= 20) {
+      if (_consecutiveWrongMoves >= 8) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    } else if (pieceOnPool.length > 20 && pieceOnPool.length <= 35) {
+      if (_consecutiveWrongMoves >= 10) {
+        checkUserStruggle();
+        _consecutiveWrongMoves = 0;
+      }
+    }
+  }
+
+  int _consecutiveWrongMoves = 0;
+
+  void _onPiecePlaced(JigsawPiece piece, Offset pieceDropPosition) async {
     _totalMoves++; // Increment total moves
     final RenderBox box =
-    _boardWidgetKey.currentContext?.findRenderObject() as RenderBox;
+        _boardWidgetKey.currentContext?.findRenderObject() as RenderBox;
     final boardPosition = box.localToGlobal(Offset.zero);
     final targetPosition =
-    boardPosition.translate(piece.boundary.left, piece.boundary.top);
+        boardPosition.translate(piece.boundary.left, piece.boundary.top);
 
     const threshold = 48.0;
-
     final distance = (pieceDropPosition - targetPosition).distance;
+
     if (distance < threshold) {
       setState(() {
         _currentPiece = piece;
         pieceOnPool.remove(piece);
-        _movesMade++; // Increment correct moves
+        _movesMade++; // Correct move made
+        _consecutiveWrongMoves = 0; // Reset wrong move counter
       });
+
+      await _audioPlayer.play(AssetSource('audios/correct_move.wav'));
 
       _offsetAnimation = Tween<Offset>(
         begin: pieceDropPosition,
         end: targetPosition,
       ).animate(_animController);
 
-      _animController.addStatusListener((status) {
+      _animController.addStatusListener((status) async {
         if (status == AnimationStatus.completed) {
           setState(() {
             pieceOnBoard.add(piece);
@@ -1540,8 +2215,19 @@ class _JigsawHomePageState extends State<JigsawHomePage>
 
           if (pieceOnPool.isEmpty) {
             _stopTimer();
-            _calculateScore(); // Calculate score when the puzzle is complete
-            _showCompletionDialog(context);
+            _calculateScore();
+            setState(() {
+              isCorrect = true;
+            });
+
+            await _audioPlayer.play(AssetSource('audios/completed.wav'));
+
+            Future.delayed(Duration(seconds: 2), () {
+              setState(() {
+                isCorrect = false;
+              });
+              _showCompletionDialog(context);
+            });
           }
         }
       });
@@ -1554,6 +2240,11 @@ class _JigsawHomePageState extends State<JigsawHomePage>
 
       final simulation = SpringSimulation(spring, 0, 1, -distance);
       _animController.animateWith(simulation);
+    } else {
+      // If move was incorrect, increment wrong move counter
+      _consecutiveWrongMoves++;
+      _checkWrongMoveProgress();
+      await _audioPlayer.play(AssetSource('audios/wrong_move.wav'));
     }
   }
 
@@ -1577,35 +2268,105 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     _score = baseScore.clamp(0, 100).round();
   }
 
-  void _showCompletionDialog(BuildContext context) {
+  String _formatTime(int seconds) {
+    final minutes = seconds ~/ 60;
+    final remainingSeconds = seconds % 60;
+    return '${minutes}m ${remainingSeconds}s';
+  }
+
+  final confettiController = ConfettiController();
+
+  bool isCongrating = false;
+
+  void _showCompletionDialog(BuildContext context) async {
+    await _audioPlayer.play(AssetSource('audios/congrats.wav'));
     final incorrectMoves = _totalMoves - _movesMade;
+    confettiController.play();
+    double screenWidth = MediaQuery.of(context).size.width;
 
     showDialog(
       context: context,
       builder: (context) {
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
-            title:
-            Text('Congratulations!', style: TextStyle(color: Colors.black)),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
+            title: Center(
+              child: Text(
+                'Congratulations!',
+                style: TextStyle(
+                  color: const Color.fromARGB(255, 236, 173, 44),
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Andika',
+                ),
+              ),
+            ),
+            content: Stack(
               children: [
-                Text('You have completed the puzzle!',
-                    style: TextStyle(color: Colors.black)),
-                SizedBox(height: 16),
-                Text('Time Taken: $_timeElapsed seconds',
-                    style: TextStyle(color: Colors.black)),
-                Text('Correct Moves: $_movesMade',
-                    style: TextStyle(color: Colors.black)),
-                Text('Wrong Moves: $incorrectMoves',
-                    style: TextStyle(color: Colors.black)),
-                Text('Score: $_score/100',
-                    style: TextStyle(color: Colors.black)),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset('assets/images/congrats_banner.png'),
+                    SizedBox(height: 20),
+                    Text(
+                      'Time Taken: ${_formatTime(_timeElapsed)}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                    Text(
+                      'Wrong Moves: $incorrectMoves',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                    Text(
+                      'Score: $_score/100',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                    Text(
+                      'Hint Usage: $hintUsed',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(
+                  left: screenWidth / 2,
+                  child: SizedBox(
+                    width: 1,
+                    height: 300,
+                    child: ConfettiWidget(
+                      confettiController: confettiController,
+                      shouldLoop: true,
+                      blastDirectionality: BlastDirectionality.explosive,
+                      numberOfParticles: 35,
+                      emissionFrequency: 0.1,
+                    ),
+                  ),
+                ),
               ],
             ),
             actions: [
-              TextButton(
-                onPressed: () async {
+              InkWell(
+                borderRadius: BorderRadius.circular(30),
+                splashColor: Colors.white.withOpacity(0.2),
+                onTap: () async {
                   setState(() {
                     isLoading = true;
                   });
@@ -1617,14 +2378,34 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                     incorrectMoves: incorrectMoves,
                     hintUsed: hintUsed,
                     score: _score,
+                    level: 2,
                   );
-                  await _adjestDifficulity(_movesMade, incorrectMoves);
+                  await _adjestDifficulity(
+                      _movesMade, incorrectMoves, hintUsed);
                 },
-                child: isLoading
-                    ? Center(
-                  child: CircularProgressIndicator(),
-                )
-                    : Text('OK'),
+                child: Container(
+                  height: 56,
+                  width: 123,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: const Color.fromARGB(255, 142, 190, 132),
+                  ),
+                  child: Center(
+                    child: isLoading
+                        ? Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Text(
+                            'Ok',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Andika',
+                            ),
+                          ),
+                  ),
+                ),
               ),
             ],
           );
@@ -1639,11 +2420,17 @@ class _JigsawHomePageState extends State<JigsawHomePage>
       builder: (context) {
         return AlertDialog(
           title: Text(
-            'Complete Image',
-            style: TextStyle(color: Colors.black),
+            'Complete Image is Here...',
+            style: TextStyle(
+              color: const Color.fromARGB(255, 117, 100, 100),
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Andika',
+            ),
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (canvasImage != null)
                 SizedBox(
@@ -1651,18 +2438,52 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                   child: RawImage(image: canvasImage),
                 ),
               SizedBox(height: 16),
-              Text('Time Taken: $_timeElapsed seconds',
-                  style: TextStyle(color: Colors.black)),
-              Text('Moves Made: $_movesMade',
-                  style: TextStyle(color: Colors.black)),
+              Text(
+                'Time Taken: ${_formatTime(_timeElapsed)}',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'ABeeZee',
+                ),
+              ),
+              Text(
+                'Moves Made: $_movesMade',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'ABeeZee',
+                ),
+              ),
             ],
           ),
           actions: [
-            TextButton(
-              onPressed: () {
+            InkWell(
+              borderRadius: BorderRadius.circular(30),
+              splashColor: Colors.white.withOpacity(0.2),
+              onTap: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Close'),
+              child: Container(
+                height: 56,
+                width: 123,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: const Color.fromARGB(255, 236, 173, 44),
+                ),
+                child: Center(
+                  child: Text(
+                    'Ok',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Andika',
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         );
@@ -1678,18 +2499,18 @@ class _JigsawHomePageState extends State<JigsawHomePage>
   }
 }
 
-class Piece{
+class Piece {
   final int x1, x2, y1, y2;
   Piece(this.x1, this.x2, this.y1, this.y2);
 
-  int area(){
+  int area() {
     return (x2 - x1) * (y2 - y1);
   }
 
-  List<Piece> sub_pieces(){
+  List<Piece> sub_pieces() {
     List<Piece> a = [];
-    for(int x = x1; x < x2; x++){
-      for(int y = y1; y < y2; y++){
+    for (int x = x1; x < x2; x++) {
+      for (int y = y1; y < y2; y++) {
         a.add(Piece(x, x + 1, y, y + 1));
       }
     }
@@ -1710,5 +2531,3 @@ class Piece{
   @override
   int get hashCode => x1.hashCode ^ x2.hashCode ^ y1.hashCode ^ y2.hashCode;
 }
-
-

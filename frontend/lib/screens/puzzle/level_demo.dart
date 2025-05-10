@@ -1,7 +1,8 @@
+import 'package:audioplayers/audioplayers.dart';
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:showcaseview/showcaseview.dart';
-
-import '../../utils/app_styles.dart';
 
 import 'dart:async';
 import 'dart:math';
@@ -13,12 +14,12 @@ import 'package:flutter/services.dart';
 import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
 
 import '../../utils/function.dart';
-import '../home/home_screen.dart';
 
-const TextStyle demoStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
+const TextStyle demoStyle =
+    TextStyle(fontSize: 22, fontWeight: FontWeight.bold, fontFamily: 'ABeeZee');
 
 class PuzzleDemo extends StatelessWidget {
-  const PuzzleDemo({Key? key}) : super(key: key);
+  PuzzleDemo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,10 @@ class PuzzleDemo extends StatelessWidget {
           },
           blurValue: 1,
           autoPlayDelay: const Duration(seconds: 3),
-          builder: (context) => const DemoImageOption(factor: 1, difficulty: 1,),
+          builder: (context) => const DemoImageOption(
+            factor: 1,
+            difficulty: 1,
+          ),
         ),
       ),
     );
@@ -57,7 +61,9 @@ class DemoImageOption extends StatefulWidget {
   final int factor;
   final int difficulty;
 
-  const DemoImageOption({Key? key, required this.factor, required this.difficulty}) : super(key: key);
+  const DemoImageOption(
+      {Key? key, required this.factor, required this.difficulty})
+      : super(key: key);
 
   @override
   State<DemoImageOption> createState() => _DemoImageOptionState();
@@ -67,16 +73,13 @@ class _DemoImageOptionState extends State<DemoImageOption> {
   final GlobalKey _one = GlobalKey();
   final GlobalKey _two = GlobalKey();
 
-
   final scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    //Start showcase view after current widget frames are drawn.
     WidgetsBinding.instance.addPostFrameCallback(
-          (_) => ShowCaseWidget.of(context)
-          .startShowCase([_one, _two]),
+      (_) => ShowCaseWidget.of(context).startShowCase([_one, _two]),
     );
   }
 
@@ -86,71 +89,143 @@ class _DemoImageOptionState extends State<DemoImageOption> {
     super.dispose();
   }
 
+  final AudioPlayer _clickPlayer = AudioPlayer();
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Select Option Demo'),
-      ),
-      backgroundColor: Styles.secondaryColor,
-      body: SafeArea(
-        bottom: false,
-        child: Container(
-            width: screenWidth,
-            height: screenHeight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 30,
-                ),
-                const Text(
-                  "Choose a Option to select image.",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
+      body: Container(
+        width: screenWidth,
+        height: screenHeight,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            opacity: 0.9,
+            image: AssetImage('assets/images/select_option_bg.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: AppBar().preferredSize.height,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      height: 53,
+                      width: 53,
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withOpacity(0.5),
+                      ),
+                      child: Center(
+                        child: Image.asset('assets/images/back_arrow.png'),
+                      ),
+                    ),
                   ),
-                ),
-                const Spacer(),
-
-                Showcase(
-                  key: _one,
-                  descTextStyle: demoStyle,
-                  description: 'Tap to take an image using your camera.',
-                  child: GestureDetector(
-                    onTap: () {startPuzzle();},
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.all(16.0), // Padding around the container
+                  Spacer(),
+                  Text(
+                    "Select a Option",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontFamily: 'Andika',
+                    ),
+                  ),
+                  Spacer(),
+                  SizedBox(
+                    width: 53,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Spacer(),
+            Container(
+              height: 545,
+              width: screenWidth,
+              margin: EdgeInsets.symmetric(horizontal: 30),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Spacer(),
+                  const Text(
+                    "Let’s Choose a Option to Continue....",
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.black,
+                      fontFamily: 'ABeeZee',
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Spacer(),
+                  Showcase(
+                    key: _one,
+                    descTextStyle: demoStyle,
+                    description: 'Tap to take an image using your camera.',
+                    child: GestureDetector(
+                      onTap: () async {
+                        startPuzzle();
+                        await _clickPlayer
+                            .play(AssetSource('audios/click.wav'));
+                      },
                       child: Container(
-                        height: 200,
+                        width: screenWidth,
+                        height: 170,
+                        padding: EdgeInsets.symmetric(horizontal: 15),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: Styles.bgColor,
+                          color: Colors.white,
+                          border: Border.all(
+                            color: const Color.fromARGB(255, 236, 173, 44),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.25),
+                              spreadRadius: 0,
+                              blurRadius: 10,
+                              offset: Offset(6, 4),
+                            ),
+                          ],
                         ),
-                        padding: const EdgeInsets.all(
-                            16.0), // Inner padding for the container's content
-
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        child: Row(
                           children: [
-                            Icon(
-                              Icons.add_a_photo,
-                              size: 50,
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              "Pick from Camara",
+                            const Text(
+                              "Pick\nfrom\nCamera",
                               style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
+                                fontSize: 26,
+                                color: const Color.fromARGB(255, 236, 173, 44),
+                                fontFamily: 'Andika',
+                              ),
+                            ),
+                            Spacer(),
+                            FittedBox(
+                              fit: BoxFit.contain,
+                              child: SizedBox(
+                                width: 110,
+                                child: Image.asset(
+                                  'assets/images/pick_from_camara.png',
+                                ),
                               ),
                             ),
                           ],
@@ -158,41 +233,56 @@ class _DemoImageOptionState extends State<DemoImageOption> {
                       ),
                     ),
                   ),
-                ),
-                Showcase(
-                  key: _two,
-                  description: 'Tap to generate an image using AI.',
-                  descTextStyle: demoStyle,
-                  child: GestureDetector(
-                    onTap: () {startPuzzle();},
-                    child: Padding(
-                      padding:
-                      const EdgeInsets.all(16.0), // Padding around the container
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Showcase(
+                    key: _two,
+                    description: 'Tap to generate an image using AI.',
+                    descTextStyle: demoStyle,
+                    child: GestureDetector(
+                      onTap: () async {
+                        startPuzzle();
+                        await _clickPlayer
+                            .play(AssetSource('audios/click.wav'));
+                      },
                       child: Container(
-                        height: 200,
+                        width: screenWidth,
+                        height: 170,
+                        padding: EdgeInsets.symmetric(horizontal: 15),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: Styles.bgColor,
+                          color: Colors.white,
+                          border: Border.all(
+                            color: const Color.fromARGB(255, 38, 165, 198),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.25),
+                              spreadRadius: 0,
+                              blurRadius: 10,
+                              offset: Offset(6, 4),
+                            ),
+                          ],
                         ),
-                        padding: const EdgeInsets.all(
-                            16.0), // Inner padding for the container's content
-
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        child: Row(
                           children: [
-                            Icon(
-                              Icons.image,
-                              size: 50,
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              "Generate using AI",
+                            const Text(
+                              "Generate\nusing\nAI",
                               style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
+                                fontSize: 26,
+                                color: const Color.fromARGB(255, 38, 165, 198),
+                                fontFamily: 'Andika',
+                              ),
+                            ),
+                            Spacer(),
+                            FittedBox(
+                              fit: BoxFit.contain,
+                              child: SizedBox(
+                                width: 110,
+                                child: Image.asset(
+                                  'assets/images/generate_from_ai.png',
+                                ),
                               ),
                             ),
                           ],
@@ -200,25 +290,26 @@ class _DemoImageOptionState extends State<DemoImageOption> {
                       ),
                     ),
                   ),
-                ),
-
-                const Spacer(),
-                const Spacer(),
-              ],
-            )
+                  Spacer(),
+                ],
+              ),
+            ),
+            Spacer(),
+            Spacer(),
+          ],
         ),
       ),
     );
   }
 
-  void startPuzzle() async{
-
+  void startPuzzle() async {
     final screenPixelScale = MediaQuery.of(context).devicePixelRatio;
     final imageSize = (300 * screenPixelScale).toInt();
 
     ByteData data = await rootBundle.load("assets/images/demo.png");
 
-    final image = MemoryImage(data.buffer.asUint8List(), scale: screenPixelScale);
+    final image =
+        MemoryImage(data.buffer.asUint8List(), scale: screenPixelScale);
 
     final completer = Completer<ImageInfo>();
     image.resolve(const ImageConfiguration()).addListener(
@@ -231,11 +322,13 @@ class _DemoImageOptionState extends State<DemoImageOption> {
 
     ui.Image img_ = await imageInfo.image;
 
-    final ByteData? byteData = await img_.toByteData(format: ui.ImageByteFormat.png);
+    final ByteData? byteData =
+        await img_.toByteData(format: ui.ImageByteFormat.png);
 
     final Uint8List uint8list = byteData!.buffer.asUint8List();
     final img.Image decodedImage = img.decodeImage(uint8list)!;
-    final img.Image resizedImage = img.copyResize(decodedImage, height: imageSize, width: imageSize);
+    final img.Image resizedImage =
+        img.copyResize(decodedImage, height: imageSize, width: imageSize);
     final Uint8List resizedBytes = img.encodePng(resizedImage);
     final ui.Codec codec = await ui.instantiateImageCodec(resizedBytes);
     final ui.FrameInfo frame = await codec.getNextFrame();
@@ -249,17 +342,15 @@ class _DemoImageOptionState extends State<DemoImageOption> {
       ),
     );
   }
-
-
 }
-
 
 class JigsawPiece extends StatelessWidget {
   JigsawPiece({
     Key? key,
     required this.image,
     required this.points,
-    required this.imageSize, required this.position,
+    required this.imageSize,
+    required this.position,
   })  : assert(points.isNotEmpty),
         boundary = _getBounds(points),
         super(key: key);
@@ -353,7 +444,6 @@ class JigsawPainter extends CustomPainter {
   }
 }
 
-
 class DemoGame extends StatelessWidget {
   final ui.Image canvasImage;
 
@@ -392,7 +482,6 @@ class DemoGame extends StatelessWidget {
   }
 }
 
-
 class DemoPuzzle extends StatefulWidget {
   final int factor = 2;
   final int difficulty = 1;
@@ -406,7 +495,6 @@ class DemoPuzzle extends StatefulWidget {
 
 class _DemoPuzzleState extends State<DemoPuzzle>
     with SingleTickerProviderStateMixin {
-
   List<JigsawPiece> pieceOnBoard = [];
   List<JigsawPiece> pieceOnPool = [];
   JigsawPiece? _currentPiece;
@@ -429,6 +517,8 @@ class _DemoPuzzleState extends State<DemoPuzzle>
 
   final List<GlobalKey> keys = [GlobalKey(), GlobalKey(), GlobalKey()];
 
+  final AudioPlayer _audioPlayer = AudioPlayer();
+
   @override
   void initState() {
     _animController = AnimationController(vsync: this);
@@ -439,15 +529,14 @@ class _DemoPuzzleState extends State<DemoPuzzle>
 
     super.initState();
 
-    for(int i = 0; i < pieceOnPool.length; i++){
+    for (int i = 0; i < pieceOnPool.length; i++) {
       keys.add(GlobalKey());
     }
 
     WidgetsBinding.instance.addPostFrameCallback(
-          (_) => ShowCaseWidget.of(context)
-          .startShowCase([keys[0], keys[1], keys[2]]),
+      (_) =>
+          ShowCaseWidget.of(context).startShowCase([keys[0], keys[1], keys[2]]),
     );
-
   }
 
   void _startTimer() {
@@ -465,102 +554,191 @@ class _DemoPuzzleState extends State<DemoPuzzle>
     _timer?.cancel();
   }
 
+  bool isCorrect = false;
+
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: Colors.grey.shade700,
-          appBar: AppBar(
-            title: Text('Puzzle Screen'),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.home),
-                onPressed: () async {
-                  //_prepareGame();
-                  bool demo = await loadString("demo", "no") != "no";
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => PuzzleLevelsScreen(demo: demo,)),
-                        (Route<dynamic> route) => false,
-                  );
-                },
+          body: Container(
+            width: screenWidth,
+            height: screenHeight,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                opacity: 0.9,
+                image: AssetImage('assets/images/activity_bg.png'),
+                fit: BoxFit.cover,
               ),
-            ],
-          ),
-          body: Column(
-            children: [
-              Container(
-                height: 400,
-                alignment: Alignment.center,
-                child: Showcase(
-                  key: keys[0],
-                  description: 'This is where you will solve the puzzle. Drag and drop all puzzle pieces in the correct order.',
-                  descTextStyle: demoStyle,
-                  child: Container(
-                    key: _boardWidgetKey,
-                    width: 300,
-                    height: 300,
-                    color: Colors.grey.shade800,
+            ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: AppBar().preferredSize.height / 5 * 4,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 55,
+                        width: 55,
+                      ),
+                      Spacer(),
+                      Text(
+                        "Let’s Play",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontFamily: 'Andika',
+                        ),
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: () async {
+                          bool demo = await loadString("demo", "no") != "no";
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PuzzleLevelsScreen(
+                                      demo: demo,
+                                    )),
+                            (Route<dynamic> route) => false,
+                          );
+                        },
+                        child: Container(
+                          height: 55,
+                          width: 55,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white.withOpacity(0.3),
+                          ),
+                          child: Center(
+                            child: Image.asset('assets/images/home_icon.png'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 400,
+                  alignment: Alignment.center,
+                  child: Showcase(
+                    key: keys[0],
+                    description:
+                        'This is where you will solve the puzzle. Drag and drop all puzzle pieces in the correct order.',
+                    descTextStyle: demoStyle,
                     child: Stack(
                       children: [
-                        for (var piece in pieceOnBoard)
-                          Positioned(
-                            left: piece.boundary.left,
-                            top: piece.boundary.top,
-                            child: piece,
+                        Container(
+                          key: _boardWidgetKey,
+                          width: 305,
+                          height: 305,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              width: 5,
+                              color: const Color.fromARGB(255, 236, 173, 44),
+                            ),
                           ),
+                          child: Stack(
+                            children: [
+                              for (var piece in pieceOnBoard)
+                                Positioned(
+                                  left: piece.boundary.left,
+                                  top: piece.boundary.top,
+                                  child: piece,
+                                ),
+                            ],
+                          ),
+                        ),
+                        isCorrect
+                            ? SizedBox(
+                                width: 305,
+                                height: 305,
+                                child: Center(
+                                  child: Lottie.asset(
+                                      'assets/animations/correct.json'),
+                                ),
+                              )
+                            : SizedBox(),
                       ],
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: ListView.separated(
-                  padding: EdgeInsets.all(32),
-                  scrollDirection: Axis.horizontal,
-                  physics: BouncingScrollPhysics(),
-                  itemCount: pieceOnPool.length,
-                  itemBuilder: (context, index) {
-                    final piece = pieceOnPool[index];
-                    return Center(
-                      child: Showcase(
-                        key: keys[2 + index],
-                        descTextStyle: demoStyle,
-                        description: 'Place this puzzle piece in ${piece.position} corner to solve the puzzle.',
-                        child: Draggable(
-                          child: piece,
-                          feedback: piece,
-                          childWhenDragging: Opacity(
-                            opacity: 0.24,
-                            child: piece,
-                          ),
-                          onDragEnd: (details) {
-                            _onPiecePlaced(piece, details.offset, index);
-                          },
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      border: Border(
+                        top: BorderSide(
+                          width: 2,
+                          color: Colors.white,
                         ),
                       ),
-                    );
-                  },
-                  separatorBuilder: (context, index) =>
-                      SizedBox(width: 32),
+                    ),
+                    child: ListView.separated(
+                      padding: EdgeInsets.all(32),
+                      scrollDirection: Axis.horizontal,
+                      physics: BouncingScrollPhysics(),
+                      itemCount: pieceOnPool.length,
+                      itemBuilder: (context, index) {
+                        final piece = pieceOnPool[index];
+                        return Center(
+                          child: Showcase(
+                            key: keys[2 + index],
+                            descTextStyle: demoStyle,
+                            description:
+                                'Place this puzzle piece in ${piece.position} corner to solve the puzzle.',
+                            child: Draggable(
+                              child: piece,
+                              feedback: piece,
+                              childWhenDragging: Opacity(
+                                opacity: 0.24,
+                                child: piece,
+                              ),
+                              onDragEnd: (details) {
+                                _onPiecePlaced(piece, details.offset, index);
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) => SizedBox(width: 32),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           floatingActionButton: Showcase(
             key: keys[1],
-            description: 'Tap here to view the full image, if you think you are lost.',
+            description:
+                'Tap here to view the full image, if you think you are lost.',
             descTextStyle: demoStyle,
-            child: FloatingActionButton(
-              onPressed: () {
-                _showFullImageDialog(context);
-                setState(() {
-                  hintUsed++;
-                });
-              },
-              child: Icon(Icons.image),
+            child: Container(
+              height: 70,
+              width: 70,
+              child: FloatingActionButton(
+                backgroundColor: Colors.white,
+                onPressed: () {
+                  _showFullImageDialog(context);
+                  setState(() {
+                    hintUsed++;
+                  });
+                },
+                child: Image.asset(
+                  'assets/images/hint_icon.png',
+                  height: 62,
+                ),
+              ),
             ),
           ),
         ),
@@ -581,17 +759,17 @@ class _DemoPuzzleState extends State<DemoPuzzle>
     );
   }
 
-  int random_length(){
+  int random_length() {
     return Random().nextInt(5) > 2 ? 2 : 1;
   }
 
-  String get_position(int x, int y , int w, int h){
+  String get_position(int x, int y, int w, int h) {
     List<String> out = [];
 
-    if (h == 1){
+    if (h == 1) {
       out.add(y == 0 ? "Top" : "Bottom");
     }
-    if (w == 1){
+    if (w == 1) {
       out.add(x == 0 ? "Left" : "Right");
     }
 
@@ -607,32 +785,30 @@ class _DemoPuzzleState extends State<DemoPuzzle>
 
     for (int x = 0; x < factor; x++) {
       for (int y = 0; y < factor; y++) {
-
         bool found = false;
-        for (List<int> use in used){
-          if ( x==use[0] && y == use[1]) found = true;
+        for (List<int> use in used) {
+          if (x == use[0] && y == use[1]) found = true;
         }
 
-        if(found) continue;
+        if (found) continue;
 
         int lx = 1;
         int ly = 1;
 
-        if (y < (factor - 1)){
+        if (y < (factor - 1)) {
           ly = random_length();
         }
         if (x < (factor - 1)) {
           lx = random_length();
         }
-        if (lx > 1){
+        if (lx > 1) {
           used.add([x + 1, y]);
-          if (ly > 1){
-            ly=1;
+          if (ly > 1) {
+            ly = 1;
           }
-        }else if (ly > 1){
+        } else if (ly > 1) {
           used.add([x, y + 1]);
         }
-
 
         pieces.add(JigsawPiece(
           key: UniqueKey(),
@@ -654,13 +830,14 @@ class _DemoPuzzleState extends State<DemoPuzzle>
     return pieces;
   }
 
-  void _onPiecePlaced(JigsawPiece piece, Offset pieceDropPosition, int index) {
+  void _onPiecePlaced(
+      JigsawPiece piece, Offset pieceDropPosition, int index) async {
     _totalMoves++; // Increment total moves
     final RenderBox box =
-    _boardWidgetKey.currentContext?.findRenderObject() as RenderBox;
+        _boardWidgetKey.currentContext?.findRenderObject() as RenderBox;
     final boardPosition = box.localToGlobal(Offset.zero);
     final targetPosition =
-    boardPosition.translate(piece.boundary.left, piece.boundary.top);
+        boardPosition.translate(piece.boundary.left, piece.boundary.top);
 
     const threshold = 48.0;
 
@@ -673,12 +850,14 @@ class _DemoPuzzleState extends State<DemoPuzzle>
         keys.removeAt(2);
       });
 
+      await _audioPlayer.play(AssetSource('audios/correct_move.wav'));
+
       _offsetAnimation = Tween<Offset>(
         begin: pieceDropPosition,
         end: targetPosition,
       ).animate(_animController);
 
-      _animController.addStatusListener((status) {
+      _animController.addStatusListener((status) async {
         if (status == AnimationStatus.completed) {
           setState(() {
             pieceOnBoard.add(piece);
@@ -687,8 +866,19 @@ class _DemoPuzzleState extends State<DemoPuzzle>
 
           if (pieceOnPool.isEmpty) {
             _stopTimer();
-            _calculateScore(); // Calculate score when the puzzle is complete
-            _showCompletionDialog(context);
+            _calculateScore();
+            setState(() {
+              isCorrect = true;
+            });
+
+            await _audioPlayer.play(AssetSource('audios/completed.wav'));
+
+            Future.delayed(Duration(seconds: 2), () async {
+              setState(() {
+                isCorrect = true;
+              });
+              _showCompletionDialog(context);
+            });
           }
         }
       });
@@ -701,6 +891,8 @@ class _DemoPuzzleState extends State<DemoPuzzle>
 
       final simulation = SpringSimulation(spring, 0, 1, -distance);
       _animController.animateWith(simulation);
+    } else {
+      await _audioPlayer.play(AssetSource('audios/wrong_move.wav'));
     }
 
     ShowCaseWidget.of(context).startShowCase([keys[2]]);
@@ -726,42 +918,128 @@ class _DemoPuzzleState extends State<DemoPuzzle>
     _score = baseScore.clamp(0, 100).round();
   }
 
-  void _showCompletionDialog(BuildContext context) {
+  final confettiController = ConfettiController();
+
+  bool isCongrating = false;
+
+  void _showCompletionDialog(BuildContext context) async {
+    await _audioPlayer.play(AssetSource('audios/congrats.wav'));
     final incorrectMoves = _totalMoves - _movesMade;
+    confettiController.play();
+    double screenWidth = MediaQuery.of(context).size.width;
 
     showDialog(
       context: context,
       builder: (context) {
         return StatefulBuilder(builder: (context, setState) {
           return AlertDialog(
-            title:
-            Text('Congratulations!', style: TextStyle(color: Colors.black)),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
+            title: Center(
+              child: Text(
+                'Congratulations!',
+                style: TextStyle(
+                  color: const Color.fromARGB(255, 236, 173, 44),
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Andika',
+                ),
+              ),
+            ),
+            content: Stack(
               children: [
-                Text('You have completed the puzzle!',
-                    style: TextStyle(color: Colors.black)),
-                SizedBox(height: 16),
-                Text('Time Taken: $_timeElapsed seconds',
-                    style: TextStyle(color: Colors.black)),
-                Text('Correct Moves: $_movesMade',
-                    style: TextStyle(color: Colors.black)),
-                Text('Wrong Moves: $incorrectMoves',
-                    style: TextStyle(color: Colors.black)),
-                Text('Score: $_score/100',
-                    style: TextStyle(color: Colors.black)),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset('assets/images/congrats_banner.png'),
+                    SizedBox(height: 20),
+                    Text(
+                      'Time Taken: ${_formatTime(_timeElapsed)}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                    Text(
+                      'Wrong Moves: $incorrectMoves',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                    Text(
+                      'Score: $_score/100',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                    Text(
+                      'Hint Usage: $hintUsed',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        fontFamily: 'ABeeZee',
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(
+                  left: screenWidth / 2,
+                  child: SizedBox(
+                    width: 1,
+                    height: 300,
+                    child: ConfettiWidget(
+                      confettiController: confettiController,
+                      shouldLoop: true,
+                      blastDirectionality: BlastDirectionality.explosive,
+                      numberOfParticles: 35,
+                      emissionFrequency: 0.1,
+                    ),
+                  ),
+                ),
               ],
             ),
             actions: [
-              TextButton(
-                onPressed: () async {
+              InkWell(
+                borderRadius: BorderRadius.circular(30),
+                splashColor: Colors.white.withOpacity(0.2),
+                onTap: () async {
                   await saveString("demo", "yes");
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => PuzzleLevelsScreen(
+                        demo: true,
+                      ),
+                    ),
                   );
                 },
-                child:Text('OK'),
+                child: Container(
+                  height: 56,
+                  width: 123,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: const Color.fromARGB(255, 142, 190, 132),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Ok',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Andika',
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ],
           );
@@ -770,37 +1048,85 @@ class _DemoPuzzleState extends State<DemoPuzzle>
     );
   }
 
+  String _formatTime(int seconds) {
+    final minutes = seconds ~/ 60;
+    final remainingSeconds = seconds % 60;
+    return '${minutes}m ${remainingSeconds}s';
+  }
+
   void _showFullImageDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: Text(
-            'Complete Image',
-            style: TextStyle(color: Colors.black),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                height: 300,
-                child: RawImage(image: widget.canvasImage),
+        return Container(
+          child: AlertDialog(
+            title: Text(
+              'Complete Image is Here...',
+              style: TextStyle(
+                color: const Color.fromARGB(255, 117, 100, 100),
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Andika',
               ),
-              SizedBox(height: 16),
-              Text('Time Taken: $_timeElapsed seconds',
-                  style: TextStyle(color: Colors.black)),
-              Text('Moves Made: $_movesMade',
-                  style: TextStyle(color: Colors.black)),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 300,
+                  child: RawImage(image: widget.canvasImage),
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Time Taken: ${_formatTime(_timeElapsed)}',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.normal,
+                    fontFamily: 'ABeeZee',
+                  ),
+                ),
+                Text(
+                  'Moves Made: $_movesMade',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.normal,
+                    fontFamily: 'ABeeZee',
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              InkWell(
+                borderRadius: BorderRadius.circular(30),
+                splashColor: Colors.white.withOpacity(0.2),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  height: 56,
+                  width: 123,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: const Color.fromARGB(255, 236, 173, 44),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Ok',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Andika',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Close'),
-            ),
-          ],
         );
       },
     );
@@ -810,6 +1136,7 @@ class _DemoPuzzleState extends State<DemoPuzzle>
   void dispose() {
     _animController.dispose();
     _timer?.cancel();
+    confettiController.dispose();
     super.dispose();
   }
 }

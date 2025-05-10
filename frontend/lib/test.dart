@@ -1,30 +1,3 @@
-import 'dart:developer';
-
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:showcaseview/showcaseview.dart';
-
-import 'package:flutter/material.dart';
-import 'package:showcaseview/showcaseview.dart';
-
-import '../../utils/app_styles.dart';
-
-import '../../utils/function.dart';
-import 'dart:async';
-import 'dart:convert';
-import 'dart:math';
-import 'dart:ui' as ui;
-import 'package:image/image.dart' as img;
-
-import 'package:flutter/physics.dart';
-import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
-import 'package:magicmind_puzzle/constants/constant.dart';
-import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
-import 'package:magicmind_puzzle/services/mongodb.dart';
-
-
 /*
 void main() => runApp(const PuzzleDemo());
 

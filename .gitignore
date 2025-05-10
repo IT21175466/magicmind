@@ -1,0 +1,40 @@
+
+# Flutter/Dart specific
+frontend/.dart_tool/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/.packages
+frontend/build/
+frontend/generated_plugin_registrant.dart
+
+# Android specific
+frontend/android/.gradle/
+frontend/android/app/debug.keystore
+frontend/android/key.properties
+frontend/android/.idea/
+frontend/android/local.properties
+
+# iOS specific
+frontend/ios/Flutter/.last_build_id
+frontend/ios/.symlinks/
+frontend/ios/Pods/
+frontend/ios/Runner.xcworkspace/
+frontend/ios/.dart_tool/
+
+# Web specific
+frontend/web/.dart_tool/
+
+# macOS specific
+frontend/macos/.dart_tool/
+frontend/macos/Flutter/ephemeral/
+
+# Windows specific
+frontend/windows/.dart_tool/
+frontend/windows/Flutter/ephemeral/
+
+# Linux specific
+frontend/linux/.dart_tool/
+frontend/linux/Flutter/ephemeral/
+
+# VS Code
+frontend/.vscode/
