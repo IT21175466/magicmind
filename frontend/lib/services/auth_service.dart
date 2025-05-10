@@ -12,6 +12,12 @@ class MongoService {
     return db.collection(_collectionName);
   }
 
+  static Future<String?> getUserName(String userId) async {
+    final col = await _getCollection();
+    final user = await col.findOne(where.id(ObjectId.parse(userId)));
+    return user?['name'];
+  }
+
   static Future<Map<String, dynamic>?> login(
       String email, String password) async {
     final col = await _getCollection();
