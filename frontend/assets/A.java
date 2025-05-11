@@ -1,0 +1,1 @@
+/media/VPS/102. Prepossition game/_docs/0205/upload_image.csv

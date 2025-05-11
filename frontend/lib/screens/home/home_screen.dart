@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:magicmind_puzzle/preposition_feature/preposition_main.dart';
 import 'package:magicmind_puzzle/screens/auth/login_page.dart';
 import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
 import 'package:magicmind_puzzle/services/auth_service.dart';
@@ -142,7 +143,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
             }),
-            buildButton("🎤   Presentation Game", Colors.brown, () {}),
+            buildButton("🎤   Preposition Game", Colors.brown, () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (contex) => PrepositionHome(),
+                ),
+              );
+            }),
             buildButton("📝  Quiz Time", Colors.orange, () {}),
             buildButton("🌍   Explore World", Colors.teal, () {}),
             Spacer(),

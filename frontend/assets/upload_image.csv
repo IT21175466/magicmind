@@ -1,0 +1,404 @@
+a,b,code,pre,preposition,post
+chair,potted plant,L,potted plant is,left to,the chair
+chair,vase,L,vase is,left to,the chair
+potted plant,chair,R,chair is,right to,the potted plant
+potted plant,vase,B,vase is,below,the potted plant
+vase,chair,R,chair is,right to,the vase
+vase,potted plant,T,potted plant is,above,the vase
+chair,potted plant,L,potted plant is,left to,the chair
+chair,vase,L,vase is,left to,the chair
+potted plant,chair,R,chair is,right to,the potted plant
+potted plant,vase,B,vase is,below,the potted plant
+vase,chair,R,chair is,right to,the vase
+vase,potted plant,T,potted plant is,above,the vase
+tv,chair,L,chair is,left to,the tv
+chair,tv,R,tv is,right to,the chair
+couch,potted plant,OL,potted plant is,on,the couch
+couch,potted plant,OR,potted plant is,on,the couch
+couch,potted plant,OL,potted plant is,on,the couch
+couch,potted plant,OR,potted plant is,on,the couch
+teddy bear,dining table,OB,teddy bear is,on,the dining table
+dog,dining table,OT,dog is,under,the dining table
+potted plant,couch,R,couch is,to the right of,the potted plant
+couch,potted plant,L,potted plant is,to the left of,the couch
+person,clock,R,clock is,to the right of,the person
+clock,person,L,person is,to the left of,the clock
+car,clock,L,clock is,to the left of,the car
+car,tv,L,tv is,to the left of,the car
+car,clock,R,clock is,to the right of,the car
+clock,car,R,car is,to the right of,the clock
+clock,tv,R,tv is,to the right of,the clock
+tv,car,R,car is,to the right of,the tv
+tv,clock,L,clock is,to the left of,the tv
+tv,clock,R,clock is,to the right of,the tv
+clock,car,L,car is,to the left of,the clock
+clock,tv,L,tv is,to the left of,the clock
+chair,potted plant,R,potted plant is,to the right of,the chair
+potted plant,chair,L,chair is,to the left of,the potted plant
+chair,clock,L,clock is,left,the chair
+clock,chair,R,chair is,right,the clock
+clock,chair,R,chair is,right,the clock
+clock,chair,R,chair is,right,the clock
+chair,clock,L,clock is,left,the chair
+chair,clock,L,clock is,left,the chair
+tv,chair,L,chair is,left,the tv
+chair,tv,R,tv is,right,the chair
+bed,cup,I,cup is,inside,the bed
+cup,bed,O,bed is,outside,the cup
+bottle,tv,R,tv is,right,the bottle
+bottle,chair,R,chair is,right,the bottle
+tv,bottle,L,bottle is,left,the tv
+tv,chair,OR,chair is,next to,the tv
+chair,bottle,L,bottle is,left,the chair
+chair,tv,OL,tv is,next to,the chair
+tv,keyboard,OB,keyboard is,under,the tv
+tv,suitcase,OR,suitcase is,beside,the tv
+tv,suitcase,R,suitcase is,right,the tv
+keyboard,tv,OT,tv is,above,the keyboard
+keyboard,suitcase,R,suitcase is,right,the keyboard
+keyboard,suitcase,R,suitcase is,right,the keyboard
+suitcase,tv,OL,tv is,beside,the suitcase
+suitcase,keyboard,L,keyboard is,left,the suitcase
+suitcase,tv,L,tv is,left,the suitcase
+suitcase,keyboard,L,keyboard is,left,the suitcase
+potted plant,couch,R,Couch is,Right,the potted plant
+couch,potted plant,L,pottedplant is,left,the couch
+person,potted plant,OR,potted plant is,beside,the person
+potted plant,person,OL,person is,beside,the potted plant
+book,bottle,OR,bottle is,beside,the book
+book,laptop,L,laptop is,left,the book
+bottle,book,OL,book is,beside,the bottle
+bottle,laptop,OL,laptop is,beside,the bottle
+laptop,book,R,book is,right,the laptop
+laptop,bottle,OR,bottle is,beside,the laptop
+bottle,bed,OB,bed is,under,the bottle
+bottle,handbag,OB,handbag is,under,the bottle
+bed,bottle,OT,bottle is,on,the bed
+bed,handbag,I,handbag is,inside,the bed
+handbag,bottle,OT,bottle is,on,the handbag
+handbag,bed,O,bed is,outside,the handbag
+potted plant,chair,OR,chair is,beside,the potted plant
+potted plant,airplane,OB,airplane is,under,the potted plant
+chair,potted plant,OL,potted plant is,beside,the chair
+chair,airplane,OB,airplane is,under,the chair
+airplane,potted plant,OT,potted plant is,on,the airplane
+airplane,chair,OT,chair is,on,the airplane
+laptop,cake,OR,cake is,beside,the laptop
+cake,laptop,OL,laptop is,beside,the cake
+chair,dining table,L,dining table is,left,the chair
+chair,dining table,L,dining table is,left,the chair
+dining table,chair,R,chair is,right,the dining table
+dining table,chair,R,chair is,right,the dining table
+person,cake,OB,cake is,in front of,the person
+person,dining table,OB,dining table is,in front of,the person
+cake,person,OT,person is,behind,the cake
+cake,dining table,O,dining table is,beside,the cake
+dining table,person,OT,person is,behind,the dining table
+dining table,cake,I,cake is,on,the dining table
+chair,bench,OL,bench is,beside,the chair
+chair,bench,OR,bench is,beside,the chair
+chair,bench,O,bench is,next to,the chair
+bench,chair,OR,chair is,beside,the bench
+bench,chair,OL,chair is,beside,the bench
+bench,chair,I,chair is,on,the bench
+laptop,bed,O,bed is,under,the laptop
+bed,laptop,I,laptop is,on,the bed
+dining table,chair,OL,chair is,beside,the dining table
+chair,dining table,OR,dining table is,beside,the chair
+person,cup,OL,cup is,near,the person
+person,book,L,book is,beside,the person
+person,cake,R,cake is,next to,the person
+cup,person,OR,person is,near,the cup
+cup,book,OR,book is,beside,the cup
+cup,cake,R,cake is,next to,the cup
+book,person,R,person is,beside,the book
+book,cup,OL,cup is,near,the book
+book,cake,OR,cake is,next to,the book
+cake,person,L,person is,beside,the cake
+cake,cup,L,cup is,near,the cake
+cake,book,OL,book is,beside,the cake
+bowl,dining table,O,bowl is,on,the dining table
+dining table,bowl,I,bowl is,on top of,the dining table
+bowl,dining table,O,dining table is,under,the bowl
+person,motorcycle,L,motorcycle is,left to,the person
+person,car,R,car is,right to,the person
+person,motorcycle,L,motorcycle is,left to,the person
+person,car,R,car is,right to,the person
+motorcycle,person,R,person is,right to,the motorcycle
+motorcycle,person,R,person is,right to,the motorcycle
+motorcycle,car,R,car is,right to,the motorcycle
+car,person,L,person is,left to,the car
+car,person,L,person is,left to,the car
+car,motorcycle,L,motorcycle is,left to,the car
+person,chair,L,chair is,left to,the person
+person,dining table,OB,dining table is,beside,the person
+person,cup,OB,cup is,above,the person
+chair,person,R,person is,right to,the chair
+chair,dining table,R,dining table is,right to,the chair
+chair,person,R,person is,right to,the chair
+chair,cup,R,cup is,right to,the chair
+dining table,person,OT,person is,on top of,the dining table
+dining table,chair,L,chair is,left to,the dining table
+dining table,person,OT,person is,on top of,the dining table
+dining table,cup,OR,cup is,over,the dining table
+person,chair,L,chair is,left to,the person
+person,dining table,OB,dining table is,beside,the person
+person,cup,R,cup is,right to,the person
+laptop,bottle,OR,bottle is,over,the laptop
+laptop,cup,R,cup is,right to,the laptop
+bottle,laptop,OL,laptop is,beside,the bottle
+bottle,cup,R,cup is,right to,the bottle
+cup,laptop,L,laptop is,left to,the cup
+cup,bottle,L,bottle is,left to,the cup
+laptop,keyboard,I,keyboard is,inside,the laptop
+laptop,bed,O,bed is,outside,the laptop
+laptop,keyboard,I,keyboard is,inside,the laptop
+laptop,bed,O,bed is,outside,the laptop
+keyboard,laptop,O,laptop is,outside,the keyboard
+keyboard,laptop,O,laptop is,outside,the keyboard
+keyboard,bed,O,bed is,outside,the keyboard
+bed,laptop,I,laptop is,inside,the bed
+bed,laptop,I,laptop is,inside,the bed
+bed,keyboard,I,keyboard is,inside,the bed
+bottle,chair,O,chair is,outside,the bottle
+bottle,chair,O,chair is,outside,the bottle
+chair,bottle,I,bottle is,inside,the chair
+chair,bottle,I,bottle is,inside,the chair
+potted plant,laptop,L,laptop is,left to,the potted plant
+potted plant,vase,I,vase is,inside,the potted plant
+potted plant,laptop,R,laptop is,right to,the potted plant
+potted plant,vase,R,vase is,right to,the potted plant
+laptop,potted plant,R,potted plant is,right to,the laptop
+laptop,potted plant,L,potted plant is,left to,the laptop
+laptop,vase,R,vase is,right to,the laptop
+vase,potted plant,O,potted plant is,outside,the vase
+vase,potted plant,L,potted plant is,left to,the vase
+vase,laptop,L,laptop is,left to,the vase
+laptop,potted plant,L,potted plant is,left to,the laptop
+laptop,clock,R,clock is,right to,the laptop
+potted plant,laptop,R,laptop is,right to,the potted plant
+potted plant,clock,R,clock is,right to,the potted plant
+clock,laptop,L,laptop is,left to,the clock
+clock,potted plant,L,potted plant is,left to,the clock
+clock,potted plant,L,potted plant is,beside,the clock
+clock,bowl,L,bowl is,beside,the clock
+clock,vase,L,vase is,beside,the clock
+clock,book,L,book is,beside,the clock
+clock,vase,R,vase is,next to,the clock
+clock,dining table,OB,dining table is,on top of,the clock
+clock,book,R,book is,next to,the clock
+clock,potted plant,L,potted plant is,beside,the clock
+clock,vase,R,vase is,next to,the clock
+clock,potted plant,L,potted plant is,beside,the clock
+clock,vase,L,vase is,beside,the clock
+potted plant,clock,R,clock is,next to,the potted plant
+potted plant,vase,I,vase is,inside,the potted plant
+vase,clock,R,clock is,next to,the vase
+vase,potted plant,O,potted plant is,outside,the vase
+teddy bear,potted plant,L,potted plant is,beside,the teddy bear
+teddy bear,chair,OT,chair is,on top of,the teddy bear
+potted plant,teddy bear,R,teddy bear is,next to,the potted plant
+potted plant,chair,R,chair is,next to,the potted plant
+chair,teddy bear,OB,teddy bear is,partially covering,the chair
+chair,potted plant,L,potted plant is,beside,the chair
+clock,dining table,L,dining table is,beside,the clock
+clock,dining table,L,dining table is,beside,the clock
+dining table,clock,R,clock is,next to,the dining table
+dining table,clock,R,clock is,next to,the dining table
+bottle,suitcase,R,suitcase is,next to,the bottle
+bottle,bird,R,bird is,next to,the bottle
+suitcase,bottle,L,bottle is,beside,the suitcase
+suitcase,bird,R,bird is,next to,the suitcase
+bird,bottle,L,bottle is,beside,the bird
+bird,suitcase,L,suitcase is,beside,the bird
+cup,bowl,L,bowl is,beside,the cup
+cup,sandwich,R,sandwich is,next to,the cup
+cup,bowl,R,bowl is,next to,the cup
+cup,sandwich,R,sandwich is,next to,the cup
+bowl,cup,R,cup is,next to,the bowl
+bowl,cup,L,cup is,beside,the bowl
+bowl,sandwich,R,sandwich is,next to,the bowl
+sandwich,cup,L,cup is,beside,the sandwich
+sandwich,cup,L,cup is,beside,the sandwich
+sandwich,bowl,L,bowl is,beside,the sandwich
+person,dining table,OB,dining table is,around,the person
+dining table,person,OT,person is,on top of,the dining table
+person,horse,OB,horse is,around,the person
+horse,person,OT,person is,on top of,the horse
+bowl,cup,R,cup is,next to,the bowl
+bowl,broccoli,R,broccoli is,next to,the bowl
+bowl,spoon,R,spoon is,next to,the bowl
+bowl,spoon,R,spoon is,next to,the bowl
+cup,bowl,L,bowl is,beside,the cup
+cup,broccoli,L,broccoli is,next to,the cup
+cup,spoon,L,spoon is,beside,the cup
+cup,spoon,L,spoon is,beside,the cup
+broccoli,bowl,L,bowl is,beside,the broccoli
+broccoli,cup,R,cup is,next to,the broccoli
+broccoli,spoon,OR,spoon is,covering,the broccoli
+broccoli,spoon,OR,spoon is,covering,the broccoli
+spoon,bowl,L,bowl is,beside,the spoon
+spoon,cup,R,cup is,next to,the spoon
+spoon,broccoli,OL,broccoli is,slightly covering,the spoon
+spoon,bowl,L,bowl is,beside,the spoon
+spoon,cup,R,cup is,next to,the spoon
+spoon,broccoli,OL,broccoli is,slightly covering,the spoon
+donut,bowl,OR,bowl is,partially covering,the donut
+donut,cake,R,cake is,next to,the donut
+bowl,donut,OL,donut is,partially covered by,the bowl
+bowl,cake,L,cake is,beside,the bowl
+cake,donut,L,donut is,beside,the cake
+cake,bowl,R,bowl is,next to,the cake
+potted plant,dining table,L,dining table is,beside,the potted plant
+potted plant,person,L,person is,beside,the potted plant
+dining table,potted plant,R,potted plant is,next to,the dining table
+dining table,person,OT,person is,on top of,the dining table
+person,potted plant,R,potted plant is,next to,the person
+person,dining table,OB,dining table is,around,the person
+bowl,potted plant,L,potted plant is,beside,the bowl
+bowl,potted plant,L,potted plant is,beside,the bowl
+potted plant,bowl,R,bowl is,next to,the potted plant
+potted plant,bowl,R,bowl is,next to,the potted plant
+potted plant,bowl,OB,bowl is,partially covering,the potted plant
+bowl,potted plant,OT,potted plant is,on top of,the bowl
+remote,cup,R,cup is,next to,the remote
+remote,bowl,L,bowl is,beside,the remote
+cup,remote,L,remote is,beside,the cup
+cup,bowl,OT,bowl is,on top of,the cup
+bowl,remote,R,remote is,next to,the bowl
+bowl,cup,OB,cup is,around,the bowl
+bottle,cake,OB,cake is,around,the bottle
+bottle,cake,L,cake is,beside,the bottle
+bottle,cake,L,cake is,beside,the bottle
+cake,bottle,OT,bottle is,on top of,the cake
+cake,bottle,R,bottle is,next to,the cake
+cake,bottle,R,bottle is,next to,the cake
+bottle,cake,L,cake is,beside,the bottle
+bottle,spoon,L,spoon is,beside,the bottle
+bottle,orange,R,orange is,next to,the bottle
+cake,bottle,L,bottle is,beside,the cake
+cake,spoon,L,spoon is,beside,the cake
+cake,orange,R,orange is,next to,the cake
+spoon,bottle,R,bottle is,next to,the spoon
+spoon,cake,R,cake is,beside,the spoon
+spoon,orange,OR,orange is,partially covering,the spoon
+orange,bottle,R,bottle is,next to,the orange
+orange,cake,L,cake is,beside,the orange
+orange,spoon,OL,spoon is,partially covering,the orange
+pizza,dining table,O,dining table is,on,the pizza
+pizza,umbrella,OR,umbrella is,beside,the pizza
+dining table,pizza,I,pizza is,inside,the dining table
+dining table,umbrella,I,umbrella is,inside,the dining table
+umbrella,pizza,OL,pizza is,partially covering,the umbrella
+umbrella,dining table,O,dining table is,on,the umbrella
+chair,dining table,OL,dining table is,partially covering,the chair
+chair,dining table,OL,dining table is,partially covering,the chair
+chair,dining table,OR,dining table is,beside,the chair
+dining table,chair,OR,chair is,beside,the dining table
+dining table,chair,OR,chair is,beside,the dining table
+dining table,chair,OL,chair is,partially covering,the dining table
+cup,chair,OT,chair is,top to,the cup
+cup,cat,OR,cat is,right to,the cup
+cup,dining table,OB,dining table is,bottom to,the cup
+cup,chair,OT,chair is,top to,the cup
+chair,cup,OB,cup is,bottom to,the chair
+chair,cat,R,cat is,right to,the chair
+chair,dining table,R,dining table is,right to,the chair
+chair,cup,R,cup is,right to,the chair
+cat,cup,OL,cup is,left to,the cat
+cat,chair,OL,chair is,left to,the cat
+cat,dining table,OB,dining table is,bottom to,the cat
+cat,chair,L,chair is,left to,the cat
+cat,cup,OB,cup is,bottom to,the cat
+dining table,cup,OT,cup is,top to,the dining table
+dining table,chair,L,chair is,left to,the dining table
+dining table,cat,OT,cat is,top to,the dining table
+vase,cat,OT,cat is,top to,the vase
+cat,vase,OB,vase is,bottom to,the cat
+cat,potted plant,OL,potted plant is,left to,the cat
+potted plant,cat,OR,cat is,right to,the potted plant
+laptop,bowl,L,bowl is,left to,the laptop
+bowl,laptop,R,laptop is,right to,the bowl
+bowl,tv,R,tv is,right to,the bowl
+tv,bowl,L,bowl is,left to,the tv
+bench,handbag,OT,handbag is,top to,the bench
+handbag,bench,OB,bench is,bottom to,the handbag
+clock,bus,O,bus is,outside,the clock
+bus,clock,I,clock is,inside,the bus
+chair,teddy bear,R,chair is,right of,the teddy bear
+chair,cat,I,chair is,in front of,the cat
+chair,teddy bear,R,chair is,right of,the teddy bear
+chair,cat,OB,chair is,on top of,the cat
+teddy bear,chair,L,teddy bear is,left of,the chair
+teddy bear,chair,L,teddy bear is,left of,the chair
+teddy bear,cat,L,teddy bear is,left of,the cat
+cat,chair,O,cat is,on,the chair
+cat,chair,OT,cat is,on top of,the chair
+cat,teddy bear,R,cat is,right of,the teddy bear
+vase,potted plant,O,vase is,on,the potted plant
+vase,dining table,OB,vase is,on top of,the dining table
+potted plant,vase,I,potted plant is,inside,the vase
+potted plant,dining table,OB,potted plant is,on top of,the dining table
+dining table,vase,OT,dining table is,under,the vase
+dining table,potted plant,OT,dining table is,under,the potted plant
+dining table,vase,OT,dining table is,on top of,the vase
+vase,dining table,OB,vase is,outside,the dining table
+bench,potted plant,OT,bench is,on top of,the potted plant
+potted plant,bench,OB,potted plant is,outside,the bench
+laptop,potted plant,OT,laptop is,on top of,the potted plant
+keyboard,laptop,O,keyboard is,outside,the laptop
+potted plant,laptop,OB,potted plant is,outside,the laptop
+potted plant,dining table,OB,potted plant is,outside,the dining table
+dining table,potted plant,OT,dining table is,on top of,the potted plant
+potted plant,bed,OB,potted plant is,outside,the bed
+bed,potted plant,OT,bed is,on top of,the potted plant
+potted plant,cup,OB,potted plant is,outside,the cup
+cup,potted plant,OT,cup is,on top of,the potted plant
+person,tv,R,tv is,right to,the person
+person,tv,R,tv is,right to,the person
+tv,person,L,person is,left to,the tv
+tv,person,L,person is,left to,the tv
+person,mouse,L,mouse is,left to,the person
+mouse,person,R,person is,right to,the mouse
+person,cake,R,cake is,right to,the person
+person,truck,L,truck is,left to,the person
+person,tv,R,tv is,right to,the person
+cake,person,L,person is,left to,the cake
+cake,truck,L,truck is,left to,the cake
+cake,tv,L,tv is,left to,the cake
+truck,person,R,person is,right to,the truck
+truck,cake,R,cake is,right to,the truck
+truck,tv,R,tv is,right to,the truck
+tv,person,L,person is,left to,the tv
+tv,cake,R,cake is,right to,the tv
+tv,truck,L,truck is,left to,the tv
+person,truck,L,truck is,left to,the person
+person,potted plant,L,potted plant is,left to,the person
+person,tv,L,tv is,left to,the person
+person,truck,L,truck is,left to,the person
+person,potted plant,L,potted plant is,left to,the person
+person,tv,L,tv is,left to,the person
+truck,person,R,person is,right to,the truck
+truck,person,R,person is,right to,the truck
+truck,potted plant,OT,potted plant is,top to,the truck
+truck,tv,L,tv is,left to,the truck
+potted plant,person,R,person is,right to,the potted plant
+potted plant,person,R,person is,right to,the potted plant
+potted plant,truck,OB,truck is,bottom to,the potted plant
+potted plant,tv,L,tv is,left to,the potted plant
+tv,person,R,person is,right to,the tv
+tv,person,R,person is,right to,the tv
+tv,chair,R,chair is,right to,the tv
+tv,chair,R,chair is,right to,the tv
+tv,bed,L,bed is,left to,the tv
+chair,tv,L,tv is,left to,the chair
+chair,bed,OR,bed is,right to,the chair
+chair,tv,L,tv is,left to,the chair
+chair,bed,R,bed is,right to,the chair
+bed,tv,L,tv is,left to,the bed
+bed,chair,OL,chair is,left to,the bed
+bed,chair,L,chair is,left to,the bed
+book,suitcase,L,suitcase is,left to,the book
+suitcase,book,R,book is,right to,the suitcase
+potted plant,keyboard,R,keyboard is,right to,the potted plant
+keyboard,potted plant,L,potted plant is,left to,the keyboard

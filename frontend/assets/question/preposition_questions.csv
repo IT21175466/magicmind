@@ -1,0 +1,474 @@
+Image,Pre,Answer,Post,Answers,Start,End
+1.png,The parrot is,on,the chair.,"on, under, behind, next to",4,5
+1.png,The goldfish is,in,the fish tank.,"in, on, under, next to",4,5
+1.png,The dog is,on,the couch.,"on, under, beside, in front of",4,5
+1.png,The girl is,sitting on,the couch.,"sitting on, standing near, under",4,5
+2.png,The hats are,on,the hat stand.,"on, under, behind, next to",5,6
+2.png,The suitcase is,under,the rack.,"under, on, behind, next to",5,6
+2.png,The shoes are,on,the top shelf.,"on, under, beside, behind",5,6
+2.png,The yellow bag is,next to,the brown suitcase.,"next to, on, under, behind",5,6
+2.png,The window is,behind,the hat stand.,"behind, next to, above, below",5,6
+3.png,The rocket is,on,the top shelf.,"on, under, behind, next to",3,4
+3.png,The ball is,next to,the blue car.,"next to, on, under, behind",3,4
+3.png,The blocks are,under,the robot.,"under, on, behind, next to",3,4
+3.png,The yellow duck is,in front of,the blocks.,"in front of, on, next to, behind",3,4
+3.png,The robot is,next to,the blocks.,"next to, under, behind, above",3,4
+3.png,The airplane is,on,the top shelf.,"on, next to, under, above",3,4
+4.png,The books are,on,the shelf.,"on, under, next to, behind",6,7
+4.png,The map is,on,the wall.,"on, under, in front of, behind",6,7
+4.png,The treasure chest is,next to,the rug.,"next to, on, under, behind",6,7
+4.png,The lamp is,on,the desk.,"on, under, next to, behind",6,7
+4.png,The globe is,on,the floor.,"on, under, beside, next to",6,7
+4.png,The coat is,hanging on,the wall hooks.,"hanging on, next to, under, behind",6,7
+5.png,The computer is,on,the desk.,"on, under, next to, behind",5,6
+5.png,The clock is,on,the wall.,"on, under, beside, in front of",5,6
+5.png,The chair is,in front of,the desk.,"in front of, next to, under, behind",5,6
+5.png,The books are,on,the shelf.,"on, under, next to, behind",5,6
+5.png,The calendar is,hanging on,the wall.,"hanging on, next to, under, behind",5,6
+5.png,The plant is,next to,the desk.,"next to, on, under, behind",5,6
+6.png,The tires are,on,the floor.,"on, under, next to, behind",7,8
+6.png,The robot is,next to,the tires.,"next to, under, behind, in front of",7,8
+6.png,The light is,hanging from,the ceiling.,"hanging from, on, next to, under",7,8
+6.png,The rocket is,on,the shelf.,"on, under, next to, behind",7,8
+6.png,The paint cans are,next to,the potted plant.,"next to, on, under, behind",7,8
+6.png,The radio is,on,the top shelf.,"on, under, next to, behind",7,8
+7.png,The vase is,on,the table.,"on, under, next to, behind",2,2
+7.png,The clock is,on,the wall.,"on, under, beside, in front of",2,2
+7.png,The cup is,next to,the vase.,"next to, on, under, behind",2,2
+7.png,The TV is,on,the TV stand.,"on, under, behind, in front of",2,2
+8.png,The books are,on,the shelf.,"on, under, next to, behind",7,8
+8.png,The calendar is,hanging below,the clock.,"hanging below, next to, on, behind",7,8
+8.png,The students are,sitting at,their desks.,"sitting at, standing near, under, on",7,8
+9.png,The crane is,behind,the buildings.,"behind, next to, on, in front of",8,9
+9.png,The loader is,next to,the compactor.,"next to, behind, under, on",8,9
+9.png,The concrete pipes are,in front of,the buildings.,"in front of, behind, next to, on",8,9
+9.png,The compactor is,next to,the pile of dirt.,"next to, behind, in front of, on",8,9
+10.png,The laptop is,on,the table.,"on, under, next to, behind",2,2
+10.png,The dog is,under,the table.,"under, on, next to, behind",2,2
+10.png,The cat is,on,the table.,"on, under, next to, behind",2,2
+11.png,The ladder is,next to,the airplane.,"next to, under, behind, in front of",5,6
+11.png,The children are,in front of,the airplane.,"in front of, behind, next to, under",5,6
+12.png,The pillows are,on,the couch.,"on, under, next to, behind",4,5
+12.png,The plant is,next to,the couch.,"next to, behind, on, under",2,2
+12.png,The hanging lights are,above,the couch.,"above, next to, under, in front of",2,2
+13.png,The cat is,on,the table.,"on, under, next to, behind",2,2
+13.png,The dog is,under,the table.,"under, on, next to, behind",2,2
+14.png,The boy is,under,the tree.,"under, on, next to, behind",1,1
+15.png,SpongeBob is,in front of,the mirror.,"in front of, behind, next to, under",2,2
+15.png,The clothes are,hanging on,the rod.,"hanging on, under, next to, behind",2,2
+16.png,The girl is,holding,a brick.,"holding, next to, under, in front of",4,4
+16.png,The boy is,holding,a window.,"holding, next to, under, behind",4,4
+16.png,The boy with the shovel is,in front of,the bricks.,"in front of, behind, next to, under",4,4
+17.png,The handbags are,on,the top shelves.,"on, under, next to, behind",4,4
+17.png,The shoes are,under,the clothing rack.,"under, on, next to, in front of",4,4
+17.png,The yellow handbag is,next to,the brown suitcase.,"next to, under, on, behind",4,4
+18.png,The hospital is,next to,the road.,"next to, behind, on, under",8,9
+18.png,The school is,next to,the playground.,"next to, behind, in front of, under",8,9
+18.png,The bank is,across from,the gas station.,"across from, behind, next to, on",8,9
+18.png,The movie theater is,between,the house and library.,"between, next to, in front of, behind",8,9
+18.png,The library is,next to,the trees.,"next to, behind, in front of, on",8,9
+19.png,The worker is,next to,the gas pump.,"next to, behind, in front of, under",10,10
+19.png,The red car is,in front of,the truck.,"in front of, behind, next to, under",10,10
+19.png,The caf� is,next to,the fuel station.,"next to, behind, on, in front of",10,10
+19.png,The yellow truck is,behind,the silver car.,"behind, next to, in front of, under",10,10
+19.png,The gas pump is,next to,the red car.,"next to, in front of, behind, under",10,10
+20.png,The boy is,lying on,the top shelf.,"lying on, next to, under, in front of",3,3
+20.png,The girl is,sitting under,the bookshelf.,"sitting under, next to, behind, on",3,3
+21.png,The teacher is,standing next to,the student.,"standing next to, behind, in front of, under",2,2
+21.png,The backpack is,under,the desk.,"under, next to, behind, on",2,2
+22.png,The lamp is,on,the small table.,"on, under, next to, behind",4,5
+22.png,The cabinet is,behind,the couch.,"behind, next to, in front of, under",4,5
+22.png,The plant is,on,the small table.,"on, next to, behind, under",4,5
+23.png,The plates are,on,the table.,"on, under, next to, in front of",3,4
+23.png,The glasses of water are,next to,the plates.,"next to, on, under, behind",3,4
+24.png,The plant is,on,the cabinet.,"on, under, next to, in front of",2,2
+24.png,The cabinet is,next to,the wall.,"next to, under, in front of, behind",2,2
+25.png,The lamp is,on,the table.,"on, next to, under, in front of",3,4
+25.png,The cups are,next to,the lamp.,"next to, under, behind, on",3,4
+25.png,The photo frame is,behind,the cups.,"behind, on, next to, under",3,4
+26.png,The boy is,on,the swing.,"on, under, next to, in front of",5,6
+26.png,The dog is,next to,the ball.,"next to, under, behind, in front of",5,6
+26.png,The girl in pink is,playing with,the ball.,"playing with, sitting on, standing near, throwing",5,6
+27.png,The children are,in,the sacks.,"in, on, next to, under",3,3
+27.png,The girl is,in the middle,of the race.,"behind,in the middle, next to, in front of",3,4
+28.png,The teacher is,in front of,the students.,"in front of, next to, behind, under",3,3
+28.png,The blackboard is,behind,the teacher.,"behind, next to, under, in front of",3,3
+29.png,The clock is,below,the TV.,"below, above, next to, behind",2,2
+29.png,The phone is,next to,the TV.,"next to, under, behind, above",2,2
+29.png,The car is,next to,the clock.,"next to, under, above, behind",2,2
+29.png,The TV is,above,the clock.,"above, below, next to, in front of",2,2
+30.png,The woman is,sitting on,the armchair.,"sitting on, next to, under, in front of",4,5
+30.png,The lamp is,next to,the armchair.,"next to, behind, under, above",4,5
+31.png,The man is,sitting next to,the rug.,"sitting next to, on, behind, in front of",4,6
+31.png,The boy is,lying on,the floor.,"lying on, under, behind, next to",4,6
+31.png,The rug is,in the middle of,the room.,"in the middle of, next to, under, behind",4,6
+32.png,The hammer is,in,the worker's hand.,"in, on, next to, under",7,8
+32.png,The toolbox is,under,the table.,"under, on, next to, in front of",7,8
+32.png,The saw is,on,the table.,"on, next to, under, behind",7,8
+33.png,The shell is,beside,the striped towel.,"beside, on, behind, in front of",8,9
+34.png,The vendor is,standing behind,the fruits.,"standing behind, next to, in front of, under",8,9
+34.png,The bananas are,next to,the pineapples.,"next to, under, behind, in front of",8,9
+34.png,The tomatoes are,in the,front row.,"in the, next to, behind, under",8,9
+35.png,The weighing scale is,on,the counter.,"on, under, next to, behind",5,6
+35.png,The instrument is,next to,the blackboard.,"next to, behind, under, in front of",5,6
+36.png,The clock is,on,the wall.,"on, next to, under, behind",2,2
+36.png,The banana is,on,the plate.,"on, under, next to, in front of",2,2
+37.png,The basket is,next to,the boy.,"next to, under, behind, in front of",6,7
+37.png,The woman is,standing next to,the plants.,"standing next to, behind, in front of, under",6,7
+37.png,The dog is,in front of,the woman.,"in front of, next to, behind, under",6,7
+38.png,The nurse is,standing next to,the bed.,"standing next to, behind, in front of, under",5,6
+38.png,The patient is,lying on,the bed.,"lying on, next to, under, in front of",5,6
+38.png,The IV drip is,hanging above,the bed.,"hanging above, next to, under, behind",5,6
+39.png,The clipboard is,in,the nurse's hands.,"in, on, next to, under",9,10
+39.png,The doctor is,standing near,the operation theater.,"standing near, next to, in front of, behind",9,10
+39.png,The child is,sitting in,the wheelchair.,"sitting in, on, next to, behind",9,10
+39.png,The medicine cart is,being pushed by,the nurse.,"being pushed by, next to, under, in front of",9,10
+40.png,The woman is,holding,a rabbit.,"holding, next to, behind, in front of",7,8
+40.png,The child is,sitting next to,the dog.,"sitting next to, holding, under, behind",7,8
+40.png,The bird is,in,the cage.,"in, on, next to, under",7,8
+40.png,The man is,holding,a dog on a leash.,"holding, next to, behind, under",7,8
+41.png,The boy is,climbing up,the tree.,"climbing up, standing near, next to, under",10,10
+41.png,The ladder is,leaning against,the tree.,"leaning against, next to, under, behind",10,10
+41.png,The dog is,sitting under,the tree.,"sitting under, next to, behind, in front of",10,10
+41.png,The girl is,holding,the ladder.,"holding, next to, under, behind",10,10
+42.png,The ducks are,swimming in,the river.,"swimming in, next to, under, behind",9,10
+42.png,The cow is,standing next to,the bull.,"standing next to, behind, under, in front of",9,10
+42.png,The horse is,grazing near,the barn.,"grazing near, next to, behind, in front of",9,10
+42.png,The apples are,on,the trees.,"on, under, next to, in front of",9,10
+42.png,The pigs are,playing in,the mud.,"playing in, next to, behind, under",9,10
+43.png,The telephone is placed,on the table,next to the TV.,"on the table, near the couch, on a shelf, under the TV",4,5
+43.png,The younger girl is,lying,on a cushion.,"sitting, lying, playing, watching",4,5
+44.png,The basket is,on,the bicycle.,"on, under, next to, in front of",5,5
+44.png,The chicken is,next to,the vegetables.,"next to, under, behind, in front of",5,5
+45.png,The boy is,running near,the water.,"running near, next to, behind, in front of",8,9
+45.png,The umbrella is,above,the boy.,"above, next to, behind, under",8,9
+45.png,The boat is,sailing on,the sea.,"sailing on, next to, under, in front of",8,9
+46.png,The cat is,behind,the box.,"behind, on, next to, under",1,1
+47.png,The boy is,in front of,the car.,"in front of, behind, next to, under",2,2
+47.png,The car is,behind,the boy.,"behind, in front of, next to, under",2,3
+48.png,The books are,on,the table.,"on, under, next to, behind",3,3
+48.png,The other girl is,holding,a book in her hands.,"holding, reading, writing in, looking at",3,4
+49.png,The parrot is,on,top of the cabinet.,"on, next to, under, behind",5,6
+49.png,The boy is,sitting on,the couch.,"sitting on, next to, under, in front of",5,5
+49.png,The fish is,in,the fishbowl.,"in, on, next to, under",5,6
+49.png,The cat is,sleeping on,the couch.,"sleeping on, next to, under, behind",5,6
+49.png,The basket is,next to,the table.,"next to, under, behind, on",5,6
+50.png,The dog is,next to,the vacuum cleaner.,"next to, under, behind, in front of",4,6
+50.png,The couch is,in front of,the window.,"in front of, next to, behind, under",4,6
+50.png,The pillow is,on,the couch.,"on, under, next to, behind",4,6
+51.png,The boy is,next to,the girl.,"next to, in front of, behind, under",5,5
+51.png,The bucket is,behind,the boy.,"behind, next to, under, in front of",5,5
+51.png,The turtle is,in front of,the sandcastle.,"in front of, next to, behind, on",5,5
+52.png,The flower vase is,on,the table.,"on, under, next to, behind",4,5
+52.png,The sofa is,behind,the woman.,"behind, next to, under, in front of",4,5
+53.png,The boy is,reaching for,the flowers.,"reaching for, climbing on, next to, behind",5,5
+53.png,The boy on the ground is,below,the children in the tree.,"below, next to, behind, under",5,5
+54.png,The lamp is,on,the table.,"on, under, next to, behind",2,2
+55.png,The dog is,on,the examination table.,"on, next to, under, behind",7,7
+55.png,The veterinarian is,wrapping,the dog's paw.,"wrapping, holding, sitting on, behind",7,10
+55.png,The cat is,under,the table.,"under, on, next to, behind",7,8
+56.png,The broom is,next to,the mop.,"next to, behind, under, on",6,7
+56.png,The boxes are,on,the floor.,"on, under, next to, behind",6,7
+56.png,The staircase is,next to,the wall.,"next to, under, behind, in front of",6,7
+57.png,The trash can is,next to,the boy.,"next to, behind, in front of, under",4,5
+57.png,The bottles are,inside,the trash can.,"inside, next to, under, above",4,5
+58.png,The knife is,hanging,on the rack.,"hanging, next to, above, under",5,5
+58.png,The lemon is,on,the shelf.,"on, next to, under, behind",5,5
+58.png,The kettle is,on,the countertop.,"on, next to, under, in front of",5,5
+58.png,The faucet is,above,the sink.,"above, next to, under, behind",5,5
+59.png,The doctor is,next to,the mother.,"next to, behind, in front of, under",5,5
+59.png,The baby is,in,the mother's arms.,"in, on, under, next to",5,5
+59.png,The wheelchair is,near,the boy.,"near, next to, behind, under",5,5
+59.png,The IV stand is,next to,the bed.,"next to, behind, in front of, under",5,5
+60.png,The seagull is,on,the boy's head.,"on, above, next to, under",4,5
+60.png,The ball is,next to,the bucket.,"next to, behind, in front of, under",4,5
+60.png,The crab is,near,the girl's hat.,"near, next to, behind, in front of",4,5
+60.png,The starfish is,in front of,the sandcastle.,"in front of, next to, under, behind",4,5
+61.png,The boy is sitting,on,the rock.,"on, next to, behind, under",4,5
+61.png,The frog is,in front of,the reeds.,"in front of, next to, behind, above",4,5
+61.png,The dragonflies are,above,the pond.,"above, next to, on, under",4,5
+61.png,The duck is swimming,with,its ducklings.,"with, behind, in front of, near",4,5
+62.png,The lamp is placed,next to,the sofa.,"next to, behind, under, on",3,3
+62.png,The paintings are,above,the shelf.,"above, next to, behind, below",3,3
+62.png,The books are kept,on,the shelf.,"on, under, behind, next to",3,3
+63.png,The vase is placed,on,the cabinet.,"on, under, next to, behind",3,3
+63.png,The clock is kept,on,the small table.,"on, under, next to, behind",3,3
+63.png,The books are kept,on,the black table.,"on, under, next to, behind",3,3
+64.png,The hanging lights are,above,the tables.,"above, below, beside, behind",5,5
+64.png,The plant is kept,on,the shelf.,"on, under, next to, in front of",5,5
+65.png,The balloons are held,by,the boy.,"by, with, under, in front of",5,5
+65.png,The candles are,on,the cake.,"on, beside, under, behind",5,5
+65.png,The table is covered,with,a red tablecloth.,"with, under, above, in",5,5
+65.png,The gift boxes are kept,next to,the teddy bear.,"next to, on, behind, in front of",5,5
+66.png,The teacher is sitting,at,the piano.,"at, on, behind, beside",5,5
+66.png,The children are standing,around,the teacher.,"around, in front of, behind, beside",5,5
+66.png,The toy is held,by,the girl in pink.,"by, with, under, next to",5,5
+66.png,The blackboard is located,above,the piano.,"above, beside, behind, under",5,5
+67.png,The lamp is placed,on,the round table.,"on, beside, under, behind",3,3
+67.png,The chair is positioned,beside,the table.,"beside, under, in front of, behind",3,3
+67.png,The cloud decoration is,above,the bed.,"above, beside, under, in front of",3,3
+67.png,The window is located,above,the chair.,"above, beside, in front of, behind",3,3
+68.png,The squirrel is sitting,on,the tree branch.,"on, under, beside, behind",8,9
+68.png,The girl is swinging,on,the tire swing.,"on, beside, under, behind",8,9
+68.png,The children are playing,in,the treehouse.,"in, under, on, beside",8,9
+69.png,The teddy bear is sitting,on,the window sill.,"on, beside, under, in front of",8,9
+69.png,The kite is hanging,from,the ceiling.,"from, on, under, beside",7,6
+69.png,The school bag is placed,next to,the bed.,"next to, on, under, behind",7,6
+69.png,The scissors are lying,on,the floor.,"on, under, beside, in",7,6
+70.png,The ambulance is parked,in front of,the hospital.,"in front of, behind, beside, under",3,3
+70.png,The doctors are standing,near,the hospital entrance.,"near, inside, on, in front of",3,3
+70.png,The hospital name is written,on,the top of the building.,"on, under, beside, near",3,3
+71.png,The family is sitting,around,the table.,"around, under, near, in front of",5,5
+71.png,The watermelon slices are,on,the table.,"on, in, under, beside",5,5
+71.png,The butterfly is flying,above,the family.,"above, under, near, beside",5,5
+71.png,The lantern is hanging,on,the wall of the house.,"on, near, beside, under",5,5
+72.png,The duck is walking,in,front of the basket.,"in, beside, under, near",5,5
+72.png,The house is located,behind,the garden.,"behind, near, beside, in front of",5,5
+72.png,The child is sitting,on,the step outside the house.,"on, near, under, behind",5,5
+73.png,The zebras are standing,inside,the fenced area.,"inside, near, behind, in front of",5,6
+73.png,The ice cream cart is,beside,the tree.,"beside, near, behind, under",5,6
+74.png,The flippers are lying,beside,the pool ladder.,"beside, under, near, on",6,7
+74.png,The umbrella is,next to,the pool.,"next to, behind, on, under",6,7
+75.png,The boy is washing his hands,at,the sink.,"at, near, in, under",9,10
+75.png,The paintings are displayed,on,the walls.,"on, under, beside, in front of",9,10
+75.png,The teacher is standing,beside,the boy at the sink.,"beside, behind, in front of, under",9,10
+75.png,The shelf with art supplies is,against,the wall.,"against, in front of, under, on top of",9,10
+76.png,The school bus is parked,near,the sidewalk.,"near, on, under, beside",6,7
+76.png,The children are crossing,on,the pedestrian crossing.,"on, under, near, beside",6,7
+76.png,The traffic light is,in front of,the school bus.,"in front of, behind, next to, under",6,7
+76.png,The boy is riding a bike,on,the road.,"on, near, under, beside",6,7
+77.png,The ticket counter is,near,the carousel.,"near, behind, in front of, beside",7,7
+77.png,The Ferris wheel is,behind,the ticket counter.,"behind, in front of, beside, near",7,7
+77.png,The popcorn stand is,beside,the ticket counter.,"beside, in front of, behind, near",7,8
+77.png,The circus tent is,in front of,the trees.,"in front of, behind, beside, near",7,8
+77.png,The flag is,on top of,the tent.,"on top of, near, behind, beside",7,8
+78.png,The teddy bear is,on,the floor.,"on, under, beside, near",3,3
+78.png,The slippers are,under,the bed.,"under, beside, in front of, behind",3,3
+78.png,The clock is,on,the wall.,"on, above, beside, behind",3,3
+79.png,The boy is,in front of,the cat.,"in front of, behind, beside, under",3,3
+79.png,The cat is,beside,the boy.,"beside, behind, in front of, near",3,3
+80.png,The sandcastle is,in front of,the water.,"in front of, beside, behind, under",4,5
+80.png,The beach ball is,beside,the sandcastle.,"beside, behind, in front of, under",4,5
+80.png,The sun is,above,the clouds.,"above, beside, below, near",4,5
+81.png,The kettle is,on,the stove.,"on, under, beside, in front of",5,4
+81.png,The towel is,hanging on,the oven handle.,"hanging on, under, beside, behind",5,4
+81.png,The mug is placed,beside,the cutting board.,"beside, under, behind, in front of",5,4
+81.png,The rolling pin is,on,the cutting board.,"on, under, beside, in",5,4
+81.png,The utensils are stored,in,a holder.,"in, on, beside, behind",5,4
+82.png,The child is sleeping,in,the bed.,"in, on, under, beside",3,3
+82.png,The bag of gifts is,beside,Santa.,"beside, behind, in front of, under",3,3
+82.png,The lamp is placed,on,the table.,"on, beside, under, behind",3,3
+83.png,The chef is standing,behind,the table.,"behind, beside, in front of, under",10,10
+83.png,The bowl of ingredients is,beside,the cake.,"beside, on, under, behind",10,10
+84.png,The cat is sitting,on,the chair.,"on, under, beside, in front of",3,3
+84.png,The fish bowl is placed,on,the round table.,"on, beside, under, in front of",3,3
+84.png,The tank is placed,on,the wooden table.,"on, under, beside, in front of",3,3
+85.png,The police car is parked,in front of,the police station.,"in front of, behind, beside, inside",4,4
+85.png,The police officer is standing,beside,the police car.,"beside, inside, behind, in front of",4,4
+85.png,The dog is sitting,beside,the police officer.,"beside, in front of, behind, under",4,4
+86.png,The pizza chef is standing,in front of,the oven.,"in front of, behind, beside, inside",5,6
+86.png,The plates are stacked,beside,the bottle of olive oil.,"beside, behind, in front of, under",5,6
+86.png,The bottle of olive oil is placed,on,the counter.,"on, under, beside, in front of",5,6
+86.png,The menu board is hanging,above,the counter.,"above, below, beside, in front of",5,6
+87.png,The woman is lying,on,the sofa.,"on, under, beside, in",4,5
+87.png,The books are placed,on,the shelf.,"on, under, beside, in front of",4,5
+87.png,The plant is placed,beside,the sofa.,"beside, under, on, in",4,5
+88.png,The airplane is flying,above,the airport.,"above, under, beside, in front of",4,5
+88.png,The control tower is,near,the runway.,"near, far, beside, in",4,5
+89.png,The girl is sitting,on,the swing.,"on, under, beside, above",8,8
+89.png,The boy is jumping,over,the puddle.,"over, under, beside, in front of",8,8
+90.png,The police officer is standing,outside,the jail cell.,"outside, inside, near, in front of",5,5
+90.png,The prisoners are sitting,inside,the jail cell.,"inside, outside, beside, behind",5,5
+90.png,The light is hanging,above,the jail cell.,"above, below, beside, in front of",5,5
+91.png,The helicopter is hovering,above,the box.,"above, under, next to, in front of",1,1
+92.png,The cat is hiding,inside,the cupboard.,"inside, outside, under, next to",1,1
+93.png,The grandmother is walking,on,the crosswalk.,"on, beside, under, behind",3,3
+93.png,The bus is,behind,the grandmother and the girl.,"behind, in front of, beside, above",3,3
+93.png,The green car is,next to,the bus.,"next to, in front of, behind, above",3,3
+94.png,The sink is,beside,the toilet.,"beside, in front of, behind, above",2,2
+94.png,The mirror is,above,the sink.,"above, next to, below, in front of",2,2
+94.png,The toilet paper holder is,on,the wall.,"on, under, beside, behind",2,2
+95.png,The customer is standing,in front of,the counter.,"in front of, behind, next to, beside",3,3
+96.png,The children are standing,around,the green creature.,"around, in front of, behind, beside",3,3
+96.png,The red toy bus is placed,in front of,the couch.,"in front of, behind, on, under",3,3
+96.png,The lamp is standing,next to,the couch.,"next to, on top of, behind, in front of",3,3
+96.png,The water jug is,on,the table.,"on, under, beside, behind",3,3
+97.png,The boy with a guitar is sitting,on,the rug.,"on, under, beside, in front of",6,7
+97.png,The black cat is lying,on,the bed.,"on, under, beside, behind",6,7
+97.png,The bookshelf is placed,next to,the green cabinet.,"above, next to, under, behind",6,7
+97.png,The boy reading a book is sitting,on,the couch.,"on, beside, in front of, under",6,7
+97.png,The girl wearing a yellow dress is kneeling,in front of,the boy playing the guitar.,"beside, in front of, behind, next to",6,7
+98.png,The girl holding the doll is sitting,on,the carpet.,"on, under, beside, behind",5,6
+98.png,The alphabet letters are displayed,above,the table.,"above, below, beside, in front of",5,6
+99.png,The toy robot is standing,beside,the dartboard.,"beside, behind, in front of, next to",6,7
+99.png,The globe is placed,on,the pink shelf.,"on, under, beside, above",6,7
+99.png,The balloon is floating,above,the room.,"above, beside, under, in front of",6,7
+100.png,The children are playing,with,the red car.,"with, around, near, beside",7,8
+100.png,The girl is sitting,on,the slide.,"on, near, beside, under",7,8
+101.png,The girl in a yellow cap is painting,on,the wall.,"on, beside, under, around",4,5
+101.png,The red bucket is placed,beside,the boy.,"beside, behind, in front of, under",4,5
+102.png,The girl in a yellow cap is picking,up a bottle,from the ground.,"up a bottle, up paper, up trash, up a can",8,9
+102.png,The bins are placed,next to,the fence.,"next to, behind, in front of, beside",8,9
+103.png,The boy in red is hanging,on the rings,with both hands.,"on the rings, on a swing, on the bars",9,10
+103.png,The boy and girl in the sandbox are playing,with sand,and a toy dog.,"with sand, with a ball, with a toy car, with water",9,10
+103.png,The bicycle is parked,near the fence,beside a tree.,"near the fence, near the road, near the swing",9,10
+104.png,The boy with the camera is standing,behind the tripod,and taking a photo.,"behind the tripod, beside the tree, on the dock",8,9
+104.png,The treehouse is built,on the tree,with a ladder.,"on the tree, beside the river, above the ground",8,9
+104.png,The tire swing is hanging,from the branch,of the tree.,"from the branch, near the dock, by the treehouse",8,9
+105.png,The boy is sliding,down the slide,with excitement.,"down the slide, near the sandbox, beside the swing",10,10
+105.png,The children are playing,in the sandbox,with buckets and shovels.,"in the sandbox, on the grass, beside the trash can",10,10
+105.png,The flowers are blooming,beside the sandbox,in the playground.,"beside the sandbox, near the slide, under the tree",10,10
+106.png,The family is sitting,in the boat,while fishing.,"in the boat, on the lake, near the plants",8,9
+106.png,The water lilies are floating,on the water,around the boat.,"on the water, beside the boat, under the sun",8,9
+107.png,The coffee shop is located,next to,the hotel.,"next to, near, behind, in front of",9,10
+107.png,The fire house is placed,beside,the roundabout.,"beside, near, next to, behind",9,10
+107.png,The gas station is seen,on the right of,the police station.,"on the right of, beside, in front of",9,10
+107.png,The church is positioned,opposite,the police station.,"opposite, near, next to, across from",9,10
+107.png,The playground is situated,behind,the hotel.,"behind, beside, near, next to",9,10
+108.png,The children are having a picnic,under,the trees.,"under, near, beside, in front of",5,6
+108.png,The basket is placed,on,the mat.,"on, near, beside, in front of",5,6
+108.png,The bottle of juice is standing,next to,the food items.,"next to, near, beside, on",5,6
+108.png,The birds are flying,above,the children.,"above, near, beside, in front of",5,6
+109.png,The cat is sitting,next to,the basket.,"next to, near, beside, in front of",8,9
+109.png,The cow is standing,behind,the farmer.,"behind, beside, in front of, near",8,9
+109.png,The tractor is parked,in front of,the barn.,"in front of, near, beside, behind",8,9
+109.png,The vegetables are growing,in,the garden rows.,"in, on, around, next to",8,9
+110.png,The boy is standing,on,the wheelbarrow.,"on, beside, near, in front of",8,9
+110.png,The dog is standing,next to,the boy.,"next to, near, in front of, behind",8,9
+111.png,The boy is sitting,on,the wooden box.,"on, beside, in front of, behind",8,9
+111.png,The chickens are eating,near,the woman's feet.,"near, beside, around, in front of",8,9
+112.png,The children are playing,with,paper boats in the water.,"with, beside, near, around",4,5
+112.png,The grandparents are sitting,on,wooden chairs on the porch.,"on, beside, in front of, near",4,5
+112.png,The paper boats are floating,in,the water near the porch.,"in, on, beside, around",4,5
+113.png,The boy is sitting,on,the wooden porch.,"on, beside, near, under",4,5
+113.png,The girl in a green dress is standing,beside,the flower pots.,"beside, near, behind, in front of",4,5
+113.png,The water flows,from,the waterfall into the stream.,"from, over, through, into",4,5
+114.png,The boy is climbing,on,the monkey bars.,"on, under, beside, near",7,9
+114.png,The kite is flying,above,the playground.,"above, near, over, beside",7,9
+115.png,The basketball hoop is placed,beside,the court boundary.,"beside, near, behind, above",5,5
+115.png,The building is located,behind,the basketball court.,"behind, near, beside, around",5,5
+117.png,The mirror is attached,to,the dresser.,"to, above, on, behind",4,5
+117.png,The teddy bear is sitting,next to,the clock.,"next to, near, behind, on",4,5
+117.png,The rocking chair is placed,on,the porch.,"on, beside, in front of, near",4,4
+118.png,The dog is standing,in front of,the porch railing.,"in front of, near, beside, behind",4,5
+118.png,The lantern is hanging,beside,the flowers.,"beside, above, below, next to",4,4
+119.png,The butterfly is flying,near,the swing.,"near, above, in front of, beside",5,6
+119.png,The colorful lanterns are hanging,above,the swing.,"above, beside, near, in front of",5,6
+120.png,The yoga mats are placed,on,the floor.,"on, near, in front of, beside",5,6
+120.png,The speakers are located,beside,the window.,"beside, in front of, near, on",5,6
+120.png,The dumbbells are placed,on,the yoga mat.,"on, near, beside, in front of",5,6
+121.png,The fire is burning,inside,the fireplace.,"inside, on, near, beside",4,5
+121.png,The clock is hanging,above,the fireplace.,"above, near, beside, on",4,5
+121.png,The potted plants are placed,on,the fireplace mantel.,"on, beside, near, under",4,4
+122.png,The sunflowers are placed,on,the desk.,"on, beside, near, behind",4,5
+122.png,The cat is sitting,near,the basket.,"near, beside, on, behind",4,5
+123.png,The ladder is leaning,against,the bunk bed.,"against, near, beside, in front of",6,7
+124.png,The tent is set up,in front of,the bed.,"in front of, near, beside, under",4,5
+125.png,The laundry baskets are,beside,the washing machines.,"beside, in front of, near, under",5,6
+125.png,The shelves are filled,with,folded towels and bottles.,"with, by, covered with, arranged with",5,6
+126.png,The books are arranged,on,the shelves.,"on, in, near, around",5,6
+126.png,The computer monitor is placed,on,the desk.,"on, beside, near, under",5,6
+127.png,The folded clothes are arranged,on,the shelves.,"on, in, near, beside",4,5
+127.png,The decorative items are placed,on top of,the rack.,"on top of, near, beside, above",4,5
+128.png,The potted plants are standing,near,the shelves and sofa.,"near, beside, on, behind",4,4
+128.png,The cups and book are kept,on,the round table.,"on, beside, near, in front of",4,5
+129.png,The bowl of pears is placed,on,the coffee table.,"on, beside, near, in front of",3,4
+129.png,The bookshelf is mounted,on,the wall.,"on, beside, near, above",3,4
+130.png,The air conditioner is installed,above,the window.,"above, near, beside, on",3,3
+140.png,The food is placed,on,the table.,"on, beside, near, under",3,3
+141.png,The clock is placed,beside,the window.,"beside, near, on, in front of",3,3
+142.png,The violin is resting,on,the chair.,"on, beside, near, in front of",3,3
+142.png,The piano is placed,near,the window.,"near, in front of, beside, behind",3,3
+143.png,The toy blocks are,on,the small table.,"on, near, beside, under",3,3
+144.png,The umbrella is,over,the lounge chairs.,"over, near, beside, in front of",3,3
+144.png,The basket is,on,the lounge chair.,"on, near, beside, under",3,3
+145.png,The oranges are,beside,the basket.,"beside, near, under, on",4,4
+145.png,The glass of juice is,on,the picnic blanket.,"on, beside, near, under",4,4
+146.png,The basketball is,next to,the donation box.,"next to, under, behind, above, on",1,1
+147.png,The piggy bank is,on,the table.,"on, under, above, next to, behind",1,1
+148.png,The cat is,under,the table.,"under, on, above, next to, behind",1,1
+149.png,The spider is,between,the two boxes.,"between, on, under, next to, behind",1,1
+150.png,The girl is,among,the boxes.,"among, between, on, next to, behind",1,1
+151.png,The girl is,across,the boxes.,"across, over, on, next to, under",1,1
+152.png,The girl is,between,the two boxes.,"between, on, across, next to, behind",1,1
+153.png,The girl is,inside,the box.,"inside, on, under, next to, behind",1,1
+154.png,The boy is,in,the bathtub.,"in, on, next to, under, behind",1,1
+155.png,The cat is,on,the chair.,"on, under, next to, behind, in",1,1
+156.png,The raccoon is,in,the box.,"in, on, under, next to, behind",1,1
+157.png,The raccoons are,near,each other.,"near, on, next to, behind, in",1,1
+158.png,The raccoon is,beside,the box.,"beside, near, behind, under, on",1,1
+159.png,The spider is,behind,the box.,"behind, in, on, beside, under",1,1
+160.png,The box is,on,the table.,"on, under, beside, behind, near",1,1
+161.png,The ball is,under,the table.,"under, on, beside, behind, near",1,1
+162.png,The teddy bear is,beside,the chair.,"beside, under, on, behind, near",1,1
+163.png,The ball is,between,the table and the chair.,"between, under, on, beside, near",1,1
+164.png,The bag is,on,the chair.,"on, under, beside, near, behind",1,1
+165.png,The turtle is,under,the chair.,"under, on, beside, near, behind",1,1
+166.png,The mouse is,on,the box.,"on, under, beside, near, behind",1,1
+167.png,The cat is,in front of,the box.,"in front of, behind, on, beside, near",1,1
+168.png,The dog is,behind,the box.,"behind, in front of, beside, near, on",1,1
+169.png,The dog is,below,the box.,"below, on, beside, near, behind",1,1
+170.png,The telephone is,above,the vase.,"above, below, beside, near, behind",2,2
+170.png,The lamp is,beside,the table.,"beside, on, above, near, behind",2,2
+170.png,The cup is,on,the table.,"on, under, beside, above, near",2,2
+170.png,The vase is,on,the table.,"on, under, beside, near, behind",2,2
+171.png,The mixer is,next to,the pot.,"next to, on, above, beside, behind",5,5
+171.png,The pancake is,on,the table.,"on, under, next to, near, beside",5,5
+171.png,The jars are,inside,the cupboard.,"inside, on, above, next to, beside",5,5
+171.png,The fruit basket is,next to,the pot.,"next to, behind, on, near, under",5,5
+172.png,The telephone is,on,the desk.,"on, under, beside, near, behind",5,6
+172.png,The books are,inside,the shelves.,"inside, on, beside, near, under",5,6
+172.png,The umbrella is,beside,the desk.,"beside, under, near, on, behind",5,6
+173.png,The scissors are,hanging,on the board.,"hanging, on, beside, under, near",7,8
+173.png,The paintbrushes are,above,the table.,"above, under, near, beside, on",7,8
+174.png,The car is,in front of,the house.,"in front of, beside, near, behind, under",1,1
+175.png,The bench is,between,the tree and the lamppost.,"between, beside, in front of, near, under",2,2
+176.png,The fishing rods are,on,the table.,"on, beside, near, in front of, under",4,4
+176.png,The bucket is,beside,the table.,"beside, under, near, on, behind",4,4
+177.png,The guitar is,on,the bench.,"on, beside, near, behind, under",3,3
+177.png,The bench is,in front of,the flowers.,"in front of, beside, behind, near, on",3,3
+178.png,The drink is,on,the table.,"on, beside, near, behind, under",3,3
+179.png,The painting is,on,the easel.,"on, beside, near, behind, above",5,5
+179.png,The paintbrushes are,in,the holder.,"in, on, beside, near, under",5,5
+180.png,The backpack is,on,the table.,"on, beside, near, under, behind",3,3
+180.png,The camera is,beside,the backpack.,"beside, near, in front of, under, on",3,3
+181.png,The pies are,inside,the oven.,"inside, on, beside, near, under",4,5
+181.png,The coffee maker is,beside,the oven.,"beside, near, on, under, in front of",4,5
+181.png,The cupcakes are,on,the tray.,"on, beside, near, under, in front of",4,5
+181.png,The bowl of kiwis is,near,the coffee pot.,"near, on, beside, under, behind",4,5
+182.png,The chairs are,around,the campfire.,"around, near, beside, in front of, behind",7,8
+182.png,The caravan is,beside,the campfire.,"beside, near, behind, in front of, on",7,8
+183.png,The dog is,inside,the tent.,"inside, beside, near, on, in front of",5,6
+183.png,The boots are,beside,the tent.,"beside, on, near, under, behind",5,6
+183.png,The lanterns are,in front of,the tent.,"in front of, near, beside, behind, on",5,6
+183.png,The kayakers are,on,the river.,"on, beside, near, under, in front of",5,5
+184.png,The telescope is,on,the platform.,"on, beside, near, under, behind",3,3
+184.png,The backpack is,beside,the telescope.,"beside, near, on, under, in front of",3,3
+185.png,The yellow umbrella is,beside,the blue umbrella.,"beside, near, behind, in front of, on",4,5
+185.png,The flowers are,under,the umbrellas.,"under, beside, near, on, behind",4,5
+186.png,The cart is,in front of,the general store.,"in front of, near, beside, behind, under",3,3
+187.png,The watering can is,in front of,the bench.,"in front of, beside, near, under, behind",4,4
+187.png,The bird is,on top of,the bench.,"on top of, beside, near, above, behind",4,4
+188.png,The snowman is,in front of,the house.,"in front of, beside, near, behind, under",3,3
+188.png,The cat is,beside,the snowman.,"beside, near, under, behind, in front of",3,3
+189.png,The general store is,behind,the truck.,"behind, beside, near, under, in front of",6,6
+189.png,The geese are,walking near,the truck.,"walking near, behind, beside, under, around",6,6
+189.png,The fruits are,in front of,the store.,"in front of, behind, beside, near, inside",6,6
+190.png,The flowers are,on,the suitcase.,"on, near, beside, in front of, under",3,3
+190.png,The suitcase is,in front of,the sofa.,"in front of, beside, near, under, behind",3,3
+191.png,The bird is,on,the mailbox.,"on, near, beside, in front of, above",3,3
+191.png,The letter is,in,the mailbox.,"in, outside, beside, under",3,3
+192.png,The bird is,sitting on,the suitcase.,"sitting on, beside, near, under",4,4
+192.png,The hat is,on top of,the suitcase.,"on top of, near, beside",4,4
+192.png,The bench is,beside,the station wall.,"beside, near, in front of, under",4,4
+193.png,The sewing machine is,on,the table.,"on, beside, near, in front of",3,3
+193.png,The vase with flowers is,beside,the sewing machine.,"beside, near, on, behind",3,3
+193.png,The thread spools are,near,the sewing machine.,"near, beside, in front of, under",3,3
+194.png,The typewriter is,on,the table.,"on, beside, near, in front of",3,3
+194.png,The open book is,in front of,the typewriter.,"in front of, beside, near, under",3,3
+195.png,The camera is,on,the stack of books.,"on, beside, near, in front of",2,2
+195.png,The coffee cup is,in front of,the books.,"in front of, beside, near, on",2,2
+196.png,The plants are,on,the table.,"on, near, beside, in front of",2,2
+196.png,The window is,behind,the plants.,"behind, beside, near, in front of",2,2
+197.png,The lamp is,beside,the pink flower pot.,"beside, near, in front of, behind",6,7
+197.png,The yarn balls are,on,the shelf.,"on, under, beside, near",6,7
