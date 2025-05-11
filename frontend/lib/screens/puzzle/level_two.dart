@@ -2,6 +2,8 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:magicmind_puzzle/services/shared_prefs_service.dart'
+    show SharedPrefs;
 import '../../utils/function.dart';
 
 import 'dart:async';
@@ -1382,7 +1384,10 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
                     isLoading = true;
                   });
 
+                  final uid = await SharedPrefs.getUserId();
+
                   await MongoDatabase.insertData(
+                    user_id: uid.toString(),
                     difficultyLevel: dificulityLevel,
                     timeElapsed: _timeElapsed,
                     movesMade: _movesMade,
@@ -2371,6 +2376,8 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                     isLoading = true;
                   });
 
+                  final uid = await SharedPrefs.getUserId();
+
                   await MongoDatabase.insertData(
                     difficultyLevel: dificulityLevel,
                     timeElapsed: _timeElapsed,
@@ -2379,6 +2386,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                     hintUsed: hintUsed,
                     score: _score,
                     level: 2,
+                    user_id: uid.toString(),
                   );
                   await _adjestDifficulity(
                       _movesMade, incorrectMoves, hintUsed);

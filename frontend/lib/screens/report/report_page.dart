@@ -9,6 +9,7 @@ import 'package:magicmind_puzzle/screens/report/dificulity_chart.dart';
 import 'package:magicmind_puzzle/screens/report/mistaks_chart.dart';
 import 'package:magicmind_puzzle/screens/report/score_chart.dart';
 import 'package:magicmind_puzzle/services/mongodb.dart';
+import 'package:magicmind_puzzle/services/shared_prefs_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -66,7 +67,8 @@ class _ReportPageState extends State<ReportPage> {
   }
 
   void fetchPuzzleResults() async {
-    List<PuzzleResult> results = await MongoDatabase.getData();
+    final uid = await SharedPrefs.getUserId();
+    List<PuzzleResult> results = await MongoDatabase.getData(uid.toString());
 
     activities.clear();
     activities.addAll(results.take(5)); // Take only the last 5 records
