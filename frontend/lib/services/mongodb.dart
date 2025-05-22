@@ -20,6 +20,7 @@ class MongoDatabase {
 
   static Future<void> insertData({
     required String difficultyLevel,
+    required String user_id,
     required int timeElapsed,
     required int movesMade,
     required int incorrectMoves,
@@ -48,19 +49,24 @@ class MongoDatabase {
       nvldDiagnosis: 'NaN',
       level: level,
       date: DateTime.now(),
+      user_id: user_id,
     );
 
     await collection.insertOne(puzzleResult.toMap());
     print('Data inserted successfully');
   }
 
-  static Future<List<PuzzleResult>> getData() async {
+  static Future<List<PuzzleResult>> getData(String user_id) async {
     try {
       var db = await Db.create(MONGO_URL);
       await db.open();
 
       var collection = db.collection(COLLECTION_NAME);
-      List<Map<String, dynamic>> data = await collection.find().toList();
+      List<Map<String, dynamic>> data = await collection
+          .find(
+            where.eq('user_id', user_id),
+          )
+          .toList();
 
       List<PuzzleResult> results =
           data.map((map) => PuzzleResult.fromMap(map)).toList();

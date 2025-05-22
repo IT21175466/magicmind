@@ -15,6 +15,7 @@ import 'package:lottie/lottie.dart';
 import 'package:magicmind_puzzle/constants/constant.dart';
 import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
 import 'package:magicmind_puzzle/services/mongodb.dart';
+import 'package:magicmind_puzzle/services/shared_prefs_service.dart';
 import 'package:magicmind_puzzle/utils/function.dart';
 
 class JisawHomeCamaraImage extends StatefulWidget {
@@ -799,6 +800,8 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
                     isLoading = true;
                   });
 
+                  final uid = await SharedPrefs.getUserId();
+
                   await MongoDatabase.insertData(
                     difficultyLevel: dificulityLevel,
                     timeElapsed: _timeElapsed,
@@ -807,6 +810,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
                     hintUsed: hintUsed,
                     score: _score,
                     level: 1,
+                    user_id: uid.toString(),
                   );
                   await _adjestDifficulity(
                       _movesMade, incorrectMoves, hintUsed);

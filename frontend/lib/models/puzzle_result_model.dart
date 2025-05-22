@@ -1,4 +1,5 @@
 class PuzzleResult {
+  String user_id;
   String id;
   String age;
   String gender;
@@ -17,6 +18,7 @@ class PuzzleResult {
   DateTime date;
 
   PuzzleResult({
+    required this.user_id,
     required this.id,
     required this.age,
     required this.gender,
@@ -37,6 +39,7 @@ class PuzzleResult {
 
   Map<String, dynamic> toMap() {
     return {
+      'user_id': user_id,
       'id': id,
       'age': age,
       'gender': gender,
@@ -58,6 +61,7 @@ class PuzzleResult {
 
   factory PuzzleResult.fromMap(Map<String, dynamic> map) {
     return PuzzleResult(
+      user_id: map['user_id'],
       id: map['id'],
       age: map['age'],
       gender: map['gender'],
