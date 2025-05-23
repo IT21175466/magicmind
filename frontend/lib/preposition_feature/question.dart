@@ -1,6 +1,6 @@
 import 'dart:collection';
 import 'dart:math';
-import 'dart:math' as Math;
+//import 'dart:math' as Math;
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';
 import 'package:magicmind_puzzle/preposition_feature/function.dart';
@@ -291,8 +291,8 @@ List<Relationship> identifyRelationships(
 
     //Overlap
 
-    int x = min(a.x2, b.x2) - max(a.x1, b.x1);
-    int y = min(a.y2, b.y2) - max(a.y1, b.y1);
+    //int x = min(a.x2, b.x2) - max(a.x1, b.x1);
+    //int y = min(a.y2, b.y2) - max(a.y1, b.y1);
 
     double ax = (a.x1 + a.x2) / 2;
     double ay = (a.y1 + a.y2) / 2;

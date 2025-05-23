@@ -1117,7 +1117,7 @@ class Won extends StatelessWidget {
   Widget build(BuildContext context) {
     Level level_ = LevelGame.score[level]!;
     int score = LevelGame.getScore(level);
-    int percentage = LevelGame.getScorePercentage(level);
+    // percentage = LevelGame.getScorePercentage(level);
     String y = LevelGame.getScoreText(level);
 
     bool last = level == Config.NUM_OF_LEVELS;

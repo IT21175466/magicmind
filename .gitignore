@@ -38,3 +38,7 @@ frontend/linux/Flutter/ephemeral/
 
 # VS Code
 frontend/.vscode/
+
+frontend/linux/
+frontend/macos/
+frontend/windows/
