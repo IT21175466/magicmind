@@ -1,5 +1,5 @@
 import 'package:magicmind_puzzle/constants/constant.dart';
-import 'package:magicmind_puzzle/utils/encript_helper.dart';
+//import 'package:magicmind_puzzle/utils/encript_helper.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
 class MongoService {
@@ -23,8 +23,8 @@ class MongoService {
     final col = await _getCollection();
     final user = await col.findOne({'email': email});
     if (user != null) {
-      final decrypted = EncryptionHelper.decrypt(user['password']);
-      if (decrypted == password) return user;
+      //final decrypted = EncryptionHelper.decrypt(user['password']);
+      if (user['password'] == password) return user;
     }
     return null;
   }
@@ -35,11 +35,11 @@ class MongoService {
     final existing = await col.findOne({'email': email});
     if (existing != null) return null;
 
-    final encryptedPassword = EncryptionHelper.encrypt(password);
+    //final encryptedPassword = EncryptionHelper.encrypt(password);
     final result = await col.insertOne({
       'name': name,
       'email': email,
-      'password': encryptedPassword,
+      'password': password,
     });
     return result.id as ObjectId?;
   }
