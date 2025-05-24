@@ -162,6 +162,8 @@ class _JigsawHomePageState extends State<JigsawHomePage>
 
   Future<void> _adjestDifficulity(
       int correctM, int wrongM, int hintUsage) async {
+    print('Inside _adjestDifficulity');
+
     final response = await http.post(
       Uri.parse('$ML_API/adjust-difficulty'),
       headers: {'Content-Type': 'application/json'},
@@ -173,11 +175,16 @@ class _JigsawHomePageState extends State<JigsawHomePage>
       }),
     );
 
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
 
       String difficulty = responseData['difficulty'];
       String prompt = responseData['image_prompt'];
+
+      print(difficulty);
 
       setState(() {
         dificulityLevel = difficulty;
@@ -304,8 +311,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                             Spacer(),
                             GestureDetector(
                               onTap: () async {
-                                bool demo =
-                                    await loadString("demo", "no") != "no";
+                                bool demo = true;
                                 //_prepareGame();
                                 Navigator.pushAndRemoveUntil(
                                   context,
@@ -729,20 +735,32 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                     isLoading = true;
                   });
 
-                  final uid = await SharedPrefs.getUserId();
+                  try {
+                    final uid = await SharedPrefs.getUserId();
 
-                  await MongoDatabase.insertData(
-                    difficultyLevel: dificulityLevel,
-                    timeElapsed: _timeElapsed,
-                    movesMade: _movesMade,
-                    incorrectMoves: incorrectMoves,
-                    hintUsed: hintUsed,
-                    score: _score,
-                    level: 1,
-                    user_id: uid.toString(),
-                  );
-                  await _adjestDifficulity(
-                      _movesMade, incorrectMoves, hintUsed);
+                    await MongoDatabase.insertData(
+                      difficultyLevel: dificulityLevel,
+                      timeElapsed: _timeElapsed,
+                      movesMade: _movesMade,
+                      incorrectMoves: incorrectMoves,
+                      hintUsed: hintUsed,
+                      score: _score,
+                      level: 1,
+                      user_id: uid.toString(),
+                    );
+                    print('Calling _adjestDifficulity...');
+
+                    await _adjestDifficulity(
+                        _movesMade, incorrectMoves, hintUsed);
+
+                    print('_adjestDifficulity completed');
+                  } catch (e) {
+                    print('Error in onTap: $e');
+                  } finally {
+                    setState(() {
+                      isLoading = false;
+                    });
+                  }
                 },
                 child: Container(
                   height: 56,
