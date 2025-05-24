@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:http/http.dart' as http;
@@ -62,6 +64,26 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     _animController = AnimationController(vsync: this);
 
     super.initState();
+  }
+
+  Future<ui.Image> _decodeImageInBackground(
+      Uint8List imageData, double scale) async {
+    return await compute(
+        _decodeImageIsolate, {'data': imageData, 'scale': scale});
+  }
+
+  static Future<ui.Image> _decodeImageIsolate(
+      Map<String, dynamic> params) async {
+    final data = params['data'] as Uint8List;
+    final scale = params['scale'] as double;
+
+    final codec = await ui.instantiateImageCodec(
+      data,
+      targetWidth: (300 * scale).toInt(),
+      targetHeight: (300 * scale).toInt(),
+    );
+    final frame = await codec.getNextFrame();
+    return frame.image;
   }
 
   void checkUserStruggle() {
@@ -234,9 +256,11 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     );
     final imageData = response.bodyBytes;
 
-    final image = MemoryImage(imageData, scale: screenPixelScale);
+    //final image = MemoryImage(imageData, scale: screenPixelScale);
 
-    canvasImage = await _getImage(image);
+    final image = await _decodeImageInBackground(imageData, screenPixelScale);
+
+    canvasImage = await _getImage(image as ImageProvider<Object>);
     pieceOnPool = _createJigsawPiece();
     pieceOnPool.shuffle();
 
@@ -304,8 +328,7 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                             Spacer(),
                             GestureDetector(
                               onTap: () async {
-                                bool demo =
-                                    await loadString("demo", "no") != "no";
+                                bool demo = true;
                                 //_prepareGame();
                                 Navigator.pushAndRemoveUntil(
                                   context,

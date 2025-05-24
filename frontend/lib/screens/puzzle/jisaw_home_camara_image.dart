@@ -366,8 +366,7 @@ class _JisawHomeCamaraImageState extends State<JisawHomeCamaraImage>
                             Spacer(),
                             GestureDetector(
                               onTap: () async {
-                                bool demo =
-                                    await loadString("demo", "no") != "no";
+                                bool demo = true;
 
                                 Navigator.pushAndRemoveUntil(
                                   context,
