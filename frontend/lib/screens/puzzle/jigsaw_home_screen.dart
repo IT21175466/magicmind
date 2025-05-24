@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:http/http.dart' as http;
@@ -64,26 +62,6 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     _animController = AnimationController(vsync: this);
 
     super.initState();
-  }
-
-  Future<ui.Image> _decodeImageInBackground(
-      Uint8List imageData, double scale) async {
-    return await compute(
-        _decodeImageIsolate, {'data': imageData, 'scale': scale});
-  }
-
-  static Future<ui.Image> _decodeImageIsolate(
-      Map<String, dynamic> params) async {
-    final data = params['data'] as Uint8List;
-    final scale = params['scale'] as double;
-
-    final codec = await ui.instantiateImageCodec(
-      data,
-      targetWidth: (300 * scale).toInt(),
-      targetHeight: (300 * scale).toInt(),
-    );
-    final frame = await codec.getNextFrame();
-    return frame.image;
   }
 
   void checkUserStruggle() {
@@ -184,6 +162,8 @@ class _JigsawHomePageState extends State<JigsawHomePage>
 
   Future<void> _adjestDifficulity(
       int correctM, int wrongM, int hintUsage) async {
+    print('Inside _adjestDifficulity');
+
     final response = await http.post(
       Uri.parse('$ML_API/adjust-difficulty'),
       headers: {'Content-Type': 'application/json'},
@@ -195,11 +175,16 @@ class _JigsawHomePageState extends State<JigsawHomePage>
       }),
     );
 
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
     if (response.statusCode == 200) {
       final responseData = json.decode(response.body);
 
       String difficulty = responseData['difficulty'];
       String prompt = responseData['image_prompt'];
+
+      print(difficulty);
 
       setState(() {
         dificulityLevel = difficulty;
@@ -256,11 +241,9 @@ class _JigsawHomePageState extends State<JigsawHomePage>
     );
     final imageData = response.bodyBytes;
 
-    //final image = MemoryImage(imageData, scale: screenPixelScale);
+    final image = MemoryImage(imageData, scale: screenPixelScale);
 
-    final image = await _decodeImageInBackground(imageData, screenPixelScale);
-
-    canvasImage = await _getImage(image as ImageProvider<Object>);
+    canvasImage = await _getImage(image);
     pieceOnPool = _createJigsawPiece();
     pieceOnPool.shuffle();
 
@@ -752,20 +735,32 @@ class _JigsawHomePageState extends State<JigsawHomePage>
                     isLoading = true;
                   });
 
-                  final uid = await SharedPrefs.getUserId();
+                  try {
+                    final uid = await SharedPrefs.getUserId();
 
-                  await MongoDatabase.insertData(
-                    difficultyLevel: dificulityLevel,
-                    timeElapsed: _timeElapsed,
-                    movesMade: _movesMade,
-                    incorrectMoves: incorrectMoves,
-                    hintUsed: hintUsed,
-                    score: _score,
-                    level: 1,
-                    user_id: uid.toString(),
-                  );
-                  await _adjestDifficulity(
-                      _movesMade, incorrectMoves, hintUsed);
+                    await MongoDatabase.insertData(
+                      difficultyLevel: dificulityLevel,
+                      timeElapsed: _timeElapsed,
+                      movesMade: _movesMade,
+                      incorrectMoves: incorrectMoves,
+                      hintUsed: hintUsed,
+                      score: _score,
+                      level: 1,
+                      user_id: uid.toString(),
+                    );
+                    print('Calling _adjestDifficulity...');
+
+                    await _adjestDifficulity(
+                        _movesMade, incorrectMoves, hintUsed);
+
+                    print('_adjestDifficulity completed');
+                  } catch (e) {
+                    print('Error in onTap: $e');
+                  } finally {
+                    setState(() {
+                      isLoading = false;
+                    });
+                  }
                 },
                 child: Container(
                   height: 56,
