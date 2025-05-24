@@ -62,11 +62,7 @@ class MongoDatabase {
       await db.open();
 
       var collection = db.collection(COLLECTION_NAME);
-      List<Map<String, dynamic>> data = await collection
-          .find(
-            where.eq('user_id', user_id),
-          )
-          .toList();
+      List<Map<String, dynamic>> data = await collection.find().toList();
 
       List<PuzzleResult> results =
           data.map((map) => PuzzleResult.fromMap(map)).toList();

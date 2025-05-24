@@ -52,11 +52,14 @@ class _HomeScreenState extends State<HomeScreen> {
       final name = await MongoService.getUserName(userId);
       setState(() {
         userName = name ?? 'Friend';
+        isLoadingName = false;
       });
     }
   }
 
   String? userName;
+
+  bool isLoadingName = true;
 
   @override
   void initState() {
@@ -69,95 +72,123 @@ class _HomeScreenState extends State<HomeScreen> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Container(
-        width: screenWidth,
-        height: screenHeight,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/reg_bg.jpg"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Home Banner
-            Container(
-              height: 125,
-              decoration: BoxDecoration(
-                color: Colors.orangeAccent,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
+      body: isLoadingName
+          ? Container(
+              width: screenWidth,
+              height: screenHeight,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/reg_bg.jpg"),
+                  fit: BoxFit.cover,
                 ),
               ),
-              child: SafeArea(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "👋 Hello, ${userName ?? 'Friend'}",
-                            style: GoogleFonts.poppins(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Text(
-                            "Ready to play and learn?",
-                            style: GoogleFonts.poppins(
-                                fontSize: 14, color: Colors.white),
-                          ),
-                        ],
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          logout(context);
-                        },
-                        icon: Icon(Icons.exit_to_app,
-                            size: 30, color: Colors.white),
-                        tooltip: "Logout",
-                      ),
-                    ],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Loading....",
+                    style: GoogleFonts.poppins(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  CircularProgressIndicator(),
+                ],
+              ),
+            )
+          : Container(
+              width: screenWidth,
+              height: screenHeight,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/reg_bg.jpg"),
+                  fit: BoxFit.cover,
                 ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Home Banner
+                  Container(
+                    height: 125,
+                    decoration: BoxDecoration(
+                      color: Colors.orangeAccent,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(30),
+                        bottomRight: Radius.circular(30),
+                      ),
+                    ),
+                    child: SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "👋 Hello, ${userName ?? 'Friend'}",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  "Ready to play and learn?",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14, color: Colors.white),
+                                ),
+                              ],
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                logout(context);
+                              },
+                              icon: Icon(Icons.exit_to_app,
+                                  size: 30, color: Colors.white),
+                              tooltip: "Logout",
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  Spacer(),
+                  buildButton("🧩   Puzzle Game", Colors.purple, () async {
+                    bool demo = await loadString("demo", "no") != "no";
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (contex) => PuzzleLevelsScreen(
+                          demo: demo,
+                        ),
+                      ),
+                    );
+                  }),
+                  buildButton("🎤   Preposition Game", Colors.brown, () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (contex) => PrepositionHome(),
+                      ),
+                    );
+                  }),
+                  buildButton("📝  Quiz Time", Colors.orange, () {}),
+                  buildButton("🌍   Explore World", Colors.teal, () {}),
+                  Spacer(),
+                ],
               ),
             ),
-
-            Spacer(),
-            buildButton("🧩   Puzzle Game", Colors.purple, () async {
-              bool demo = await loadString("demo", "no") != "no";
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (contex) => PuzzleLevelsScreen(
-                    demo: demo,
-                  ),
-                ),
-              );
-            }),
-            buildButton("🎤   Preposition Game", Colors.brown, () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (contex) => PrepositionHome(),
-                ),
-              );
-            }),
-            buildButton("📝  Quiz Time", Colors.orange, () {}),
-            buildButton("🌍   Explore World", Colors.teal, () {}),
-            Spacer(),
-          ],
-        ),
-      ),
     );
   }
 }
