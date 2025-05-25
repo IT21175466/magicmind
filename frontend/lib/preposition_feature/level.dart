@@ -38,19 +38,21 @@ class Level{
     seconds -= minutes * 60;
 
     return "$minutes min $seconds seconds";
+
+    //total time taken for the level
   }
   int seconds(){
     Duration difference = end.difference(start);
     return difference.inSeconds;
   }
 }
-
+//Manages game levels and scoring
 class LevelGame{
   static HashMap<int, Level> score = HashMap();
 
   static bool isUnlocked(int level){
 
-    if (level == 1) return true;
+    if (level == 1) return true;  //// First level always unlocked
     if (level == -1) return true;
     if (score.containsKey(level)) return true;
     if (!score.containsKey(level - 1)) return false;
