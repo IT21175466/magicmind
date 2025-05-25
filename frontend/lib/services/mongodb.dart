@@ -18,6 +18,22 @@ class MongoDatabase {
     print(await collection.find().toList());
   }
 
+  static Future<void> insertPrepositionData(String status, int score,
+      String level, String time, String user_id) async {
+    var db = await Db.create(MONGO_URL);
+    await db.open();
+    var collection = db.collection('Preposition');
+
+    await collection.insertOne({
+      'status': status,
+      'score': score,
+      'level': level,
+      'time_spent': time,
+      'user_id': user_id
+    });
+    print('Preposition Data inserted successfully');
+  }
+
   static Future<void> insertData({
     required String difficultyLevel,
     required String user_id,
