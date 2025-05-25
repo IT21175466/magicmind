@@ -7,6 +7,7 @@ import 'package:magicmind_puzzle/models/puzzle_result_model.dart';
 import 'package:magicmind_puzzle/navigations/vocabulary_list_screen.dart';
 import 'package:magicmind_puzzle/preposition_feature/preposition_main.dart';
 import 'package:magicmind_puzzle/screens/auth/login_page.dart';
+import 'package:magicmind_puzzle/screens/home/buy_app.dart';
 import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
 import 'package:magicmind_puzzle/services/auth_service.dart';
 import 'package:magicmind_puzzle/services/mongodb.dart';
@@ -30,6 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: (_) => LoginPage()), (predicate) => false);
   }
+
+  String userPaidStatus = '';
 
   Widget buildButton(String text, Color color, VoidCallback onPressed) {
     return Container(
@@ -60,8 +63,10 @@ class _HomeScreenState extends State<HomeScreen> {
     final userId = await SharedPrefs.getUserId();
     if (userId != null) {
       final name = await MongoService.getUserName(userId);
+      final status = await MongoService.getUserPaidStatus(userId);
       setState(() {
         userName = name ?? 'Friend';
+        userPaidStatus = status ?? 'trail';
         isLoadingName = false;
       });
     }
@@ -126,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   // Home Banner
                   Container(
-                    height: 125,
+                    height: 155,
                     decoration: BoxDecoration(
                       color: Colors.orangeAccent,
                       borderRadius: BorderRadius.only(
@@ -157,6 +162,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                   "Ready to play and learn?",
                                   style: GoogleFonts.poppins(
                                       fontSize: 14, color: Colors.white),
+                                ),
+                                Spacer(),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => BuyApp()));
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 5),
+                                    decoration: BoxDecoration(
+                                        color: Colors.deepOrangeAccent,
+                                        borderRadius:
+                                            BorderRadius.circular(25)),
+                                    child: Text(
+                                      userPaidStatus == 'trial'
+                                          ? "Trial User"
+                                          : 'Paid User',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -194,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   }),
-                  buildButton("📝  Vocabulary", Colors.orange, () {
+                  buildButton("📝  Vocabulary Game", Colors.orange, () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -299,19 +331,16 @@ class _HomeScreenState extends State<HomeScreen> {
           pw.MultiPage(
             build: (pw.Context context) => [
               pw.Center(
-                child: pw.Text('MagicMind Puzzle - Student Performance Report',
+                child: pw.Text('MagicMind - Student Performance Report',
                     style: pw.TextStyle(
                         fontSize: 24, fontWeight: pw.FontWeight.bold)),
               ),
               pw.SizedBox(height: 5),
+              pw.Divider(),
               pw.Text('Puzzle Results Report',
                   style: pw.TextStyle(
                       fontSize: 20, fontWeight: pw.FontWeight.bold)),
               pw.SizedBox(height: 10),
-              pw.Text('Last 5 Session Records:',
-                  style: pw.TextStyle(
-                      fontSize: 18, fontWeight: pw.FontWeight.bold)),
-              pw.SizedBox(height: 5),
               for (var activity in activities)
                 pw.Text(
                     'Session ${activities.indexOf(activity) + 1}: Score - ${activity.score}, Incorrect Moves: ${activity.incorrectMoves}, Hints Used: ${activity.hintsUsed}'),
@@ -322,18 +351,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: pw.TextStyle(
                       fontSize: 20, fontWeight: pw.FontWeight.bold)),
               pw.SizedBox(height: 10),
-              pw.Text('Last 5 Session Records:',
-                  style: pw.TextStyle(
-                      fontSize: 18, fontWeight: pw.FontWeight.bold)),
-              pw.SizedBox(height: 5),
               for (var activity in prepositionActivities)
                 pw.Text(
                     'Score - ${activity.score}, Status: ${activity.status}, Level: ${activity.level}, Time Spent: ${activity.timeSpent}'),
               pw.SizedBox(height: 10),
-              pw.Text('Performance Analysis:',
-                  style: pw.TextStyle(
-                      fontSize: 18, fontWeight: pw.FontWeight.bold)),
-              pw.SizedBox(height: 20),
+
               pw.Divider(),
               pw.Center(
                 child: pw.Text(
