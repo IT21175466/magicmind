@@ -83,6 +83,9 @@ class LevelGame{
   static int getScorePercentage(int level){
     Level l = score[level]!;
     int score_correct = 0;
+
+
+    //Count correct and incorrect answers
     for (int key in l.questions.keys) {
       if (l.questions[key]!) score_correct++;
     }
