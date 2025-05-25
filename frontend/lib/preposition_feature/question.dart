@@ -165,6 +165,7 @@ class Relationship {
       required this.relationship});
 }
 
+//bug fixed
 List<Sentence> generateSentencesNew(List<IdentifiedObject> objects, int level) {
   List<Sentence> sentences = [];
 
