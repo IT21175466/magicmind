@@ -103,6 +103,7 @@ class LevelGame{
       if (l.questions[key]!) score_correct++;
     }
 
+//Calculate marks as percentage
     int marks = (score_correct * 100 / (upload ? Config.NUM_OF_QUESTIONS_FOR_IMAGE_UPLOAD_SESSION : Config.NUM_OF_QUESTIONS_FOR_SINGLE_LEVEL)).toInt();
 
     List<String> x = ["Excellent", "Good", "Average", "Needs Improvement"];
