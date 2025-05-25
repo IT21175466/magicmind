@@ -1,5 +1,6 @@
 import 'dart:collection';
-
+import 'dart:ui' as ui;
+import 'package:image/image.dart' as img;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:magicmind_puzzle/preposition_feature/a.dart';
@@ -7,6 +8,8 @@ import 'package:magicmind_puzzle/preposition_feature/function.dart';
 import 'package:magicmind_puzzle/preposition_feature/question.dart';
 import 'package:magicmind_puzzle/preposition_feature/score.dart';
 import 'package:magicmind_puzzle/screens/home/home_screen.dart';
+import 'package:magicmind_puzzle/services/mongodb.dart';
+import 'package:magicmind_puzzle/services/shared_prefs_service.dart';
 
 class PrepositionHome extends StatelessWidget {
   const PrepositionHome({super.key});
@@ -310,9 +313,9 @@ class ChooseSource extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Upload\nThe\nImage",
+                                        "Upload\nan Image",
                                         style: TextStyle(
-                                            fontSize: 28,
+                                            fontSize: 22,
                                             fontWeight: FontWeight.w400,
                                             color: Color(0xFFECAD2C)),
                                       ),
@@ -349,9 +352,9 @@ class ChooseSource extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Generate\nan\nImage",
+                                        "Generate\nan Image",
                                         style: TextStyle(
-                                            fontSize: 28,
+                                            fontSize: 22,
                                             fontWeight: FontWeight.w400,
                                             color: Color(0xFF26A5C6)),
                                       ),
@@ -771,6 +774,161 @@ class ChooseLevel extends StatelessWidget {
   }
 }
 
+class CheckImage extends StatefulWidget {
+  CheckImage({super.key});
+
+  @override
+  State<CheckImage> createState() => _CheckImageState();
+}
+
+class _CheckImageState extends State<CheckImage> {
+  void hideLoadingDialog(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
+  XFile? result;
+  double accuracy = 0.5;
+
+  ui.Image? image;
+  List<TableRow> rows = [];
+
+  void drawResult() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+    img.Image image = GeneratedQuestion.readImage(result!);
+    List<IdentifiedObject> objects =
+        await GeneratedQuestion.detectObjects(image);
+    List<IdentifiedObject> x = [];
+
+    for (IdentifiedObject y in objects) {
+      if (y.accuracy! >= accuracy) x.add(y);
+    }
+    List<Relationship> relationships = identifyRelationships(x, 1);
+    ui.Image image_ =
+        await GeneratedQuestion.drawObjects(objects, image, accuracy: accuracy);
+
+    List<TableRow> rows = [
+      TableRow(children: [
+        TableCell(
+            child: Text(
+          "A",
+          style: TextStyle(color: Colors.white),
+        )),
+        TableCell(child: Text("A acc", style: TextStyle(color: Colors.white))),
+        TableCell(child: Text("B", style: TextStyle(color: Colors.white))),
+        TableCell(child: Text("B acc", style: TextStyle(color: Colors.white))),
+        TableCell(child: Text("code", style: TextStyle(color: Colors.white))),
+      ]),
+    ];
+
+    for (Relationship relationship in relationships) {
+      rows.add(TableRow(children: [
+        TableCell(
+            child: Text(relationship.objectA.label,
+                style: TextStyle(color: Colors.white))),
+        TableCell(
+            child: Text(
+                (relationship.objectA.accuracy ?? 0.0).toStringAsFixed(2),
+                style: TextStyle(color: Colors.white))),
+        TableCell(
+            child: Text(relationship.objectB.label,
+                style: TextStyle(color: Colors.white))),
+        TableCell(
+            child: Text(
+                (relationship.objectB.accuracy ?? 0.0).toStringAsFixed(2),
+                style: TextStyle(color: Colors.white))),
+        TableCell(
+            child: Text(relationship.relationship,
+                style: TextStyle(color: Colors.white))),
+      ]));
+    }
+
+    setState(() {
+      this.rows = rows;
+      this.image = image_;
+    });
+
+    hideLoadingDialog(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xFF000000),
+      body: Padding(
+        padding: EdgeInsets.all(32),
+        child: SingleChildScrollView(
+          child: Column(
+            spacing: 32,
+            children: [
+              IconButton(
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    );
+
+                    final imagePicker = ImagePicker();
+                    XFile? result_ = await imagePicker.pickImage(
+                      source: ImageSource.gallery,
+                    );
+
+                    if (result_ != null) {
+                      hideLoadingDialog(context);
+                      result = result_;
+                      drawResult();
+                    } else {
+                      hideLoadingDialog(context);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            content: Text("Please select an image."),
+                          );
+                        },
+                      );
+                    }
+                  },
+                  icon: Icon(Icons.camera_alt)),
+              Text(
+                "Accuracy: ${accuracy.toStringAsFixed(2)}",
+                style: TextStyle(color: Colors.white),
+              ),
+              Slider(
+                  value: accuracy,
+                  onChanged: (acc) {
+                    accuracy = acc;
+                    drawResult();
+                  }),
+              image != null
+                  ? RawImage(
+                      image: image,
+                    )
+                  : Text(""),
+              Table(
+                children: rows,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class Question extends StatefulWidget {
   final int level;
   final int number;
@@ -1076,10 +1234,17 @@ class _QuestionState extends State<Question> {
   }
 }
 
-class Won extends StatelessWidget {
+class Won extends StatefulWidget {
   final int level;
 
   const Won({super.key, required this.level});
+
+  @override
+  State<Won> createState() => _WonState();
+}
+
+class _WonState extends State<Won> {
+  bool isLoadingInsert = false;
 
   Widget starBar(int percentage) {
     DrawIcon(percentage, start) {
@@ -1115,12 +1280,12 @@ class Won extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Level level_ = LevelGame.score[level]!;
-    int score = LevelGame.getScore(level);
+    Level level_ = LevelGame.score[widget.level]!;
+    int score = LevelGame.getScore(widget.level);
     // percentage = LevelGame.getScorePercentage(level);
-    String y = LevelGame.getScoreText(level);
+    String y = LevelGame.getScoreText(widget.level);
 
-    bool last = level == Config.NUM_OF_LEVELS;
+    bool last = widget.level == Config.NUM_OF_LEVELS;
 
     int overall_score = 0;
     int overall_time = 0;
@@ -1192,7 +1357,7 @@ class Won extends StatelessWidget {
                                   child: Text(
                                     level_.completed()
                                         ? "Congratulations!"
-                                        : " You lost",
+                                        : "You lost",
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.w500,
@@ -1241,7 +1406,7 @@ class Won extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                level > 0
+                                widget.level > 0
                                     ? Align(
                                         alignment: Alignment.centerLeft,
                                         child: Padding(
@@ -1304,24 +1469,46 @@ class Won extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
-                        onPressed: () => {
+                        onPressed: () async {
+                          setState(() {
+                            isLoadingInsert = true;
+                          });
+                          final uid = await SharedPrefs.getUserId();
+
+                          await MongoDatabase.insertPrepositionData(
+                              level_.completed()
+                                  ? "Congratulations!"
+                                  : "You lost",
+                              score,
+                              widget.level.toString(),
+                              _time,
+                              uid!);
+
+                          setState(() {
+                            isLoadingInsert = false;
+                          });
+
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => level > 0
+                                builder: (context) => widget.level > 0
                                     ? const ChooseLevel()
                                     : ChooseImage(level: -1)),
-                          )
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFF8EBE83),
                           textStyle: TextStyle(color: Colors.white),
                         ),
-                        child: Text("Continue",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold)),
+                        child: isLoadingInsert
+                            ? Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : Text("Continue",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold)),
                       ),
                     ),
                   ],

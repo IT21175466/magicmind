@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:magicmind_puzzle/constants/constant.dart';
+import 'package:magicmind_puzzle/models/preposition.dart';
 import 'package:magicmind_puzzle/models/puzzle_result_model.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:uuid/uuid.dart';
@@ -16,6 +17,54 @@ class MongoDatabase {
 
     var collection = db.collection(COLLECTION_NAME);
     print(await collection.find().toList());
+  }
+
+  static Future<List<PrepositionData>> getPrepositionData() async {
+    var db = await Db.create(MONGO_URL);
+    await db.open();
+    var collection = db.collection('Preposition');
+
+    List<Map<String, dynamic>> data = await collection.find().toList();
+
+    List<PrepositionData> results =
+        data.map((map) => PrepositionData.fromMap(map)).toList();
+
+    await db.close();
+    return results;
+
+    //   try {
+    //     var db = await Db.create(MONGO_URL);
+    //     await db.open();
+
+    //     var collection = db.collection(COLLECTION_NAME);
+    //     List<Map<String, dynamic>> data = await collection.find().toList();
+
+    //     List<PuzzleResult> results =
+    //         data.map((map) => PuzzleResult.fromMap(map)).toList();
+
+    //     await db.close();
+    //     return results;
+    //   } catch (e) {
+    //     print("Error retrieving data: $e");
+    //     return [];
+    //   }
+    // }
+  }
+
+  static Future<void> insertPrepositionData(String status, int score,
+      String level, String time, String user_id) async {
+    var db = await Db.create(MONGO_URL);
+    await db.open();
+    var collection = db.collection('Preposition');
+
+    await collection.insertOne({
+      'status': status,
+      'score': score,
+      'level': level,
+      'time_spent': time,
+      'user_id': user_id
+    });
+    print('Preposition Data inserted successfully');
   }
 
   static Future<void> insertData({
