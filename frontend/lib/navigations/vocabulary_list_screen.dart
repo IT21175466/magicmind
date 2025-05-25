@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:magicmind_puzzle/constants/env.dart';
-import 'package:magicmind_puzzle/models/session_provider.dart';
 import 'package:magicmind_puzzle/navigations/home_screen.dart';
 import 'package:magicmind_puzzle/navigations/image_test_screen.dart';
 import 'package:magicmind_puzzle/navigations/previous_vocabulary_records_screen.dart';
 import 'package:magicmind_puzzle/navigations/vocabulary_screen.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -572,54 +570,54 @@ class _VocabularyLevelsScreenState extends State<VocabularyLevelsScreen> {
                         ),
                       ),
                       actions: [
-                        Container(
-                          margin: EdgeInsets.only(right: 10),
-                          decoration: BoxDecoration(
-                            color: Color(
-                                0xff80ca84), // Background color for the circle
-                            shape: BoxShape.circle, // Circular shape
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.orangeAccent
-                                    .withOpacity(0.6), // Glow effect
-                                blurRadius: 10,
-                                spreadRadius: 2,
-                              ),
-                            ],
-                          ),
-                          child: IconButton(
-                            icon: Icon(Icons.logout,
-                                color: Colors.white), // Logout icon
-                            onPressed: () async {
-                              Provider.of<SessionProvider>(context,
-                                      listen: false)
-                                  .clearSession();
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              await prefs.remove('accessToken');
-                              await prefs.remove('refreshToken');
-                              await prefs.remove('accessTokenExpireDate');
-                              await prefs.remove('refreshTokenExpireDate');
-                              await prefs.remove('userRole');
-                              await prefs.remove('authEmployeeID');
-                              await prefs.remove("vocabulary_difficulty");
-                              await prefs.remove("difference_difficulty");
+                        // Container(
+                        //   margin: EdgeInsets.only(right: 10),
+                        //   decoration: BoxDecoration(
+                        //     color: Color(
+                        //         0xff80ca84), // Background color for the circle
+                        //     shape: BoxShape.circle, // Circular shape
+                        //     boxShadow: [
+                        //       BoxShadow(
+                        //         color: Colors.orangeAccent
+                        //             .withOpacity(0.6), // Glow effect
+                        //         blurRadius: 10,
+                        //         spreadRadius: 2,
+                        //       ),
+                        //     ],
+                        //   ),
+                        //   child: IconButton(
+                        //     icon: Icon(Icons.logout,
+                        //         color: Colors.white), // Logout icon
+                        //     onPressed: () async {
+                        //       Provider.of<SessionProvider>(context,
+                        //               listen: false)
+                        //           .clearSession();
+                        //       SharedPreferences prefs =
+                        //           await SharedPreferences.getInstance();
+                        //       await prefs.remove('accessToken');
+                        //       await prefs.remove('refreshToken');
+                        //       await prefs.remove('accessTokenExpireDate');
+                        //       await prefs.remove('refreshTokenExpireDate');
+                        //       await prefs.remove('userRole');
+                        //       await prefs.remove('authEmployeeID');
+                        //       await prefs.remove("vocabulary_difficulty");
+                        //       await prefs.remove("difference_difficulty");
 
-                              // Check if widget is still mounted before navigating
-                              if (mounted) {
-                                Navigator.pushReplacementNamed(
-                                    context, '/landing');
-                              }
-                            },
-                          ),
-                        ),
+                        //       // Check if widget is still mounted before navigating
+                        //       if (mounted) {
+                        //         Navigator.pushReplacementNamed(
+                        //             context, '/landing');
+                        //       }
+                        //     },
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Container(
-                      height: 200,
+                      height: 300,
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
                         color: Color(0xff27a5c6),
@@ -655,76 +653,65 @@ class _VocabularyLevelsScreenState extends State<VocabularyLevelsScreen> {
                             ),
                           ),
                           const Spacer(),
-                          Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  ElevatedButton.icon(
-                                    onPressed: () async {
-                                      File pdfFile = await _loadPDFfromAssets(
-                                          "assets/instructions/vocabulary booklet.pdf");
+                          ElevatedButton.icon(
+                            onPressed: () async {
+                              File pdfFile = await _loadPDFfromAssets(
+                                  "assets/instructions/vocabulary booklet.pdf");
 
-                                      // Check if widget is still mounted before navigating
-                                      if (mounted) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => PDFView(
-                                              filePath: pdfFile.path,
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                    icon: const Icon(Icons.menu_book),
-                                    label: const Text("Instructions PDF"),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blue[700],
-                                      foregroundColor: Colors.white,
+                              // Check if widget is still mounted before navigating
+                              if (mounted) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PDFView(
+                                      filePath: pdfFile.path,
                                     ),
                                   ),
-                                  ElevatedButton.icon(
-                                    onPressed: () {
-                                      _playInstructions();
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                              'Playing audio instructions...'),
-                                          duration: Duration(seconds: 2),
-                                        ),
-                                      );
-                                    },
-                                    icon: const Icon(Icons.volume_up),
-                                    label: const Text("Audio Instructions"),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.green[700],
-                                      foregroundColor: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8),
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PreviousVocabularyRecordsScreen()),
-                                  );
-                                },
-                                icon: const Icon(Icons.history),
-                                label: const Text("Previous Records"),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.orange[700],
-                                  foregroundColor: Colors.white,
-                                  minimumSize: const Size(double.infinity, 36),
+                                );
+                              }
+                            },
+                            icon: const Icon(Icons.menu_book),
+                            label: const Text("Instructions PDF"),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue[700],
+                              foregroundColor: Colors.white,
+                            ),
+                          ),
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              _playInstructions();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Playing audio instructions...'),
+                                  duration: Duration(seconds: 2),
                                 ),
-                              ),
-                            ],
+                              );
+                            },
+                            icon: const Icon(Icons.volume_up),
+                            label: const Text("Audio Instructions"),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.green[700],
+                              foregroundColor: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        PreviousVocabularyRecordsScreen()),
+                              );
+                            },
+                            icon: const Icon(Icons.history),
+                            label: const Text("Previous Records"),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.orange[700],
+                              foregroundColor: Colors.white,
+                              minimumSize: const Size(double.infinity, 36),
+                            ),
                           ),
                         ],
                       ),
@@ -734,11 +721,11 @@ class _VocabularyLevelsScreenState extends State<VocabularyLevelsScreen> {
                   // List view of vocabulary levels
                   Expanded(
                     child: GridView.builder(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(8.0),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        crossAxisSpacing: 16.0,
-                        mainAxisSpacing: 16.0,
+                        crossAxisSpacing: 8.0,
+                        mainAxisSpacing: 8.0,
                         childAspectRatio: 0.8,
                       ),
                       itemCount: levels.length,
@@ -814,7 +801,7 @@ class _VocabularyLevelsScreenState extends State<VocabularyLevelsScreen> {
                                   children: [
                                     // Level content
                                     Padding(
-                                      padding: const EdgeInsets.all(16.0),
+                                      padding: const EdgeInsets.all(8.0),
                                       child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,

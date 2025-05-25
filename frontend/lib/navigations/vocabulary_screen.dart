@@ -1185,51 +1185,49 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                           : SizedBox(),
                       const SizedBox(height: 20),
                       option == "write"
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                ElevatedButton.icon(
-                                  onPressed: _uploadSignature,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.green,
-                                    foregroundColor: Colors.white,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 12),
-                                    textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                  icon: const Icon(Icons.check_circle),
-                                  label: const Text('Check My Writing! ✓'),
+                          ? ElevatedButton.icon(
+                              onPressed: _uploadSignature,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 12),
+                                textStyle: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                ElevatedButton.icon(
-                                  onPressed: () {
-                                    // Clear the signature pad
-                                    _signaturePadKey.currentState?.clear();
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orange,
-                                    foregroundColor: Colors.white,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 12),
-                                    textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                  ),
-                                  icon: const Icon(Icons.refresh),
-                                  label: const Text('Start Over! 🔄'),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
                                 ),
-                              ],
+                              ),
+                              icon: const Icon(Icons.check_circle),
+                              label: const Text('Check My Writing! ✓'),
                             )
                           : const SizedBox(),
+                      const SizedBox(height: 10),
+                      option == "write"
+                          ? ElevatedButton.icon(
+                              onPressed: () {
+                                // Clear the signature pad
+                                _signaturePadKey.currentState?.clear();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.orange,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 12),
+                                textStyle: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                              ),
+                              icon: const Icon(Icons.refresh),
+                              label: const Text('Start Over! 🔄'),
+                            )
+                          : SizedBox(),
                       const SizedBox(height: 20),
 
                       if (_isUploading)
