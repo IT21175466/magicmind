@@ -18,6 +18,12 @@ class MongoService {
     return user?['name'];
   }
 
+  static Future<String?> getUserPaidStatus(String userId) async {
+    final col = await _getCollection();
+    final user = await col.findOne(where.id(ObjectId.parse(userId)));
+    return user?['status'];
+  }
+
   static Future<Map<String, dynamic>?> login(
       String email, String password) async {
     final col = await _getCollection();
@@ -40,6 +46,7 @@ class MongoService {
       'name': name,
       'email': email,
       'password': password,
+      'status': 'trial'
     });
     return result.id as ObjectId?;
   }

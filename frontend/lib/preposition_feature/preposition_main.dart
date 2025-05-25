@@ -8,6 +8,8 @@ import 'package:magicmind_puzzle/preposition_feature/function.dart';
 import 'package:magicmind_puzzle/preposition_feature/question.dart';
 import 'package:magicmind_puzzle/preposition_feature/score.dart';
 import 'package:magicmind_puzzle/screens/home/home_screen.dart';
+import 'package:magicmind_puzzle/services/mongodb.dart';
+import 'package:magicmind_puzzle/services/shared_prefs_service.dart';
 
 class PrepositionHome extends StatelessWidget {
   const PrepositionHome({super.key});
@@ -311,9 +313,9 @@ class ChooseSource extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Upload\nThe\nImage",
+                                        "Upload\nan Image",
                                         style: TextStyle(
-                                            fontSize: 28,
+                                            fontSize: 22,
                                             fontWeight: FontWeight.w400,
                                             color: Color(0xFFECAD2C)),
                                       ),
@@ -350,9 +352,9 @@ class ChooseSource extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        "Generate\nan\nImage",
+                                        "Generate\nan Image",
                                         style: TextStyle(
-                                            fontSize: 28,
+                                            fontSize: 22,
                                             fontWeight: FontWeight.w400,
                                             color: Color(0xFF26A5C6)),
                                       ),
@@ -1232,10 +1234,17 @@ class _QuestionState extends State<Question> {
   }
 }
 
-class Won extends StatelessWidget {
+class Won extends StatefulWidget {
   final int level;
 
   const Won({super.key, required this.level});
+
+  @override
+  State<Won> createState() => _WonState();
+}
+
+class _WonState extends State<Won> {
+  bool isLoadingInsert = false;
 
   Widget starBar(int percentage) {
     DrawIcon(percentage, start) {
@@ -1271,12 +1280,12 @@ class Won extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Level level_ = LevelGame.score[level]!;
-    int score = LevelGame.getScore(level);
+    Level level_ = LevelGame.score[widget.level]!;
+    int score = LevelGame.getScore(widget.level);
     // percentage = LevelGame.getScorePercentage(level);
-    String y = LevelGame.getScoreText(level);
+    String y = LevelGame.getScoreText(widget.level);
 
-    bool last = level == Config.NUM_OF_LEVELS;
+    bool last = widget.level == Config.NUM_OF_LEVELS;
 
     int overall_score = 0;
     int overall_time = 0;
@@ -1348,7 +1357,7 @@ class Won extends StatelessWidget {
                                   child: Text(
                                     level_.completed()
                                         ? "Congratulations!"
-                                        : " You lost",
+                                        : "You lost",
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.w500,
@@ -1397,7 +1406,7 @@ class Won extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                level > 0
+                                widget.level > 0
                                     ? Align(
                                         alignment: Alignment.centerLeft,
                                         child: Padding(
@@ -1460,24 +1469,46 @@ class Won extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
-                        onPressed: () => {
+                        onPressed: () async {
+                          setState(() {
+                            isLoadingInsert = true;
+                          });
+                          final uid = await SharedPrefs.getUserId();
+
+                          await MongoDatabase.insertPrepositionData(
+                              level_.completed()
+                                  ? "Congratulations!"
+                                  : "You lost",
+                              score,
+                              widget.level.toString(),
+                              _time,
+                              uid!);
+
+                          setState(() {
+                            isLoadingInsert = false;
+                          });
+
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => level > 0
+                                builder: (context) => widget.level > 0
                                     ? const ChooseLevel()
                                     : ChooseImage(level: -1)),
-                          )
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFF8EBE83),
                           textStyle: TextStyle(color: Colors.white),
                         ),
-                        child: Text("Continue",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold)),
+                        child: isLoadingInsert
+                            ? Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : Text("Continue",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold)),
                       ),
                     ),
                   ],
