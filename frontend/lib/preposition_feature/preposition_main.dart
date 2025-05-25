@@ -1,5 +1,6 @@
 import 'dart:collection';
-
+import 'dart:ui' as ui;
+import 'package:image/image.dart' as img;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:magicmind_puzzle/preposition_feature/a.dart';
@@ -763,6 +764,161 @@ class ChooseLevel extends StatelessWidget {
                   height: 46,
                 ),
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CheckImage extends StatefulWidget {
+  CheckImage({super.key});
+
+  @override
+  State<CheckImage> createState() => _CheckImageState();
+}
+
+class _CheckImageState extends State<CheckImage> {
+  void hideLoadingDialog(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
+  XFile? result;
+  double accuracy = 0.5;
+
+  ui.Image? image;
+  List<TableRow> rows = [];
+
+  void drawResult() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+
+    img.Image image = GeneratedQuestion.readImage(result!);
+    List<IdentifiedObject> objects =
+        await GeneratedQuestion.detectObjects(image);
+    List<IdentifiedObject> x = [];
+
+    for (IdentifiedObject y in objects) {
+      if (y.accuracy! >= accuracy) x.add(y);
+    }
+    List<Relationship> relationships = identifyRelationships(x, 1);
+    ui.Image image_ =
+        await GeneratedQuestion.drawObjects(objects, image, accuracy: accuracy);
+
+    List<TableRow> rows = [
+      TableRow(children: [
+        TableCell(
+            child: Text(
+          "A",
+          style: TextStyle(color: Colors.white),
+        )),
+        TableCell(child: Text("A acc", style: TextStyle(color: Colors.white))),
+        TableCell(child: Text("B", style: TextStyle(color: Colors.white))),
+        TableCell(child: Text("B acc", style: TextStyle(color: Colors.white))),
+        TableCell(child: Text("code", style: TextStyle(color: Colors.white))),
+      ]),
+    ];
+
+    for (Relationship relationship in relationships) {
+      rows.add(TableRow(children: [
+        TableCell(
+            child: Text(relationship.objectA.label,
+                style: TextStyle(color: Colors.white))),
+        TableCell(
+            child: Text(
+                (relationship.objectA.accuracy ?? 0.0).toStringAsFixed(2),
+                style: TextStyle(color: Colors.white))),
+        TableCell(
+            child: Text(relationship.objectB.label,
+                style: TextStyle(color: Colors.white))),
+        TableCell(
+            child: Text(
+                (relationship.objectB.accuracy ?? 0.0).toStringAsFixed(2),
+                style: TextStyle(color: Colors.white))),
+        TableCell(
+            child: Text(relationship.relationship,
+                style: TextStyle(color: Colors.white))),
+      ]));
+    }
+
+    setState(() {
+      this.rows = rows;
+      this.image = image_;
+    });
+
+    hideLoadingDialog(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xFF000000),
+      body: Padding(
+        padding: EdgeInsets.all(32),
+        child: SingleChildScrollView(
+          child: Column(
+            spacing: 32,
+            children: [
+              IconButton(
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    );
+
+                    final imagePicker = ImagePicker();
+                    XFile? result_ = await imagePicker.pickImage(
+                      source: ImageSource.gallery,
+                    );
+
+                    if (result_ != null) {
+                      hideLoadingDialog(context);
+                      result = result_;
+                      drawResult();
+                    } else {
+                      hideLoadingDialog(context);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            content: Text("Please select an image."),
+                          );
+                        },
+                      );
+                    }
+                  },
+                  icon: Icon(Icons.camera_alt)),
+              Text(
+                "Accuracy: ${accuracy.toStringAsFixed(2)}",
+                style: TextStyle(color: Colors.white),
+              ),
+              Slider(
+                  value: accuracy,
+                  onChanged: (acc) {
+                    accuracy = acc;
+                    drawResult();
+                  }),
+              image != null
+                  ? RawImage(
+                      image: image,
+                    )
+                  : Text(""),
+              Table(
+                children: rows,
+              )
             ],
           ),
         ),
