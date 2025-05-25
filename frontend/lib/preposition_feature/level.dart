@@ -14,6 +14,7 @@ class Config {
 
 }
 
+//a single level in the game
 class Level{
   final int level;
   final HashMap<int, bool> questions = HashMap();
