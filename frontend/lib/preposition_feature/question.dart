@@ -3,9 +3,9 @@ import 'dart:math';
 import 'dart:math' as Math;
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';
-import 'package:magicmind_puzzle/preposition_feature/function.dart';
-import 'package:magicmind_puzzle/preposition_feature/score.dart';
-
+import 'package:merged_app/preposition_feature/function.dart';
+import 'package:merged_app/preposition_feature/score.dart';
+  
 const Map<String, List<String>> ANSWERS = {
   "above": ["in", "below", "under", "between"],
   "on": ["in", "below", "under", "between"],

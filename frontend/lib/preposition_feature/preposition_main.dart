@@ -3,12 +3,12 @@ import 'dart:ui' as ui;
 import 'package:image/image.dart' as img;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:magicmind_puzzle/preposition_feature/a.dart';
-import 'package:magicmind_puzzle/preposition_feature/function.dart';
-import 'package:magicmind_puzzle/preposition_feature/question.dart';
-import 'package:magicmind_puzzle/preposition_feature/score.dart';
-import 'package:magicmind_puzzle/screens/home/home_screen.dart';
-
+import 'package:merged_app/navigations/home_screen.dart';
+import 'package:merged_app/preposition_feature/a.dart';
+import 'package:merged_app/preposition_feature/function.dart';
+import 'package:merged_app/preposition_feature/question.dart';
+import 'package:merged_app/preposition_feature/score.dart';
+ 
 class PrepositionHome extends StatelessWidget {
   const PrepositionHome({super.key});
 

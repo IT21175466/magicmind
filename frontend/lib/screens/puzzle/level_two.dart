@@ -2,8 +2,11 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:magicmind_puzzle/services/shared_prefs_service.dart'
-    show SharedPrefs;
+ 
+import 'package:merged_app/constants/constant.dart' show ML_API;
+import 'package:merged_app/screens/puzzle/puzzle_levels_screen.dart';
+import 'package:merged_app/services/mongodb.dart';
+import 'package:merged_app/services/shared_prefs_service.dart';
 import '../../utils/function.dart';
 
 import 'dart:async';
@@ -16,9 +19,7 @@ import 'package:flutter/physics.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:magicmind_puzzle/constants/constant.dart';
-import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
-import 'package:magicmind_puzzle/services/mongodb.dart';
+ 
 
 class LevelTwo_SelectImageOption extends StatefulWidget {
   final int factor;

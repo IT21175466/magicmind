@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:merged_app/screens/puzzle/puzzle_levels_screen.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 import 'dart:async';
@@ -11,7 +12,7 @@ import 'package:image/image.dart' as img;
 
 import 'package:flutter/physics.dart';
 import 'package:flutter/services.dart';
-import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
+
 
 import '../../utils/function.dart';
 

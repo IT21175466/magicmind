@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:magicmind_puzzle/utils/app_styles.dart';
-
+import 'package:merged_app/constants/styles.dart';
+ 
 class CustomGameCard extends StatelessWidget {
   final String title;
   final IconData icon;

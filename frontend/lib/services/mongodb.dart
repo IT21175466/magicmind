@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:magicmind_puzzle/constants/constant.dart';
-import 'package:magicmind_puzzle/models/puzzle_result_model.dart';
+  import 'package:merged_app/constants/constant.dart';
+import 'package:merged_app/models/puzzle_result_model.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:uuid/uuid.dart';
 

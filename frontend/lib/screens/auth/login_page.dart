@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:magicmind_puzzle/screens/auth/register_page.dart';
-import 'package:magicmind_puzzle/screens/home/home_screen.dart';
-import 'package:magicmind_puzzle/services/auth_service.dart';
-import 'package:magicmind_puzzle/services/shared_prefs_service.dart';
+import 'package:merged_app/navigations/home_screen.dart';
+import 'package:merged_app/screens/auth/register_page.dart';
+import 'package:merged_app/services/auth_service.dart';
+import 'package:merged_app/services/shared_prefs_service.dart';
+ 
 
 class LoginPage extends StatefulWidget {
   @override

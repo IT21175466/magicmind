@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:magicmind_puzzle/screens/home/home_screen.dart';
-import 'package:magicmind_puzzle/utils/app_styles.dart';
+import 'package:merged_app/constants/styles.dart';
+import 'package:merged_app/navigations/home_screen.dart';
+
 
 class PuzzleResultsScreen extends StatefulWidget {
   final int moves;

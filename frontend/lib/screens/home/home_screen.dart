@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:magicmind_puzzle/preposition_feature/preposition_main.dart';
-import 'package:magicmind_puzzle/screens/auth/login_page.dart';
-import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
-import 'package:magicmind_puzzle/services/auth_service.dart';
-import 'package:magicmind_puzzle/services/shared_prefs_service.dart';
-import 'package:magicmind_puzzle/utils/function.dart';
+import 'package:merged_app/models/session_provider.dart';
+import 'package:merged_app/preposition_feature/preposition_main.dart';
+import 'package:merged_app/screens/auth/login_page.dart';
+import 'package:merged_app/screens/puzzle/puzzle_levels_screen.dart';
+import 'package:merged_app/services/auth_service.dart';
+import 'package:merged_app/services/shared_prefs_service.dart';
+import 'package:merged_app/utils/function.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,8 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
         style: ElevatedButton.styleFrom(
           minimumSize: Size(double.infinity, 60),
           backgroundColor: color,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         ),
         label: Text(
           text,
@@ -58,7 +60,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   String? userName;
-
   bool isLoadingName = true;
 
   @override
@@ -93,9 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  SizedBox(height: 15),
                   CircularProgressIndicator(),
                 ],
               ),
@@ -128,10 +127,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
@@ -149,29 +148,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ],
                             ),
-                            IconButton(
-                              onPressed: () {
-                                logout(context);
-                              },
-                              icon: Icon(Icons.exit_to_app,
-                                  size: 30, color: Colors.white),
-                              tooltip: "Logout",
-                            ),
                           ],
                         ),
                       ),
                     ),
                   ),
-
                   Spacer(),
                   buildButton("🧩   Puzzle Game", Colors.purple, () async {
                     bool demo = await loadString("demo", "no") != "no";
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (contex) => PuzzleLevelsScreen(
-                          demo: demo,
-                        ),
+                        builder: (context) => PuzzleLevelsScreen(demo: demo),
                       ),
                     );
                   }),
@@ -179,12 +167,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (contex) => PrepositionHome(),
+                        builder: (context) => PrepositionHome(),
                       ),
                     );
                   }),
-                  buildButton("📝  Quiz Time", Colors.orange, () {}),
-                  buildButton("🌍   Explore World", Colors.teal, () {}),
+                  buildButton("📝   Quiz Time", Colors.orange, () {}),
+                  buildButton("🚪   Logout", Colors.red, () async {
+                    Provider.of<SessionProvider>(context, listen: false)
+                        .clearSession();
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    await prefs.remove('accessToken');
+                    await prefs.remove('refreshToken');
+                    await prefs.remove('accessTokenExpireDate');
+                    await prefs.remove('refreshTokenExpireDate');
+                    await prefs.remove('userRole');
+                    await prefs.remove('authEmployeeID');
+                    await prefs.remove("vocabulary_difficulty");
+                    await prefs.remove("difference_difficulty");
+                    Navigator.pushReplacementNamed(context, '/landing');
+                  }),
                   Spacer(),
                 ],
               ),

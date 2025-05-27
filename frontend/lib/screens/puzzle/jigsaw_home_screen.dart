@@ -9,10 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
-import 'package:magicmind_puzzle/constants/constant.dart';
-import 'package:magicmind_puzzle/screens/puzzle/puzzle_levels_screen.dart';
-import 'package:magicmind_puzzle/services/mongodb.dart';
-import 'package:magicmind_puzzle/services/shared_prefs_service.dart';
+import 'package:merged_app/constants/constant.dart';
+import 'package:merged_app/screens/puzzle/puzzle_levels_screen.dart';
+import 'package:merged_app/services/mongodb.dart';
+import 'package:merged_app/services/shared_prefs_service.dart';
+
 
 import '../../utils/function.dart';
 

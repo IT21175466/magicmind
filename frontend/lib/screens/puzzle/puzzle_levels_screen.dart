@@ -1,11 +1,12 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:magicmind_puzzle/screens/demo/demo_video.dart';
-import 'package:magicmind_puzzle/screens/home/home_screen.dart';
-import 'package:magicmind_puzzle/screens/puzzle/level_demo.dart';
-import 'package:magicmind_puzzle/screens/puzzle/level_two.dart';
-import 'package:magicmind_puzzle/screens/puzzle/select_image_option_screen.dart';
-import 'package:magicmind_puzzle/screens/report/report_page.dart';
+import 'package:merged_app/navigations/home_screen.dart';
+import 'package:merged_app/screens/demo/demo_video.dart';
+import 'package:merged_app/screens/puzzle/level_demo.dart';
+import 'package:merged_app/screens/puzzle/level_two.dart';
+import 'package:merged_app/screens/puzzle/select_image_option_screen.dart';
+import 'package:merged_app/screens/report/report_page.dart' show ReportPage;
+ 
 
 class PuzzleLevelsScreen extends StatefulWidget {
   final bool demo;

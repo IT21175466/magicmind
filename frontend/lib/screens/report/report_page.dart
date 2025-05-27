@@ -4,12 +4,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:magicmind_puzzle/models/puzzle_result_model.dart';
-import 'package:magicmind_puzzle/screens/report/dificulity_chart.dart';
-import 'package:magicmind_puzzle/screens/report/mistaks_chart.dart';
-import 'package:magicmind_puzzle/screens/report/score_chart.dart';
-import 'package:magicmind_puzzle/services/mongodb.dart';
-import 'package:magicmind_puzzle/services/shared_prefs_service.dart';
+import 'package:merged_app/models/puzzle_result_model.dart';
+import 'package:merged_app/screens/report/dificulity_chart.dart';
+import 'package:merged_app/screens/report/mistaks_chart.dart';
+import 'package:merged_app/screens/report/score_chart.dart';
+import 'package:merged_app/services/mongodb.dart';
+import 'package:merged_app/services/shared_prefs_service.dart';
+ 
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;

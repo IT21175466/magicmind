@@ -1,0 +1,2 @@
+D:/team/magicmind/frontend/android/app/.cxx/Debug/l3f06r4m/x86/CMakeFiles/edit_cache.dir
+D:/team/magicmind/frontend/android/app/.cxx/Debug/l3f06r4m/x86/CMakeFiles/rebuild_cache.dir

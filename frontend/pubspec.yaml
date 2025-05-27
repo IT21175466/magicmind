@@ -1,59 +1,74 @@
-name: magicmind_puzzle
-description: "A new Flutter project."
-
+name: merged_app
+description: "A merged Flutter project combining chat and puzzle functionalities."
 publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.3
+  sdk: '>=3.5.3 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-
-
   cupertino_icons: ^1.0.8
-  http: ^1.2.2
   google_fonts: ^6.2.1
-  fc_native_image_resize: ^0.12.0
+  http: ^1.2.2
+  provider: ^6.1.5
+  shared_preferences: ^2.0.15
+  image_picker: ^0.8.6+5
+  file_picker: ^10.1.9
+  audioplayers: ^6.4.0
+  flutter_colorpicker: ^1.1.0
   image: ^4.3.0
-  flutter_dotenv: ^5.2.1
   video_player: ^2.9.3
+  pdf: ^3.10.4
+  path_provider: ^2.0.11
+  open_file: ^3.5.10
+  flutter_pdfview: ^1.4.0+1
+  intl: ^0.20.2
+  fl_chart: ^0.70.2
+  chewie: ^1.11.3
+  # From chat_app
+  carousel_slider: ^4.0.0
+  syncfusion_flutter_signaturepad: ^26.2.10
+  flutter_tts: ^3.2.2
+  # From magicmind_puzzle
+  fc_native_image_resize: ^0.12.0
+  flutter_dotenv: ^5.2.1
   uuid: ^4.5.1
   mongo_dart: ^0.10.3
   confetti: ^0.8.0
-  audioplayers: ^6.2.0
   lottie: ^3.3.1
-  intl: ^0.20.2
-  fl_chart: ^0.70.2
-  pdf: ^3.10.4
   printing: ^5.11.0
-  path_provider: ^2.0.11
   flutter_image_compress: ^2.4.0
   encrypt: ^5.0.3
-  shared_preferences: ^2.0.8
-  showcaseview:
-
-  #Preposition
+  showcaseview: ^3.0.0
   tflite_flutter: ^0.11.0
-  file_picker:
-  image_picker: ^0.8.5+3
-  csv:
-
+  csv: ^6.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^4.0.0
 
 flutter:
-
   uses-material-design: true
-
   assets:
+    # From chat_app
+    - assets/icons/
     - assets/images/
+    - assets/audios/
+    - assets/images/desk/
+    - assets/images/sport/
+    - assets/images/kichen/
+    - assets/videos/
+    - assets/backgrounds/
+    - assets/instructions/
+    - assets/audios/home.mp3
+
+
+    # From magicmind_puzzle
+   
     - assets/animations/
     - assets/audios/
     - assets/videos/
@@ -64,16 +79,21 @@ flutter:
     - assets/tf/model.tflite
     - assets/tf/labels.txt
     - assets/upload_image.csv
-
   fonts:
+    # From chat_app
+    - family: ABeeZee
+      fonts:
+        - asset: assets/fonts/font01/ABeeZee-Regular.ttf
+        - asset: assets/fonts/font01/ABeeZee-Regular.ttf
+          style: italic
+    - family: Rubik
+      fonts:
+        - asset: assets/fonts/font02/Rubik-VariableFont_wght.ttf
+        - asset: assets/fonts/font02/Rubik-Italic-VariableFont_wght.ttf
+    # From magicmind_puzzle
     - family: Andika
       fonts:
         - asset: fonts/Andika-Bold.ttf
         - asset: fonts/Andika-BoldItalic.ttf
         - asset: fonts/Andika-Italic.ttf
         - asset: fonts/Andika-Regular.ttf
-
-    - family: ABeeZee
-      fonts:
-        - asset: fonts/ABeeZee-Italic.ttf
-        - asset: fonts/ABeeZee-Regular.ttf

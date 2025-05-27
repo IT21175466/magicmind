@@ -1,8 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:magicmind_puzzle/screens/puzzle/jigsaw_home_screen.dart';
-import 'package:magicmind_puzzle/screens/puzzle/jisaw_home_camara_image.dart';
-
+import 'package:merged_app/screens/puzzle/jigsaw_home_screen.dart';
+import 'package:merged_app/screens/puzzle/jisaw_home_camara_image.dart';
+ 
 import '../../utils/function.dart';
 
 class SelectImageOption extends StatefulWidget {

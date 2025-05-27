@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:magicmind_puzzle/models/puzzle_result_model.dart';
+ import 'package:merged_app/models/puzzle_result_model.dart';
 
 class DifficultyChart extends StatelessWidget {
   final List<PuzzleResult> activities;

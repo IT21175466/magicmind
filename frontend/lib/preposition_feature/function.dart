@@ -10,8 +10,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/services.dart' show Uint8List, rootBundle;
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
-import 'package:magicmind_puzzle/preposition_feature/question.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:merged_app/preposition_feature/question.dart';
+ import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:image/image.dart' as img;
 
 class GeneratedQuestion {
