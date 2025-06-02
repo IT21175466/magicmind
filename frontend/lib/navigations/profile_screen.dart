@@ -1,13 +1,11 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-
-import 'package:flutter/material.dart';
  
+import 'package:flutter/material.dart';
 import 'package:merged_app/constants/env.dart';
 import 'package:merged_app/models/session_provider.dart';
 import 'package:merged_app/navigations/difference_identification_preformance_screen.dart';
-import 'package:merged_app/navigations/vocabuloary_performance_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -363,7 +361,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         style: const TextStyle(fontSize: 16, color: Colors.grey),
                       ),
                       SizedBox(height: 10,),
-                     
+                      ElevatedButton.icon(
+                        onPressed: _generateAndShowPDF,
+                        icon: const Icon(Icons.picture_as_pdf_outlined),
+                        label: const Text("Download Report"),
+                      ),
                     ],
                   ),
                 ),
@@ -374,8 +376,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Evenly space cards
                   children: [
-                     
-                    const SizedBox(width: 10), // Space between the cards
                     Expanded(
                       child: Card(
                         color: const Color(0xff27a5c6),
@@ -397,7 +397,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                               Text(
-                                vocabularyDifficulty.toString(),
+                                changeIdentificationDifficulty.toString(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 55,
@@ -405,10 +405,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   color: Colors.white,
                                 ),
                               ),
-                              _buildStars(vocabularyDifficulty),
+                              _buildStars(changeIdentificationDifficulty),
                               const SizedBox(height: 16),
                               const Text(
-                                'Vocabulary Activity',
+                                'Change Identification',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 15,
@@ -416,12 +416,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   color: Colors.white,
                                 ),
                               ),
-                              const SizedBox(height: 5,),
+                              const SizedBox(height: 8),
                               ElevatedButton.icon(
                                 onPressed: (){
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => VocabularyPerformanceScreen()),
+                                    MaterialPageRoute(builder: (context) => DifferenceIdentificationReportPage()),
                                   );
                                 },
                                 icon: const Icon(Icons.area_chart),
@@ -434,6 +434,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                     ),
+                    const SizedBox(width: 10), // Space between the cards
+                   
                   ],
                 ),
               ),

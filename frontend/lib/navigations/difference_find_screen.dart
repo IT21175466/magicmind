@@ -178,23 +178,23 @@ class _DifferenceFindScreenState extends State<DifferenceFindScreen> {
 
     // Calculate score
     const int maxScore = 100;
-    const int maxTimePenalty = 40; // Maximum penalty for time
-    const int maxMovesPenalty = 30; // Maximum penalty for drag moves
-    const int baseTimeThreshold = 60; // Time threshold for penalties
-    const int baseMovesThreshold = 20; // Drag move threshold for penalties
+    const int maxTimePenalty = 40;  
+    const int maxMovesPenalty = 30;  
+    const int baseTimeThreshold = 60; 
+    const int baseMovesThreshold = 20;  
 
     int timePenalty = (elapsedSeconds * 0.2).toInt();
 
     double movesPenalty =
         ((dragMoves - 2) * (2 + widget.difficulty)).toDouble();
 
-    // Ensure penalties don't exceed their respective caps
+ 
     timePenalty = timePenalty.clamp(0, maxTimePenalty).toInt();
-    // movesPenalty = movesPenalty.clamp(0, maxMovesPenalty) as double;
+  
 
     int score = (maxScore - timePenalty.round()).toInt();
 
-    // Cap score to 60 if highlight was used
+ 
     if (showHighlight) {
       score = score.clamp(0, 60);
     }
