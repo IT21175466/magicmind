@@ -39,7 +39,7 @@ class _DirectionScreenState extends State<DirectionScreen> {
     prepositions = widget.levelData['options'] ?? [];
     prepositionIndices = _identifyPrepositionIndices();
     generateImageFromPrompt();
-    hint = widget.levelData['clue'] ?? "Find the correct direction"; // Set initial hint
+    hint = widget.levelData['clued'] ?? "Find the correct direction"; // Set initial hint
   }
 
   /// Identifies indices of words in the answer that are prepositions.

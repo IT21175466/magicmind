@@ -425,7 +425,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   );
                                 },
                                 icon: const Icon(Icons.area_chart),
-                                label: const Text("Perfor"),
+                                label: const Text("Performance"),
                               ),
                               const SizedBox(height: 8),
 

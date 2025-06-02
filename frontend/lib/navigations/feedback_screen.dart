@@ -75,7 +75,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           String message = '';
           if (changeIdentificationDifficulty < predictedDifficulty) {
             message =
-                'Would you like to reward your level to this predicted value of $predictedDifficulty?';
+                ' you like to reward your level to this predicted value of $predictedDifficulty?';
           } else if (changeIdentificationDifficulty > predictedDifficulty) {
             message =
                 'Would it be fine to lower your reward level to this predicted value of $predictedDifficulty?';
